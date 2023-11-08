@@ -3,9 +3,9 @@
 </svelte:head>
 
 <script>
-  import BloodCta from "../Components/BloodCTA.svelte";
-  import HowWorks from "../Components/HowWorks.svelte";
-  import Banner from "../Components/InnerBanner.svelte";
+  import BloodCta from "../components/BloodCTA.svelte"
+  import HowWorks from "../components/HowWorks.svelte";
+  import Banner from "../components/InnerBanner.svelte";
   
   let pageLinks = [
     { text: 'Home', url: '/' },
