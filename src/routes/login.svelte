@@ -5,13 +5,13 @@
     import Swal from 'sweetalert2';
     import { goto } from '@sapper/app';
     import Banner from "../Components/InnerBanner.svelte";
-    import { getDatabase, ref, set, get  } from 'firebase/database';
-    import { page } from '@sapper/app'
+  
+
 
     import { firebaseApp } from '../firebase';
 
 const auth = getAuth(firebaseApp);
-const db = getDatabase(firebaseApp);
+// const db = getDatabase(firebaseApp);
 
 
   
@@ -28,60 +28,37 @@ const db = getDatabase(firebaseApp);
 
   
     async function handleLogin() {
-  try {
-    const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    const user = userCredential.user;
+      try {
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        // Successfully logged in
+        const user = userCredential.user;
+        const timestamp = new Date();
+        const formattedTimestamp = timestamp.toISOString(); // Adjust formatting as needed
+  
 
-    // Fetch user data from Firebase Realtime Database
-    const userRef = ref(db, 'users/' + user.uid); // Adjust the database path to your structure
-    const snapshot = await get(userRef);
-    const userData = snapshot.val();
-
-    if (userData) {
-      // Successfully logged in
-      const timestamp = new Date();
-      const formattedTimestamp = timestamp.toISOString();
-
-      Swal.fire({
-        icon: 'success',
-        title: '🎉 Login Successful 🎉',
-        text: `You are logged in at ${formattedTimestamp} from ${window.navigator.userAgent}.`,
-        showConfirmButton: false,
-        timer: 5000,
-      });
-
-      const { name, email, dateOfBirth } = userData;
-
-// Use the data in your component as needed, for example, update the store
-page.store.update((store) => {
-  store.userData = {
-    name,
-    email,
-    dateOfBirth,
-  };
-});
-
-// Redirect to the dashboard page
-goto('/dashboard'); // Replace with the correct route
-
-      // Use the data in your component as needed
-    } else {
-      // User data not found
-      Swal.fire({
-        icon: 'error',
-        title: 'User Data Not Found',
-        text: 'User data could not be retrieved from the database.',
-      });
+        // Show a success message with SweetAlert
+        Swal.fire({
+          icon: 'success',
+          title: '🎉 Login Successful 🎉',
+          text: `You are logged in at ${formattedTimestamp} from ${window.navigator.userAgent}.`,
+          showConfirmButton: false, // Remove the OK button
+          timer: 5000, // Show the message for 5 seconds (5000 milliseconds)
+        });
+  
+        // Redirect to the dashboard or profile page after a delay
+        setTimeout(() => {
+          goto('/dashboard'); // Replace with the correct route
+        }, 5000); // Delay for 5 seconds
+  
+      } catch (error) {
+        // Login failed, show an error message
+        Swal.fire({
+          icon: 'error',
+          title: 'Login Failed',
+          text: error.message,
+        });
+      }
     }
-  } catch (error) {
-    Swal.fire({
-      icon: 'error',
-      title: 'Login Failed',
-      text: error.message,
-    });
-  }
-}
-
 
     let showPassword = false;
 
