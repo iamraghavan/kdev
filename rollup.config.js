@@ -33,7 +33,9 @@ export default {
 			svelte({
 				compilerOptions: {
 					dev,
-					hydratable: true
+					hydratable: true,
+					extensions: ['.svelte'],
+					exportConditions: ['node', 'svelte'],
 				}
 			}),
 			url({

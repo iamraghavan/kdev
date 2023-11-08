@@ -5,13 +5,13 @@
     import Swal from 'sweetalert2';
     import { goto } from '@sapper/app';
     import Banner from "../Components/InnerBanner.svelte";
-  
-
+    import { getDatabase, ref, set, get  } from 'firebase/database';
+    import { page } from '@sapper/app'
 
     import { firebaseApp } from '../firebase';
 
 const auth = getAuth(firebaseApp);
-// const db = getDatabase(firebaseApp);
+const db = getDatabase(firebaseApp);
 
 
   
@@ -25,71 +25,63 @@ const auth = getAuth(firebaseApp);
       });
     });
 
-    async function sendLoginNotification(email, timestamp, userAgent) {
-    // Implement sending an email here, e.g., using Nodemailer or your preferred email service
-    // The code below is a simplified example and should be replaced with actual email sending logic.
-    const nodemailer = require('nodemailer'); // Example, use your preferred email library.
 
-    // Create a transporter for sending email notifications
-    const transporter = nodemailer.createTransport({
-      service: 'your-email-service-provider', // Replace with your email service provider
-      auth: {
-        user: 'your-email@example.com',
-        pass: 'your-email-password',
-      },
-    });
-
-    // Define the email message
-    const mailOptions = {
-      from: 'your-email@example.com',
-      to: email, // User's email
-      subject: 'Login Notification',
-      text: `You are logged in at ${timestamp} from ${userAgent}.`,
-    };
-
-    // Send the email
-    transporter.sendMail(mailOptions, function (error, info) {
-      if (error) {
-        console.error('Email could not be sent:', error);
-      } else {
-        console.log('Email sent:', info.response);
-      }
-    });
-  }
   
     async function handleLogin() {
-      try {
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        // Successfully logged in
-        const user = userCredential.user;
-        const timestamp = new Date();
-        const formattedTimestamp = timestamp.toISOString(); // Adjust formatting as needed
-  
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
 
-        sendLoginNotification(email, timestamp, window.navigator.userAgent);
-        // Show a success message with SweetAlert
-        Swal.fire({
-          icon: 'success',
-          title: '🎉 Login Successful 🎉',
-          text: `You are logged in at ${formattedTimestamp} from ${window.navigator.userAgent}.`,
-          showConfirmButton: false, // Remove the OK button
-          timer: 5000, // Show the message for 5 seconds (5000 milliseconds)
-        });
-  
-        // Redirect to the dashboard or profile page after a delay
-        setTimeout(() => {
-          goto('/dashboard'); // Replace with the correct route
-        }, 5000); // Delay for 5 seconds
-  
-      } catch (error) {
-        // Login failed, show an error message
-        Swal.fire({
-          icon: 'error',
-          title: 'Login Failed',
-          text: error.message,
-        });
-      }
+    // Fetch user data from Firebase Realtime Database
+    const userRef = ref(db, 'users/' + user.uid); // Adjust the database path to your structure
+    const snapshot = await get(userRef);
+    const userData = snapshot.val();
+
+    if (userData) {
+      // Successfully logged in
+      const timestamp = new Date();
+      const formattedTimestamp = timestamp.toISOString();
+
+      Swal.fire({
+        icon: 'success',
+        title: '🎉 Login Successful 🎉',
+        text: `You are logged in at ${formattedTimestamp} from ${window.navigator.userAgent}.`,
+        showConfirmButton: false,
+        timer: 5000,
+      });
+
+      const { name, email, dateOfBirth } = userData;
+
+// Use the data in your component as needed, for example, update the store
+page.store.update((store) => {
+  store.userData = {
+    name,
+    email,
+    dateOfBirth,
+  };
+});
+
+// Redirect to the dashboard page
+goto('/dashboard'); // Replace with the correct route
+
+      // Use the data in your component as needed
+    } else {
+      // User data not found
+      Swal.fire({
+        icon: 'error',
+        title: 'User Data Not Found',
+        text: 'User data could not be retrieved from the database.',
+      });
     }
+  } catch (error) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Login Failed',
+      text: error.message,
+    });
+  }
+}
+
 
     let showPassword = false;
 
