@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<meta name="theme-color" content="#333333">
+
+	%sapper.base%
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" media="all">
+		<!-- Main style sheet -->
+		<link rel="stylesheet" type="text/css" href="/css/style.min.css" media="all">
+		<!-- responsive style sheet -->
+		<link rel="stylesheet" type="text/css" href="/css/responsive.css" media="all">
+		
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.1/font/bootstrap-icons.min.css" integrity="sha512-oAvZuuYVzkcTc2dH5z1ZJup5OmSQ000qlfRvuoTTiyTBjwX1faoyearj8KdMq0LgsBTHMrRuMek7s+CxF8yE+w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+		<script src="/vendor/jquery.min.js"></script>
+	
+		<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	
+		<script src="/vendor/wow/wow.min.js"></script>
+	
+		<script src="/vendor/slick/slick.min.js"></script>
+		
+		<script src="/vendor/fancybox/dist/jquery.fancybox.min.js"></script>
+
+		<script src="/vendor/jquery.lazy.min.js"></script>
+
+		<script src="/vendor/jquery.counterup.min.js"></script>
+		<script src="/vendor/jquery.waypoints.min.js"></script>
+	
+		<script src="/vendor/nice-select/jquery.nice-select.min.js"></script>
+	
+		<script src="/vendor/validator.js"></script>
+
+		<script  src="/vendor/isotope.pkgd.min.js"></script>
+
+		<script src="/js/theme.js"></script>
+
+
+	<!-- Sapper creates a <script> tag containing `src/client.js`
+	     and anything else it needs to hydrate the app and
+	     initialise the router -->
+	%sapper.scripts%
+
+	<!-- Sapper generates a <style> tag containing critical CSS
+	     for the current page. CSS for the rest of the app is
+	     lazily loaded when it precaches secondary pages -->
+	%sapper.styles%
+
+	<!-- This contains the contents of the <svelte:head> component, if
+	     the current page has one -->
+	%sapper.head%
+</head>
+<body>
+	<!-- The application will be rendered inside this element,
+	     because `src/client.js` references it -->
+	<div id="sapper">%sapper.html%</div>
+</body>
+</html>
