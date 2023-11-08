@@ -193,8 +193,8 @@
   }
 
 
-
-  import Banner from "../Components/InnerBanner.svelte";
+  import Banner from "../components/InnerBanner.svelte";
+  // import Banner from "../Components/InnerBanner.svelte";
   
   let pageLinks = [
     { text: 'Home', url: '/' },

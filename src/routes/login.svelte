@@ -4,12 +4,12 @@
     // import { navigate } from 'svelte-routing';
     import Swal from 'sweetalert2';
     import { goto } from '@sapper/app';
-    import Banner from "../Components/InnerBanner.svelte";
+    import Banner from "../components/InnerBanner.svelte";
+
+    import { get, ref } from 'firebase/database';
+  import { db } from '../firebase';
   
-
-
     import { firebaseApp } from '../firebase';
-
 const auth = getAuth(firebaseApp);
 // const db = getDatabase(firebaseApp);
 
@@ -25,16 +25,15 @@ const auth = getAuth(firebaseApp);
       });
     });
 
+  
+    let user; // Initialize user as null
 
-  
     async function handleLogin() {
-      try {
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        // Successfully logged in
-        const user = userCredential.user;
-        const timestamp = new Date();
-        const formattedTimestamp = timestamp.toISOString(); // Adjust formatting as needed
-  
+    try {
+      const auth = getAuth();
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      // Successfully logged in
+      user = userCredential.user;
 
         // Show a success message with SweetAlert
         Swal.fire({
@@ -59,6 +58,7 @@ const auth = getAuth(firebaseApp);
         });
       }
     }
+  
 
     let showPassword = false;
 

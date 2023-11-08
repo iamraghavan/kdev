@@ -8,7 +8,7 @@
 <script>
 
   import { afterUpdate } from 'svelte';
-  import Banner from "../Components/InnerBanner.svelte";
+  import Banner from "../components/InnerBanner.svelte";
 
   let pageLinks = [
     { text: 'Home', url: '/' },
