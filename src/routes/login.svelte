@@ -14,7 +14,8 @@ const auth = getAuth(firebaseApp);
 // const db = getDatabase(firebaseApp);
 
 
-  
+let rememberMe;
+
     let email = '';
     let password = '';
   
@@ -28,26 +29,32 @@ const auth = getAuth(firebaseApp);
   
   
 
-    async function handleLogin() {
+     const handleLogin = async () => {
     try {
-      const auth = getAuth();
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
 
+      // Check if "Keep me logged in" is selected
+      if (rememberMe) {
+        
+        localStorage.setItem('userLoggedIn', true);
+      }
+
       localStorage.setItem('loggedIn', 'true');
- // Show a success message with SweetAlert
- Swal.fire({
-          icon: 'success',
-          title: '🎉 Login Successful 🎉',
-          text: `You are logged in at  ${window.navigator.userAgent}.`,
-          showConfirmButton: false, // Remove the OK button
-          timer: 5000, // Show the message for 5 seconds (5000 milliseconds)
-        });
-  
-        // Redirect to the dashboard or profile page after a delay
-        setTimeout(() => {
-          goto('/profile/dashboard'); 
-        }, 5000); 
-  
+      
+
+      // Show a success message with SweetAlert
+      Swal.fire({
+        icon: 'success',
+        title: '🎉 Login Successful 🎉',
+        text: `You are logged in at ${window.navigator.userAgent}.`,
+        showConfirmButton: false, // Remove the OK button
+        timer: 5000, // Show the message for 5 seconds (5000 milliseconds),
+      });
+
+      // Redirect to the dashboard or profile page after a delay
+      setTimeout(() => {
+        goto('/profile');
+      }, 5000);
     } catch (error) {
       // Login failed, show an error message
       Swal.fire({
@@ -56,7 +63,17 @@ const auth = getAuth(firebaseApp);
         text: error.message,
       });
     }
-  }
+  };
+
+  // Check for stored authentication state on component mount
+  onMount(() => {
+    const userLoggedIn = localStorage.getItem('userLoggedIn');
+
+    if (userLoggedIn) {
+      goto('/profile');
+      console.log('User already logged in.');
+    }
+  });
 
     let showPassword = false;
 
@@ -124,14 +141,14 @@ const auth = getAuth(firebaseApp);
                     </div>
                     
                   
-                    <div class="col-12">
-                      <div class="agreement-checkbox d-flex justify-content-between align-items-center">
-                        <div>
-                          <input type="checkbox" id="remember">
-                          <label for="remember">By hitting the "Register" button, you agree to the <a href="/">Terms conditions</a> & <a href="/">Privacy Policy</a></label>
-                        </div>
-                      </div>
-                    </div>
+                    <div class="agreement-checkbox d-flex justify-content-between align-items-center">
+											<div>
+												<input type="checkbox" bind:checked={rememberMe} id="remember">
+<label for="remember">Keep me logged in</label>
+
+											</div>
+											<a href>Forget Password?</a>
+										</div>
                     <div class="col-12">
 <button type="button" class="btn-eleven fw-500 tran3s d-block mt-20" on:click={handleLogin}>Login</button>
                     </div>

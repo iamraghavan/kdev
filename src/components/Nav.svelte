@@ -6,7 +6,7 @@
     crossorigin="anonymous"
     referrerpolicy="no-referrer"
   />
-  <title>Welcome to Karikalan Magic show!</title>
+
 </svelte:head>
 
 <script>
@@ -45,18 +45,33 @@
       userData = snapshot.val();
       userDisplayName = userData.fullName; // Assuming "fullName" is a field in your user data
 
-      userContext.set(userDisplayName); // Set user data in the store
+      userContext.set(userDisplayName);
+       // Set user data in the store
     });
   });
 
   // Function to handle logout
-  function handleLogout() {
-    // Perform logout actions and redirect
-    // For example, sign out the user and then redirect to the login page
+
+  const handleLogout = async () => {
+    // Perform any additional logout logic if needed
+
+    // Clear the session (remove the flag from local storage)
+    localStorage.removeItem('userLoggedIn');
+
     auth.signOut().then(() => {
-      goto('/login');
+      goto('/');
     });
-  }
+  };
+
+  // Check for stored authentication state on component mount
+  onMount(() => {
+    const userLoggedIn = localStorage.getItem('userLoggedIn');
+
+    if (userLoggedIn) {
+      // goto('/profile');
+      console.log('User already logged in.');
+    }
+  });
 
   // Share the user context with child components
   setContext('userContext', userContext);
@@ -79,11 +94,11 @@
     const hour = now.getHours();
 
     if (hour >= 5 && hour < 12) {
-      return 'Good Morning';
+      return 'Good Morning ☀️😊';
     } else if (hour >= 12 && hour < 17) {
-      return 'Good Afternoon';
+      return 'Good Afternoon 🌞👋🍵';
     } else {
-      return 'Good Evening';
+      return 'Good Evening 🍵🕰️';
     }
   }
 </script>
@@ -111,7 +126,7 @@
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="userDropdown">
                   <!-- Add navigation links to profile and dashboard pages -->
-                  <li><a href="/profile/dashboard" class="dropdown-item">Profile</a></li>
+                  <li><a href="/profile" class="dropdown-item">Profile</a></li>
                   <li><a href on:click={handleLogout} class="dropdown-item fw-500 text-dark">Logout</a></li>
                 </ul>
               </div>
