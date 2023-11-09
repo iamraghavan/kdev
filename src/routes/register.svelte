@@ -6,7 +6,6 @@
   import { onMount } from 'svelte';
   import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
   import { getDatabase, ref, set } from 'firebase/database';
-//   import { navigate } from 'svelte-routing';
   import { updateProfile, sendEmailVerification } from 'firebase/auth';
   import Swal from 'sweetalert2';
   import { goto } from '@sapper/app';

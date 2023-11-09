@@ -27,18 +27,27 @@ const auth = getAuth(firebaseApp);
 
   
   
-    let user; // Initialize user as null
 
     async function handleLogin() {
     try {
       const auth = getAuth();
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      // Successfully logged in
-      user = userCredential.user;
 
-      // Redirect to the dashboard route with user data as a query parameter
-      const userString = encodeURIComponent(JSON.stringify(user)); // Ensure the user data is properly serialized
-      goto(`/dashboard?user=${userString}`);
+      localStorage.setItem('loggedIn', 'true');
+ // Show a success message with SweetAlert
+ Swal.fire({
+          icon: 'success',
+          title: '🎉 Login Successful 🎉',
+          text: `You are logged in at  ${window.navigator.userAgent}.`,
+          showConfirmButton: false, // Remove the OK button
+          timer: 5000, // Show the message for 5 seconds (5000 milliseconds)
+        });
+  
+        // Redirect to the dashboard or profile page after a delay
+        setTimeout(() => {
+          goto('/dashboard'); 
+        }, 5000); 
+  
     } catch (error) {
       // Login failed, show an error message
       Swal.fire({
