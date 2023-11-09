@@ -1,10 +1,10 @@
 <script>
     import { onMount } from 'svelte';
-    import { auth } from '../firebase'; // Import only auth from your Firebase module
+    import { auth } from '../../firebase'; // Import only auth from your Firebase module
     import { getDatabase, ref, get } from 'firebase/database';
     import { onAuthStateChanged } from 'firebase/auth';
   
-    import { firebaseApp } from '../firebase';
+    import { firebaseApp } from '../../firebase';
   
     const db = getDatabase(firebaseApp);
     let userData = null;

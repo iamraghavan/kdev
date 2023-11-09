@@ -18,8 +18,8 @@
 			<div class="position-relative">
 			  <div class="row">
 				<div class="col-lg-6 col-md-8">
-				  <h1>Find your <br> Job without any hassle.</h1>
-				  <p class="text-md mt-40 lg-mt-20 mb-65 lg-mb-30 pe-xxl-5">With the largest professional creative community online, simply search through from our website</p>
+				  <h1>Join our cause and help us save <br>  more lives.</h1>
+				  <p class="text-md mt-40 lg-mt-20 mb-65 lg-mb-30 pe-xxl-5">Find blood donors near your location and make a blood request in less than a minutes.</p>
 				</div>
 			  </div>
 			  <div class="position-relative">
@@ -27,7 +27,8 @@
 				  <div class="col-lg-6 col-md-8">
 					<div class="job-search-two position-relative me-xxl-5">
 					  <form on:submit|preventDefault={search} class="d-flex align-items-center justify-content-between">
-						<input type="text" placeholder="Enter Pincode / Zip" class="bg-grey" bind:value={searchInput}>
+						<input type="text" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')"  minlength="5"
+						maxlength="6" pattern="[0-9]*" placeholder="Enter your Pincode" bind:value={searchInput} autocomplete="off" class="bg-grey">
 						<button class="btn-five h-100">Search</button>
 					  </form>
 					</div>

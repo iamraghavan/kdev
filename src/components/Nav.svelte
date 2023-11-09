@@ -12,6 +12,55 @@
 <script>
   // import { link } from '@sapper/app';
 
+  import { onMount, setContext } from 'svelte';
+  import { auth } from '../firebase';
+  import { getDatabase, ref, get } from 'firebase/database';
+  import { onAuthStateChanged } from 'firebase/auth';
+  import { writable } from 'svelte/store';
+  import { goto } from '@sapper/app';
+
+  import { firebaseApp } from '../firebase';
+
+  const db = getDatabase(firebaseApp);
+  let userData = null;
+  let userDisplayName = null;
+
+  // Create a writable store to share user data
+  const userContext = writable(null);
+
+  onMount(() => {
+    // Listen for changes in user authentication state
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        // User is not authenticated, you may want to handle this case
+        userContext.set(null); // Set user data to null
+        return;
+      }
+
+      const uid = user.uid;
+      const userRef = ref(db, 'users/' + uid);
+
+      // Fetch user data
+      const snapshot = await get(userRef);
+      userData = snapshot.val();
+      userDisplayName = userData.fullName; // Assuming "fullName" is a field in your user data
+
+      userContext.set(userDisplayName); // Set user data in the store
+    });
+  });
+
+  // Function to handle logout
+  function handleLogout() {
+    // Perform logout actions and redirect
+    // For example, sign out the user and then redirect to the login page
+    auth.signOut().then(() => {
+      goto('/login');
+    });
+  }
+
+  // Share the user context with child components
+  setContext('userContext', userContext);
+
   let mobHeaderLogo = {
     src: "./images/logo/logo_04.png",
     alt: "Logo Image",
@@ -24,6 +73,19 @@
     alt: "Logo Image",
     style: "width: 14rem; height: auto; padding-bottom: 7px;"
   };
+
+  function getGreeting() {
+    const now = new Date();
+    const hour = now.getHours();
+
+    if (hour >= 5 && hour < 12) {
+      return 'Good Morning';
+    } else if (hour >= 12 && hour < 17) {
+      return 'Good Afternoon';
+    } else {
+      return 'Good Evening';
+    }
+  }
 </script>
 
 <header class="theme-main-menu menu-overlay sticky-menu">
@@ -35,6 +97,28 @@
             <img style={logoImage.style} src={logoImage.src} alt={logoImage.alt}>
           </a>
         </div>
+        {#if $userContext !== null}
+        <div class="right-widget ms-auto ms-lg-0 order-lg-2">
+          <ul class="d-flex align-items-center style-none">
+            <!-- <li class="d-none d-md-block ms-4">
+              <a href="/logout" on:click={handleLogout} class="fw-500 text-dark">Logout</a>
+            </li> -->
+            <li class="d-none d-md-block ms-4">
+              <!-- Display the user's full name and create a dropdown menu -->
+              <div class="nav-item dropdown">
+                <a class="dropdown-toggle fw-500 text-dark" data-bs-theme="dark" href="/" role="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                  {getGreeting()}, {$userContext}
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="userDropdown">
+                  <!-- Add navigation links to profile and dashboard pages -->
+                  <li><a href="/profile/dashboard" class="dropdown-item">Profile</a></li>
+                  <li><a href on:click={handleLogout} class="dropdown-item fw-500 text-dark">Logout</a></li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </div>
+        {:else}
         <div class="right-widget ms-auto ms-lg-0 order-lg-2">
           <ul class="d-flex align-items-center style-none">
             <li class="d-none d-md-block ms-4">
@@ -45,6 +129,7 @@
             </li>
           </ul>
         </div>
+        {/if}
         <nav class="navbar navbar-expand-lg p0 me-lg-auto ms-3 ms-lg-5 order-lg-1">
           <button
             class="navbar-toggler d-block d-lg-none"

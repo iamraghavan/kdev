@@ -45,7 +45,7 @@ const auth = getAuth(firebaseApp);
   
         // Redirect to the dashboard or profile page after a delay
         setTimeout(() => {
-          goto('/dashboard'); 
+          goto('/profile/dashboard'); 
         }, 5000); 
   
     } catch (error) {
