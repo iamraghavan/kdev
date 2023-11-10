@@ -97,7 +97,7 @@
                             <p class="showos">{browserLanguage} | {osplatform}</p>
                         </div>
                     </div>
-                    <img src="images/lazy.svg" data-src="images/shape/shape_28.svg" alt="" class="lazy-img mt-80 sm-mt-30 sm-mb-20">
+                   
                 </div>
                 <div class="col-lg-2 col-md-3 col-sm-4 mb-6">
                     <h5 class="footer-title">Services​</h5>

@@ -1,39 +1,160 @@
-<script>
-  let userData;
 
-  // Check if the code is running on the client side
-  if (typeof window !== 'undefined') {
-    // Check if localStorage is available
-    if (window.localStorage) {
-      // Parse userData from localStorage or set to an empty object
-      userData = JSON.parse(localStorage.getItem('userData')) || {};
-    } else {
-      console.error('localStorage is not available.');
+
+<script>
+  import { onMount } from 'svelte';
+  import { auth, db } from '../../firebase'; // Import your Firebase configuration
+  import { signInWithEmailAndPassword } from 'firebase/auth';
+  import { ref, get } from 'firebase/database';
+  import { goto } from '@sapper/app';
+
+  let userData = {};
+
+  onMount(async () => {
+    // Check if the user is signed in using Firebase Authentication
+    const user = auth.currentUser;
+
+    if (!user) {
+      // Redirect to the home page if the user is not signed in
+      goto('/');
+      return;
     }
-  }
+
+    // Fetch user data from Firebase Realtime Database
+    const userRef = ref(db, `users/${user.uid}`);
+    const userSnapshot = await get(userRef);
+    userData = userSnapshot.val();
+
+    // Redirect to the home page if the user data is not available
+    if (!userData) {
+      goto('/');
+    }
+  });
+
+  let genderIcon;
+
+  let genderIconClass = userData.gender === 'male' ? 'fa-mars' : userData.gender === 'female' ? 'fa-venus' : 'fa-question';
+
+
+  let pageTitle = userData.fullName;
+  let pageBlood = userData.bloodGroup;
+
+
+  import html2canvas from 'html2canvas';
+  let logoImage = 'https://firebasestorage.googleapis.com/v0/b/waggy-tails-8d2ab.appspot.com/o/Untitled-2.png?alt=media&token=cafbf7fb-ee7a-4dcb-8fab-ad428beddf70'
+
+  let showDownloadButton = true;
+
+  const downloadImage = async () => {
+    const profileCard = document.getElementById('profile-card');
+
+    const canvas = await html2canvas(profileCard);
+
+    const dataURL = canvas.toDataURL('image/png');
+
+    const a = document.createElement('a');
+    a.href = dataURL;
+    a.download = 'profile.png';
+
+    document.body.appendChild(a);
+    a.click();
+
+    document.body.removeChild(a);
+
+    // Hide the download button and show the logo image after clicking
+    showDownloadButton = false;
+  };
+
+
 </script>
+
+<!-- 
+<svelte:head>
+
+</svelte:head> -->
+
+<svelte:head>
+  <title>{userData ? userData.fullName : 'Profile'}'s Profile on Kuruhdi.com</title>
+  <meta name="description" content="`Explore {userData ? userData.fullName : 'Profile'}'s profile on Kuruhdi.com. Learn more about {userData ? userData.fullName : 'Profile'} and discover details, interests, and more. Blood Group: ${pageBlood}.`">
+  <link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+/>
+
+
+
+</svelte:head>
+
+
+<style>
+  @media (max-width: 767px) {
+  /* Add your mobile-specific styles here */
+
+  /* Example: Set padding-top to 10px on mobile screens */
+  .pta01{
+    padding-top: 1rem !important;
+  }
+}
+</style>
 
 <!-- Your modified HTML code with a single root element -->
 <div class="main-page-wrapper">
-  <div class="inner-banner-one position-relative">
+  <div class="inner-banner-one position-relative ">
     <div class="container">
-      <div class="candidate-profile-card list-layout bg-dark">
-        <div class="d-flex align-items-start align-items-xl-center">
-          <div class="right-side">
-            <div class="row gx-1 align-items-center">
-              <div class="col-xl-2 order-xl-0">
-                <div class="position-relative">
-                  <h4 class="candidate-name text-white mb-0" style="text-transform: capitalize;">
-                    {userData ? userData.fullName : 'Name Not Available'}
-                  </h4>
-                  <div class="candidate-post">UI Designer</div>
-                </div>
-              </div>
-              <!-- Add the rest of your code here -->
-            </div>
-          </div>
-        </div>
-      </div>
+      <div class="candidate-profile-card list-layout bg-dark candidate-profile-card list-layout bg-dark" id="profile-card">
+                  <div class="d-flex align-items-start align-items-xl-center">
+                      
+                      <div class="right-side">
+                          <div class="row gx-1 align-items-center">
+                              <div class="col-xl-2 order-xl-0">
+                                  <div class="position-relative">
+                                      <h4 class="candidate-name text-white mb-0"> {userData.fullName || 'Name Not Available'}</h4>
+                                   
+                                      <div class="candidate-post">
+                                        
+                                        {userData.gender || 'Gender Not Available'} | Age : {userData.age}
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-xl-3 order-xl-3 text-white pta01" >
+                                <span>Location</span>
+                                <div>{userData.city}, {userData.state || 'Location Not Available'}</div>
+                              </div>
+                              
+                              <div class="col-xl-3 col-md-4 order-xl-1">
+                                  <div class="candidate-info">
+                                      <span>Contact</span>
+                                      <div>{userData.phoneNumber} <br> {userData.email} </div>
+                                  </div>
+                                  <!-- /.candidate-info -->
+                              </div>
+              <div class="col-xl-2 col-md-4 order-xl-2">
+                                  <div class="candidate-info">
+                                      <span>Blood Group</span>
+                                      <div>{userData.bloodGroup}</div>
+                                  </div>
+                                  <!-- /.candidate-info -->
+                              </div>
+                              <!-- Your HTML code -->
+                              <div class="col-xl-2 col-md-4 order-xl-4">
+                                {#if showDownloadButton}
+                                  <div class="d-flex justify-content-md-end">
+                                    <button class="save-btn text-center tran3s" on:click={downloadImage}><i class="bi bi-download"></i></button>
+                                    <button class="cv-download-btn fw-500 tran3s ms-md-3 sm-mt-20"><i class="bi bi-pencil" style="margin: 0 5px;"></i>Edit</button>
+                                  </div>
+                                {:else}
+                                  <!-- Replace with your logo image -->
+                                  <img src={logoImage} alt="Logo" class="logo-image" />
+                                {/if}
+                              </div>
+                              
+
+                          </div>
+                      </div>
+                  </div>
+              </div> 
     </div>
+
   </div>
 </div>
+
+

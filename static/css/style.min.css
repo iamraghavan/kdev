@@ -3864,8 +3864,8 @@ iframe {
 }
 
 .inner-banner-one .candidate-profile-card .cv-download-btn:hover {
-    background: #375749;
-    border-color: #375749
+    background: #FF0000;
+    border-color: #a9a9a9
 }
 
 .inner-banner-one .candidate-profile-card .cadidate-skills li {
@@ -3874,7 +3874,7 @@ iframe {
 }
 
 .inner-banner-one .candidate-profile-card.list-layout .save-btn {
-    background: #375749;
+    background: #FF0000;
     border-color: #fff;
     color: #fff
 }

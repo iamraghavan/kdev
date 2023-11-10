@@ -15,6 +15,7 @@
   let password = "";
   let fullName = "";
   let gender = "";
+  let bloodGroup = "";
   let dateOfBirth = "";
   let phoneNumber = "";
   let pincode = "";
@@ -143,6 +144,7 @@
         email: email,
         fullName: fullName,
         gender: gender,
+        bloodGroup : bloodGroup,
         dateOfBirth: dateOfBirth,
         phoneNumber: phoneNumber,
         pincode: pincode,
@@ -192,9 +194,7 @@
     }
   }
 
-  
-
-let alertColor = "black";
+  let alertColor = "black";
 
   import Banner from "../components/InnerBanner.svelte";
   import InformationOne from "../components/InformationOne.svelte";
@@ -218,6 +218,9 @@ let alertColor = "black";
 </svelte:head>
 
 <!-- Add your styles here -->
+
+
+
 
 <div class="main-page-wrapper">
   <div>
@@ -283,6 +286,41 @@ let alertColor = "black";
                           Female
                         </label>
                       </div>
+                    </div>
+                  </div>
+
+                  <div class="col-12">
+                    <div class="input-group-meta position-relative mb-25">
+                      <label for="country">Blood Group</label>
+                      <select
+                      bind:value={bloodGroup}
+                        class="form-select"
+                        id="id3"
+                        name="bloodGroupType"
+                        required
+                      >
+                      <option disabled hidden style="display:none" value="">Choose... Blood</option>
+                        <option value="A+">A+</option>
+                        <option value="A-">A-</option>
+                        <option value="A1+">A1+</option>
+                        <option value="A1-">A1-</option>
+                        <option value="A1B+">A1B+</option>
+                        <option value="A1B-">A1B-</option>
+                        <option value="A2+">A2+</option>
+                        <option value="A2-">A2-</option>
+                        <option value="A2B+">A2B+</option>
+                        <option value="A2B-">A2B-</option>
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+                        <option value="B+">B+</option>
+                        <option value="B-">B-</option>
+                        <option value="Bombay Blood Group"
+                          >Bombay Blood Group</option
+                        >
+                        <option value="INRA">INRA</option>
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
+                      </select>
                     </div>
                   </div>
 
@@ -501,9 +539,7 @@ let alertColor = "black";
     <div class="mt-50 rounded container text-black" style="text-align:justify;">
       <div class="position-relative">
         <div class="row px-lg-5 px-auto pt-3">
-
-            <InformationOne {alertColor} />
-      
+          <InformationOne {alertColor} />
         </div>
       </div>
     </div>
@@ -562,4 +598,28 @@ let alertColor = "black";
   }
 
   /* Style the select container */
+
+  select {
+  width: 100%;
+  height: 55px;
+  font-size: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 8px;
+  padding: 0 52px 0 20px;
+  color: #000;
+  background: rgba(49, 121, 90, 0.09);
+  appearance: none; /* Remove default styles (e.g., arrow) in some browsers */
+}
+
+/* Style for the arrow icon in select */
+select::after {
+  content: '\25BC'; /* Unicode character for a down arrow */
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  font-size: 20px;
+  color: #000;
+  pointer-events: none; /* Ensure the arrow doesn't interfere with select interaction */
+}
 </style>
