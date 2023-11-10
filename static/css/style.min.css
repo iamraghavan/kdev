@@ -3836,7 +3836,7 @@ iframe {
 }
 
 .inner-banner-one .candidate-profile-card {
-    background: url(../images/shape/shape_34.svg) repeat-x;
+    /* background: url(../images/shape/shape_34.svg) repeat-x; */
     background-size: cover;
     border: none
 }

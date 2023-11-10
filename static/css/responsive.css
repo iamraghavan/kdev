@@ -1,4 +1,12 @@
+/* Responsive CSS Document */
 
+/* 
+    Created on   : 04/06/2023.
+    Theme Name   : Jobi - Responsive Job Board HTML Template
+    Version      : 1.0.
+    Developed by : (me@heloshape.com) / (www.me.heloshape.com)
+   
+*/
 
 @media (min-width: 992px) {
   .container {padding-right: 0;padding-left: 0;}
@@ -328,7 +336,7 @@
   .feedback-section-four .slider-wrapper .slick-dots {position: static; margin-top: 30px; justify-content: center;}
   .blog-meta-two .blog-title {font-size: 18px;}
   .theme-main-menu .login-btn-three {padding: 10px 22px;}
-  .inner-banner-one {padding: 120px 0 0px;}
+  .inner-banner-one {padding: 120px 0 70px;}
   .filter-area-tab.offcanvas {position: fixed; overflow-y: auto;}
   .filter-area-tab.offcanvas .main-title {margin-top: 30px; text-align: center;}
   .job-list-one.style-two {padding: 25px 20px;}

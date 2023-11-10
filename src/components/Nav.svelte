@@ -28,6 +28,10 @@
   // Create a writable store to share user data
   const userContext = writable(null);
 
+  function toCapitalizedCase(str) {
+  return str.replace(/\b\w/g, (match) => match.toUpperCase());
+}
+
   onMount(() => {
     // Listen for changes in user authentication state
     onAuthStateChanged(auth, async (user) => {
@@ -43,7 +47,11 @@
       // Fetch user data
       const snapshot = await get(userRef);
       userData = snapshot.val();
-      userDisplayName = userData.fullName; // Assuming "fullName" is a field in your user data
+   
+    
+      userDisplayName = userData.fullName;
+      
+
 
       userContext.set(userDisplayName);
        // Set user data in the store
@@ -115,14 +123,14 @@
         {#if $userContext !== null}
         <div class="right-widget ms-auto ms-lg-0 order-lg-2">
           <ul class="d-flex align-items-center style-none">
-            <!-- <li class="d-none d-md-block ms-4">
-              <a href="/logout" on:click={handleLogout} class="fw-500 text-dark">Logout</a>
-            </li> -->
+            
             <li class="d-none d-md-block ms-4">
               <!-- Display the user's full name and create a dropdown menu -->
               <div class="nav-item dropdown">
                 <a class="dropdown-toggle fw-500 text-dark" data-bs-theme="dark" href="/" role="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                  {getGreeting()}, {$userContext}
+                  {getGreeting()}, <span style="color: #ff0000;
+                  text-transform: capitalize;
+                  font-family: 'McLaren';"> {$userContext} </span>
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="userDropdown">
                   <!-- Add navigation links to profile and dashboard pages -->
@@ -223,6 +231,28 @@
                   <li><a href="blog-details.html" class="dropdown-item"><span>Blog Details</span></a></li>
                 </ul> 
               </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="contact.html" role="button">Contact</a>
+              </li>
+              {#if $userContext !== null}
+              <li class="nav-item dropdown d-md-none mt-5">
+                <a class="dropdown-toggle fw-500 text-dark" data-bs-theme="dark" href="/" role="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                  {getGreeting()}, <br> <span style="font-size: 1.5rem;
+                  text-transform: capitalize;
+                  color: #ff0000;
+                  font-family: 'McLaren';
+                  font-weight: 600;"> {$userContext} </span>
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a href="/profile" class="dropdown-item">Profile</a></li>
+  <li><a href on:click={handleLogout} class="dropdown-item fw-500 text-dark">Logout</a></li>
+                </ul> 
+              </li>
+              {:else}
+            
+              <li class="d-md-none mt-5"><a href="/login" class="btn-five w-100">Login</a></li>
+              {/if}
             </ul>
           </div>
         </nav>
@@ -230,3 +260,6 @@
     </div>
   </div>
 </header>
+
+
+
