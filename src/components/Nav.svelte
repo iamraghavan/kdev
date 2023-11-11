@@ -18,6 +18,37 @@
   import { onAuthStateChanged } from 'firebase/auth';
   import { writable } from 'svelte/store';
   import { goto } from '@sapper/app';
+  import { navigationEvent } from './navigation';
+
+  import { onDestroy } from 'svelte';
+// import { navigationEvent } from './navigation';
+
+let updateCount = 0;
+
+onMount(() => {
+  const unsubscribe = navigationEvent.subscribe((event) => {
+    if (event === 'navigate') {
+      // Trigger a refresh or update in the header
+      updateCount += 1;
+    }
+  });
+
+  return () => {
+    unsubscribe();
+  };
+});
+
+onDestroy(() => {
+  // Cleanup if needed
+});
+
+
+  onMount(() => {
+  // Example: Trigger the event when navigating to a different route
+  document.querySelector('a').addEventListener('click', () => {
+    navigationEvent.set('navigate');
+  });
+});
 
   import { firebaseApp } from '../firebase';
 
@@ -152,6 +183,7 @@
             </li>
           </ul>
         </div>
+    
         {/if}
         <nav class="navbar navbar-expand-lg p0 me-lg-auto ms-3 ms-lg-5 order-lg-1">
           <button

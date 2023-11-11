@@ -172,4 +172,100 @@
 </div>
 
 
+<div class="container">
+  <div class="row">
+    <div class="col-xxl-6 col-lg-6">
+      <div class="cadidate-profile-sidebar ms-xl-5 ms-xxl-0 md-mt-60">
+          <div class="cadidate-bio bg-wrapper mb-60 md-mb-40">
+              <ul class="style-none">
+                  <li class="border-0">
+                      <span>Location: </span>
+                      <div>{userData.city}, {userData.state}, {userData.country}  </div>
+                  </li>
+                  <li>
+                      <span>Date of Birth: </span>
+                      <div>{userData.dateOfBirth}</div>
+                  </li>
+                  <li>
+                      <span>Email: </span>
+                      <div><a href={`mailto:${userData.email}`}>{userData.email}</a>
+                      </div>
+                  </li>
+                  <li>
+                      <span>Phone Number: </span>
+                      <div>{userData.phoneNumber}</div>
+                  </li>
+                  <li>
+                      <span>WhatsApp Number: </span>
+                      <div>{userData.whatsapp}</div>
+                  </li>
+                
+                 
+              </ul>
+             
+          
+            </div>
+          <!-- /.cadidate-bio -->
+       
+      
+      </div> 
+      <!-- /.cadidate-profile-sidebar -->
+    </div>
+    <div class="col-xxl-6 col-lg-6">
+      <div class="cadidate-profile-sidebar ms-xl-5 ms-xxl-0 md-mt-60">
+          <div class="cadidate-bio bg-wrapper mb-60 md-mb-40">
+              <ul class="style-none">
+                  <li class="border-0">
+                      <span>Last Donation Date: </span>
+                      <div>{userData.LastDonationDate || "None of Donation"}</div>
+                  </li>
+                  <li>
+                      <span>Travel History :  </span>
+                      <div>{#if userData.travelHistory === 'yes'}
+                        Yes, I have a travel history
+                      {:else if userData.travelHistory === 'no'}
+                        No, I don't have a travel history
+                      {/if}</div>
+                  </li>
+                  <li>
+                      <span>Risky Activities : </span>
+                      <div>{#if userData.riskyActivities === 'yes'}
+                        Yes, I engage in risky activities
+                      {:else if userData.riskyActivities === 'no'}
+                      No, I don't engage in risky activities
+                      {/if}
+                      </div>
+                  </li>
+                  <li>
+                      <span>Tattoos and Piercings : </span>
+                      <div>{#if userData.tattoosPiercings === 'yes'}
+                        Yes, I have tattoos or piercings
+                      {:else if userData.tattoosPiercings === 'no'}
+                      No, I don't have tattoos or piercings
+                      {/if}</div>
+                  </li>
+                  
+                
+                  <li>
+                      <span>Social:</span>
+                      <div>
+                          <a href="{`https://www.facebook.com/${userData.Facebook}`}" target="_blank" class="me-3"><i class="bi bi-facebook"></i></a>
+                          <a href="{`https://instagram.com/${userData.Instagram}`}" target="_blank" class="me-3"><i class="bi bi-instagram"></i></a>
+                          <a href="{`https://twitter.com/${userData.Twitter}`}" target="_blank" class="me-3"><i class="bi bi-twitter"></i></a>
+                          <a href="{`https://www.linkedin.com/in/${userData.Linkedin}`}" target="_blank"><i class="bi bi-linkedin"></i></a>
+                      </div>
+                  </li>
+              </ul>
+             
+          
+            </div>
+          <!-- /.cadidate-bio -->
+       
+      
+      </div> 
+      <!-- /.cadidate-profile-sidebar -->
+    </div>
+  </div>
+</div>
+
 <BloodCta />

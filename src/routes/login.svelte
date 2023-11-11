@@ -65,6 +65,38 @@ let rememberMe;
     }
   };
 
+
+  const showForgotPassword = async () => {
+    const { value: email } = await Swal.fire({
+      title: 'Forgot Password',
+      html: '<input id="swal-input1" class="swal2-input" placeholder="Enter your email">',
+      focusConfirm: false,
+      preConfirm: () => {
+        return document.getElementById('swal-input1').value;
+      },
+    });
+
+    if (email) {
+      try {
+        await sendPasswordResetEmail(auth, email);
+
+        // Password reset email sent successfully
+        Swal.fire({
+          icon: 'success',
+          title: 'Password Reset Email Sent',
+          text: 'Please check your email for instructions on resetting your password.',
+        });
+      } catch (error) {
+        // Password reset email failed
+        Swal.fire({
+          icon: 'error',
+          title: 'Password Reset Failed',
+          text: error.message,
+        });
+      }
+    }
+  };
+
   // Check for stored authentication state on component mount
   onMount(() => {
     const userLoggedIn = localStorage.getItem('userLoggedIn');
@@ -147,7 +179,7 @@ let rememberMe;
 <label for="remember">Keep me logged in</label>
 
 											</div>
-											<a href>Forget Password?</a>
+											<a href on:click|preventDefault={showForgotPassword}>Forget Password?</a>
 										</div>
                     <div class="col-12">
 <button type="button" class="btn-eleven fw-500 tran3s d-block mt-20" on:click={handleLogin}>Login</button>

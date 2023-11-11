@@ -11424,12 +11424,12 @@ body.compensate-for-scrollbar {
     padding: 0 15px;
     line-height: 45px;
     border-radius: 50px;
-    background: #244034
+    background: #070707
 }
 
 .dashboard-body .dash-btn-two:hover {
-    background: #bf0600;
-    color: #244034
+    background: #244034;
+    color: #fff
 }
 
 .dashboard-body .dash-cancel-btn {
