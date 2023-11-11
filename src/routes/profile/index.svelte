@@ -7,6 +7,8 @@
   import { ref, get } from 'firebase/database';
   import { goto } from '@sapper/app';
 
+  import edit from './edit.svelte'
+
   let userData = {};
 
   onMount(async () => {
@@ -30,6 +32,10 @@
     }
   });
 
+  const navigateToEditPage = () => {
+    goto(`/profile/edit`); 
+  };
+
   let genderIcon;
 
   let genderIconClass = userData.gender === 'male' ? 'fa-mars' : userData.gender === 'female' ? 'fa-venus' : 'fa-question';
@@ -40,6 +46,7 @@
 
 
   import html2canvas from 'html2canvas';
+  import BloodCta from '../../components/BloodCTA.svelte';
   let logoImage = 'https://firebasestorage.googleapis.com/v0/b/waggy-tails-8d2ab.appspot.com/o/Untitled-2.png?alt=media&token=cafbf7fb-ee7a-4dcb-8fab-ad428beddf70'
 
   let showDownloadButton = true;
@@ -74,11 +81,8 @@
 
 <svelte:head>
   <title>{userData ? userData.fullName : 'Profile'}'s Profile on Kuruhdi.com</title>
-  <meta name="description" content="`Explore {userData ? userData.fullName : 'Profile'}'s profile on Kuruhdi.com. Learn more about {userData ? userData.fullName : 'Profile'} and discover details, interests, and more. Blood Group: ${pageBlood}.`">
-  <link
-  rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
-/>
+  <meta name="description" content="Explore {userData ? userData.fullName : 'Profile'}'s profile on Kuruhdi.com. Learn more about {userData ? userData.fullName : 'Profile'} and discover details, interests, and more. Blood Group {pageBlood}.">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
 
 
 
@@ -139,16 +143,26 @@
                                 {#if showDownloadButton}
                                   <div class="d-flex justify-content-md-end">
                                     <button class="save-btn text-center tran3s" on:click={downloadImage}><i class="bi bi-download"></i></button>
-                                    <button class="cv-download-btn fw-500 tran3s ms-md-3 sm-mt-20"><i class="bi bi-pencil" style="margin: 0 5px;"></i>Edit</button>
+                                    <button class="cv-download-btn fw-500 tran3s ms-md-3 sm-mt-20" on:click={navigateToEditPage}><i class="bi bi-pencil" style="margin: 0 5px;"></i>Edit</button>
                                   </div>
-                                {:else}
-                                  <!-- Replace with your logo image -->
-                                  <img src={logoImage} alt="Logo" class="logo-image" />
+                              
+                                 
                                 {/if}
                               </div>
                               
 
+                              
                           </div>
+                          <!-- <div class="d-flex flex-column align-items-center text-center" style="padding-top: 1rem;">
+                            <p class="mb-0 text-white">powered by</p>
+                            <span class="mt-2" style="font-size: 1.1rem; font-family: 'McLaren', sans-serif; color:white;">Bumble Bees</span>
+                          </div> -->
+                          <div class="d-sm-none justify-content-center align-items-left" style="padding-top: 1rem;">
+                            <span class="mt-2" style="font-size: 1.1rem; font-family: 'McLaren', sans-serif; color:white;">Powered by Bumble Bees</span>
+                          </div>
+                          
+                          
+                          
                       </div>
                   </div>
               </div> 
@@ -158,3 +172,4 @@
 </div>
 
 
+<BloodCta />
