@@ -42,7 +42,7 @@
 				<img src="images/assets/screen_15.png" data-src="" alt="" class="lazy-img">
 				<div class="ps-3">
 				  <div class="fw-500 text-dark text-md">18k+</div>
-				  <div>Individual Donars</div>
+				  <div>Individual Donors</div>
 				</div>
 			  </div>
 			</div>

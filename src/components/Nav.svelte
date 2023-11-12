@@ -214,7 +214,7 @@ onDestroy(() => {
                 <a href="/about" class="nav-link" role="button" data-bs-auto-close="outside" aria-expanded="false">About us</a>
               </li>
               <li class="nav-item dropdown mega-dropdown-sm">
-                <a class="nav-link dropdown-toggle" href="/" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Blood Donar
+                <a class="nav-link dropdown-toggle" href="/" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Blood Donors
                 </a>
                 <ul class="dropdown-menu">
                   <li class="row gx-1">
@@ -228,7 +228,7 @@ onDestroy(() => {
                         <ul class="style-none mega-dropdown-list">
                          
                           <li><a href="company-v1.html" class="dropdown-item"><span>My Profile</span></a></li>
-                          <li><a href="company-v2.html" class="dropdown-item"><span>Forget Donar Account</span></a></li>
+                          <li><a href="company-v2.html" class="dropdown-item"><span>Forget Donor Account</span></a></li>
                           <!-- <li><a href="company-v3.html" class="dropdown-item"><span>Go to My Profile</span></a></li> -->
                           <li><a href="company-v4.html" class="dropdown-item"><span>Get Digital Donor Card</span></a></li>
                           
@@ -255,11 +255,11 @@ onDestroy(() => {
               </li>
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="/" role="button" data-bs-toggle="dropdown"
-                  data-bs-auto-close="outside" aria-expanded="false">Find a Donar
+                  data-bs-auto-close="outside" aria-expanded="false">Find a Donor
                 </a>
                 <ul class="dropdown-menu">
-                  <li><a href="/donar/search-blood-donors-by-pincode" class="dropdown-item"><span>Find Donar with Pincode</span></a></li>
-                  <li><a href="blog-v2.html" class="dropdown-item"><span>Find Local Donar</span></a></li>
+                  <li><a href="/donor/search-blood-donors-by-pincode" class="dropdown-item"><span>Find Donor with Pincode</span></a></li>
+                  <li><a href="blog-v2.html" class="dropdown-item"><span>Find Local Donor</span></a></li>
                   <!-- <li><a href="blog-v3.html" class="dropdown-item"><span>Blog Full width</span></a></li>
                   <li><a href="blog-details.html" class="dropdown-item"><span>Blog Details</span></a></li> -->
                 </ul> 

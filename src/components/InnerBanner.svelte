@@ -11,7 +11,7 @@
     <div class="container">
       <div class="position-relative">
         <div class="row">
-          <div class="col-xl-6 m-auto text-center">
+          <div class="col-xl-8 m-auto text-center">
             <div class="title-two">
               <h2 class="text-black">{title}</h2>
             </div>

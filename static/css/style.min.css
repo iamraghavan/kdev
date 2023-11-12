@@ -1,10 +1,47 @@
-@import"https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700&display=swap";
+/* @import"https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700&display=swap";
 @import"../fonts/gordita/stylesheet.css";
 @import"../fonts/bootstrap-icons-1.10.2/font.css";
+ */
 
+ @import url('https://fonts.googleapis.com/css2?family=McLaren&display=swap');
+ @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Source+Code+Pro:wght@200;300;400;500;600;700;800;900&display=swap');
 
-  @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-
+ .select-container {
+    position: relative;
+    width: 100%;
+    max-width: 300px; /* Adjust as needed */
+  }
+  
+  /* Style the select box */
+  select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: rgba(49, 121, 90, .09);
+    color: #333;
+    font-size: 16px;
+    cursor: pointer;
+    outline: none;
+  }
+  
+  /* Style the arrow icon */
+  .select-container::after {
+    content: '▼'; /* Unicode character for down arrow */
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    font-size: 20px;
+    color: #555;
+    pointer-events: none;
+  }
+  
+  /* Style the select when focused */
+  select:focus {
+    border-color: #ff725e; /* Change to your preferred focus color */
+    box-shadow: 0 0 5px rgba(49, 121, 90, 0.657); /* Change to your preferred focus shadow */
+  }
 
 ::-webkit-scrollbar {
     width: 5px
@@ -15,12 +52,12 @@
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #d2f34c;
+    background: #bf0600;
     border-radius: 0
 }
 
 body {
-    font-family: 'Source Code Pro', monospace;
+    font-family: 'Source Code Pro', monospace !important;
     font-weight: normal;
     font-size: 16px;
     position: relative;
@@ -43,13 +80,14 @@ h4,
 h5,
 .h6,
 h6 {
-    font-family: "EB Garamond", serif;
+    font-family: 'Source Code Pro', monospace !important;
     font-weight: 500;
     color: #000
 }
 
 .h1,
 h1 {
+    font-family: 'McLaren', sans-serif !important; 
     font-size: 85px;
     letter-spacing: -1px;
     line-height: 1.058em
@@ -57,6 +95,7 @@ h1 {
 
 .h2,
 h2 {
+    font-family: 'McLaren', sans-serif !important; 
     font-size: 70px;
     line-height: 1.041em
 }
@@ -116,7 +155,7 @@ hr {
 }
 
 .ctn-preloader .txt-loading .letters-loading {
-    font-family: "EB Garamond", serif;
+    font-family: 'Source Code Pro', monospace !important;
     font-weight: 700;
     letter-spacing: 8px;
     display: inline-block;
@@ -128,7 +167,7 @@ hr {
 
 .ctn-preloader .txt-loading .letters-loading::before {
     animation: letters-loading 4s infinite;
-    color: #00bf58;
+    color: #FF0000;
     content: attr(data-text-preloader);
     left: 0;
     opacity: 0;
@@ -200,7 +239,7 @@ hr {
     font-size: 25px;
     cursor: pointer;
     border-radius: 50%;
-    background: #00bf58;
+    background: #FF0000;
     transition: all .3s ease-in-out
 }
 
@@ -239,7 +278,7 @@ hr {
     text-align: center;
     border-radius: 50px;
     color: #000;
-    background-color: #d2f34c;
+    background-color: #bf0600;
     border: 2px solid rgba(0, 0, 0, 0);
     transition: all .3s ease-in-out 0s
 }
@@ -250,8 +289,8 @@ hr {
 
 .btn-one:hover {
     background-color: #244034;
-    color: #d2f34c;
-    border-color: #d2f34c
+    color: #bf0600;
+    border-color: #bf0600
 }
 
 .btn-two {
@@ -306,7 +345,7 @@ hr {
     text-align: center;
     border-radius: 6px;
     color: #244034;
-    background: #d2f34c;
+    background: #bf0600;
     transition: all .3s ease-in-out 0s
 }
 
@@ -322,7 +361,7 @@ hr {
     text-align: center;
     border-radius: 50px;
     color: #fff;
-    background: #00bf58;
+    background: #FF0000;
     transition: all .3s ease-in-out 0s
 }
 
@@ -337,21 +376,21 @@ hr {
 
 .btn-six {
     font-weight: 500;
-    color: #00bf58;
+    color: #FF0000;
     position: relative;
     padding-right: 12px;
-    border-bottom: 2px solid #00bf58;
+    border-bottom: 2px solid #FF0000;
     transition: all .3s ease-in-out 0s
 }
 
 .btn-six:hover {
-    color: #00bf58;
+    color: #FF0000;
     letter-spacing: .2px
 }
 
 .btn-six:after {
-    border-bottom: 2px solid #00bf58;
-    border-right: 2px solid #00bf58;
+    border-bottom: 2px solid #FF0000;
+    border-right: 2px solid #FF0000;
     content: "";
     display: block;
     margin-top: -4px;
@@ -381,8 +420,8 @@ hr {
     min-width: 150px;
     text-align: center;
     border-radius: 50px;
-    color: #00bf58;
-    border: 1px solid #00bf58;
+    color: #FF0000;
+    border: 1px solid #FF0000;
     transition: all .3s ease-in-out 0s
 }
 
@@ -406,17 +445,17 @@ hr {
 }
 
 .btn-eight.style-two {
-    border: 2px solid #00bf58;
+    border: 2px solid #FF0000;
     background: rgba(0, 0, 0, 0)
 }
 
 .btn-eight span {
-    color: #00bf58
+    color: #FF0000
 }
 
 .btn-eight a {
     font-weight: normal;
-    color: #00bf58;
+    color: #FF0000;
     text-decoration: underline
 }
 
@@ -427,7 +466,7 @@ hr {
 }
 
 .btn-nine:hover {
-    color: #00bf58
+    color: #FF0000
 }
 
 .btn-nine i {
@@ -438,12 +477,12 @@ hr {
 .btn-ten {
     line-height: 50px;
     border-radius: 10px;
-    background: #31795a;
+    background: #ff725e;
     padding: 0 26px
 }
 
 .btn-ten:hover {
-    background: #00bf58
+    background: #FF0000
 }
 
 .btn-eleven {
@@ -453,13 +492,13 @@ hr {
     text-transform: uppercase;
     letter-spacing: .88px;
     color: #fff;
-    background: #31795a;
+    background: #ff725e;
     width: 100%
 }
 
 .btn-eleven:hover,
 .btn-eleven:focus {
-    background: #00bf58
+    background: #FF0000
 }
 
 .title-one h2 {
@@ -468,14 +507,14 @@ hr {
 }
 
 .title-one h2.main-font {
-    font-family: 'Source Code Pro', monospace;
+    font-family: 'McLaren', sans-serif !important; 
     font-size: 60px;
     color: #000;
     line-height: 1.333em
 }
 
 .title-one h2.main-font.color-blue {
-    color: #005025
+    color: #E81919
 }
 
 .title-one span img {
@@ -505,20 +544,20 @@ hr {
 }
 
 .title-two h2.color-blue {
-    color: #005025
+    color: #E81919
 }
 
 .title-two h2 span {
-    color: #d2f34c
+    color: #bf0600
 }
 
 .title-two h2.main-font {
-    font-family: 'Source Code Pro', monospace;
+    font-family: 'McLaren', sans-serif !important; 
     font-size: 58px
 }
 
 .title-two .sub-title {
-    color: #00bf58;
+    color: #FF0000;
     font-weight: 500;
     font-size: 18px;
     margin-bottom: 15px
@@ -532,16 +571,16 @@ hr {
 }
 
 .title-three h2.main-font {
-    font-family: 'Source Code Pro', monospace;
+    font-family: 'McLaren', sans-serif !important; 
     color: #000
 }
 
 .title-three h2.color-blue {
-    color: #005025
+    color: #E81919
 }
 
 .title-four h2 {
-    font-family: 'Source Code Pro', monospace;
+    font-family: 'McLaren', sans-serif !important; 
     font-size: 32px;
     color: #000;
     margin: 0
@@ -2548,8 +2587,8 @@ iframe {
 }
 
 .theme-main-menu .category-dropdown .item:hover .icon {
-    background: #d2f34c;
-    border-color: #d2f34c
+    background: #bf0600;
+    border-color: #bf0600
 }
 
 .theme-main-menu .category-dropdown .explore-all-btn {
@@ -2558,7 +2597,7 @@ iframe {
     padding: 12px 20px;
     margin-top: 40px;
     border-radius: 0 0 10px 10px;
-    color: #31795a;
+    color: #ff725e;
     font-size: 17px;
     letter-spacing: -0.3px
 }
@@ -2567,14 +2606,14 @@ iframe {
     width: 28px;
     height: 28px;
     line-height: 26px;
-    border: 1px solid #31795a;
+    border: 1px solid #ff725e;
     font-weight: 900;
     text-align: center;
     border-radius: 50%
 }
 
 .theme-main-menu .category-dropdown .explore-all-btn:hover {
-    background: #31795a;
+    background: #ff725e;
     color: #fff
 }
 
@@ -2586,11 +2625,11 @@ iframe {
     position: relative;
     z-index: 99;
     border: none;
-    background: #00bf58
+    background: #FF0000
 }
 
 .theme-main-menu.menu-style-one .navbar-toggler {
-    background: #d2f34c
+    background: #bf0600
 }
 
 .theme-main-menu .navbar-toggler:focus {
@@ -2650,7 +2689,8 @@ iframe {
 }
 
 .navbar .nav-item .nav-link {
-    font-weight: 500;
+    font-weight: 600;
+    font-family: 'McLaren', sans-serif !important; 
     font-size: 1em;
     line-height: initial;
     color: #000;
@@ -2661,15 +2701,16 @@ iframe {
 }
 
 .navbar .nav-item:hover .nav-link {
-    color: #00bf58
+    color: #FF0000
 }
 
 .navbar .dropdown-menu .dropdown-item {
-    text-transform: capitalize;
-    line-height: 38px;
+    text-transform: capitalize !important;
+    font-family: 'McLaren', sans-serif !important; 
+    line-height: 41px;
     padding: 0 15px;
     color: #000;
-    font-size: .88em;
+    font-size: .90em;
     background: rgba(0, 0, 0, 0);
     position: relative;
     letter-spacing: -0.3px;
@@ -2678,8 +2719,8 @@ iframe {
 }
 
 .navbar .dropdown-menu .dropdown-item:hover {
-    color: #005025;
-    background: rgba(0, 191, 88, .06)
+    color: #1e1e1e;
+    background: rgba(191, 6, 0, 0.06)
 }
 
 .dashboard-menu .nav-link::before {
@@ -2703,7 +2744,7 @@ iframe {
 }
 
 .menu-style-one .navbar .nav-item:hover .nav-link {
-    color: #d2f34c
+    color: #bf0600
 }
 
 .menu-style-one .navbar .nav-item.category-btn .nav-link {
@@ -2712,7 +2753,7 @@ iframe {
     padding: 0 17px;
     border-radius: 25px;
     margin: 10px 35px 10px 0;
-    color: #d2f34c
+    color: #bf0600
 }
 
 .menu-style-one .navbar .nav-item.category-btn .nav-link i {
@@ -2729,7 +2770,7 @@ iframe {
 }
 
 .menu-style-two .navbar .nav-item:hover .nav-link {
-    color: #00bf58
+    color: #FF0000
 }
 
 .theme-main-menu .mega-dropdown,
@@ -2766,13 +2807,13 @@ iframe {
 }
 
 .navbar [class*=mega-dropdown] .menu-column .mega-menu-title {
-    font-family: 'Source Code Pro', monospace;
-    font-size: 14px;
-    font-weight: 500;
-    color: #005025;
+    font-family: 'McLaren', sans-serif !important; 
+    font-size: 18px;
+    font-weight: 600;
+    color: #E81919;
     display: inline-block;
     position: relative;
-    margin: 0 0 5px;
+    margin: 0 0 10px;
     padding-left: 15px
 }
 
@@ -2786,11 +2827,11 @@ iframe {
 }
 
 .menu-style-one .job-post-btn:hover {
-    color: #d2f34c
+    color: #bf0600
 }
 
 .theme-main-menu .login-btn-one {
-    color: #d2f34c;
+    color: #bf0600;
     font-weight: 500
 }
 
@@ -2799,7 +2840,7 @@ iframe {
 }
 
 .theme-main-menu .login-btn-two {
-    color: #00bf58
+    color: #FF0000
 }
 
 .theme-main-menu .login-btn-two:hover {
@@ -2814,8 +2855,8 @@ iframe {
 }
 
 .theme-main-menu .login-btn-three:hover {
-    background: #00bf58;
-    border-color: #00bf58
+    background: #FF0000;
+    border-color: #FF0000
 }
 
 .theme-main-menu .login-btn-three.dark-style {
@@ -2824,8 +2865,8 @@ iframe {
 }
 
 .theme-main-menu .login-btn-three.dark-style:hover {
-    background: #00bf58;
-    border-color: #00bf58;
+    background: #FF0000;
+    border-color: #FF0000;
     color: #fff
 }
 
@@ -2903,7 +2944,7 @@ iframe {
 }
 
 .category-menu li a:hover {
-    color: #00bf58
+    color: #FF0000
 }
 
 .category-menu .dropdown-menu {
@@ -3078,7 +3119,7 @@ iframe {
 
 .hero-banner-one h1 span {
     display: block;
-    color: #d2f34c
+    color: #bf0600
 }
 
 .hero-banner-one .img-box {
@@ -3199,11 +3240,11 @@ iframe {
 .hero-banner-three h1 {
     font-weight: 700;
     letter-spacing: -1px;
-    color: #005025
+    color: #E81919
 }
 
 .hero-banner-three .partner-title {
-    font-family: "EB Garamond", serif;
+    font-family: 'Source Code Pro', monospace !important;
     color: #93ad9f;
     font-size: 24px
 }
@@ -3268,7 +3309,7 @@ iframe {
 }
 
 .hero-banner-five h1 {
-    font-family: 'Source Code Pro', monospace;
+    font-family: 'McLaren', sans-serif !important; 
     font-size: 72px;
     line-height: 1.277em;
     letter-spacing: -1px
@@ -3297,7 +3338,7 @@ iframe {
     text-align: center;
     line-height: 90px;
     font-size: 30px;
-    color: #00bf58;
+    color: #FF0000;
     right: 0;
     bottom: 0;
     background: #fff;
@@ -3305,7 +3346,7 @@ iframe {
 }
 
 .hero-banner-five .chat-btn:hover {
-    background: #00bf58;
+    background: #FF0000;
     color: #fff
 }
 
@@ -3316,7 +3357,7 @@ iframe {
 }
 
 .hero-banner-six h1 {
-    font-family: 'Source Code Pro', monospace;
+    font-family: 'McLaren', sans-serif !important; 
     color: #fff;
     font-weight: 500;
     line-height: 1.15em
@@ -3345,7 +3386,7 @@ iframe {
 }
 
 .hero-banner-seven h1 {
-    font-family: 'Source Code Pro', monospace;
+    font-family: 'McLaren', sans-serif !important; 
     font-weight: 500;
     font-size: 74px;
     line-height: 1.243em
@@ -3397,7 +3438,7 @@ iframe {
     height: 55px;
     border-radius: 6px;
     overflow: hidden;
-    background: #d2f34c;
+    background: #bf0600;
     transition: all .2s ease-in-out 0s
 }
 
@@ -3454,11 +3495,11 @@ iframe {
     padding: 0 25px;
     line-height: 35px;
     border-radius: 30px;
-    background: #00bf58
+    background: #FF0000
 }
 
 .fancy-banner-two .bg-wrapper .text-wrapper .explore-btn:hover {
-    background: #d2f34c;
+    background: #bf0600;
     color: #244034
 }
 
@@ -3507,11 +3548,11 @@ iframe {
     color: #fff;
     font-size: 40px;
     padding-left: 5px;
-    background: #00bf58
+    background: #FF0000
 }
 
 .fancy-banner-three .bg-wrapper .text-wrapper .video-icon:hover {
-    background: #d2f34c;
+    background: #bf0600;
     color: #244034
 }
 
@@ -3536,7 +3577,7 @@ iframe {
     width: 35px;
     height: 35px;
     font-size: 18px;
-    background: #00bf58
+    background: #FF0000
 }
 
 .fancy-banner-three .bg-wrapper .bottom-content .text {
@@ -3546,7 +3587,7 @@ iframe {
 .fancy-banner-three .bg-wrapper .bottom-content .text a {
     font-size: 12px;
     letter-spacing: 1px;
-    color: #00bf58
+    color: #FF0000
 }
 
 .fancy-banner-three .bg-wrapper .bottom-content .text a:hover {
@@ -3675,7 +3716,7 @@ iframe {
     height: 55px;
     border-radius: 6px;
     overflow: hidden;
-    background: #00bf58;
+    background: #FF0000;
     cursor: pointer;
     transition: all .2s ease-in-out 0s
 }
@@ -3718,19 +3759,21 @@ iframe {
     font-size: 55px
 }
 
+
+
 .inner-banner-one {
-    background-image: linear-gradient(to top, #dfe9f3 0%, white 100%);
-    padding: 150px 0 115px;
+    background: #ffffff;
+    padding: 150px 0 5px;
     z-index: 9
 }
 
 .inner-banner-one h1 {
-    color: #fff
+    color: #000000
 }
 
 .inner-banner-one h1 span {
     display: block;
-    color: #d2f34c
+    color: #bf0600
 }
 
 .inner-banner-one .post-date {
@@ -3764,7 +3807,7 @@ iframe {
 }
 
 .inner-banner-one .share-buttons li a:hover {
-    background: #00bf58;
+    background: #FF0000;
     color: #fff
 }
 
@@ -3794,7 +3837,7 @@ iframe {
 }
 
 .inner-banner-one .candidate-profile-card {
-    background: url(../images/shape/shape_34.svg) repeat-x;
+    /* background: url(../images/shape/shape_34.svg) repeat-x; */
     background-size: cover;
     border: none
 }
@@ -3899,7 +3942,7 @@ iframe {
 
 .slick-arrow-two li:hover {
     background: #f5f5f5;
-    color: #005025
+    color: #E81919
 }
 
 .slick-arrow-two li .bi:before {
@@ -3919,7 +3962,7 @@ iframe {
 }
 
 .category-section-four .list-item a:hover {
-    color: #00bf58
+    color: #FF0000
 }
 
 .category-section-five .card-wrapper {
@@ -3981,7 +4024,7 @@ iframe {
     line-height: 120px;
     color: #fff;
     font-size: 70px;
-    background: #00bf58;
+    background: #FF0000;
     position: absolute;
     left: 40%;
     bottom: 29%;
@@ -3989,7 +4032,7 @@ iframe {
 }
 
 .text-feature-one .img-data .video-icon:hover {
-    background: #d2f34c;
+    background: #bf0600;
     color: #244034
 }
 
@@ -4091,7 +4134,7 @@ iframe {
 .text-feature-three .video-post .video-icon {
     width: 65px;
     height: 65px;
-    background: #d2f34c;
+    background: #bf0600;
     color: #000;
     font-size: 45px;
     line-height: 65px;
@@ -4099,7 +4142,7 @@ iframe {
 }
 
 .text-feature-three .video-post .video-icon:hover {
-    background: #00bf58;
+    background: #FF0000;
     color: #fff
 }
 
@@ -4125,7 +4168,7 @@ iframe {
 }
 
 .text-feature-four .bg-wrapper .brand span {
-    font-family: "EB Garamond", serif;
+    font-family: 'Source Code Pro', monospace !important;
     font-size: 70px;
     color: #00ef6e;
     display: block;
@@ -4178,7 +4221,7 @@ iframe {
 }
 
 .how-it-works.bg-color {
-    background: #244034
+    background: #ea5252
 }
 
 .how-it-works.bg-color .shape_01 {
@@ -4216,11 +4259,11 @@ iframe {
 }
 
 .slick-arrow-one li:hover {
-    background: #d2f34c
+    background: #bf0600
 }
 
 .slick-arrow-one.color-two li:hover {
-    background: #00bf58;
+    background: #FF0000;
     color: #fff
 }
 
@@ -4261,7 +4304,7 @@ iframe {
 }
 
 .partner-logos .title span {
-    color: #00bf58
+    color: #FF0000
 }
 
 .partner-logos .logo {
@@ -4305,7 +4348,7 @@ iframe {
 }
 
 .address-block-one .title {
-    font-family: 'Source Code Pro', monospace;
+    font-family: 'Source Code Pro', monospace !important;
     font-size: 24px;
     padding: 20px 0 5px
 }
@@ -4318,7 +4361,7 @@ iframe {
 
 .address-block-one p .call {
     font-size: 22px;
-    color: #31795a
+    color: #ff725e
 }
 
 .address-block-one p .call:hover {
@@ -4342,7 +4385,7 @@ iframe {
 }
 
 .faq-section .nav .nav-link.active {
-    background: #d2f34c;
+    background: #bf0600;
     color: #244034
 }
 
@@ -4352,11 +4395,11 @@ iframe {
 }
 
 .error-page .error {
-    font-family: "EB Garamond", serif;
+    font-family: 'Source Code Pro', monospace !important;
     font-size: 100px;
     line-height: initial;
     letter-spacing: 5px;
-    color: #31795a
+    color: #ff725e
 }
 
 .error-page h2 {
@@ -4427,7 +4470,7 @@ iframe {
 
 .job-search-one form .search-btn {
     letter-spacing: .8px;
-    background: #d2f34c;
+    background: #bf0600;
     color: #000;
     border-radius: 0 10px 10px 0;
     width: 195px;
@@ -4436,12 +4479,12 @@ iframe {
 }
 
 .job-search-one form .search-btn:hover {
-    background: #00bf58;
+    background: #FF0000;
     color: #fff
 }
 
 .job-search-one form .search-btn-two {
-    background: #00bf58;
+    background: #FF0000;
     color: #fff;
     border-radius: 0 10px 10px 0;
     margin-right: -1px;
@@ -4449,7 +4492,7 @@ iframe {
 }
 
 .job-search-one form .search-btn-two:hover {
-    background: #005025;
+    background: #E81919;
     color: #fff
 }
 
@@ -4624,7 +4667,7 @@ iframe {
 }
 
 .accordion-style-one.color-two .accordion-button {
-    color: #005025
+    color: #E81919
 }
 
 .accordion-style-one.color-two .accordion-button::after {
@@ -4668,7 +4711,7 @@ iframe {
 .accordion-style-two .accordion-button:not(.collapsed):after {
     content: "-";
     font-size: 24px;
-    background: #00bf58;
+    background: #FF0000;
     color: #fff
 }
 
@@ -4710,11 +4753,11 @@ iframe {
     border-radius: 50%;
     font-size: 17px;
     font-weight: 500;
-    color: #31795a
+    color: #ff725e
 }
 
 .pagination-one li.active a {
-    background: #31795a;
+    background: #ff725e;
     color: #fff
 }
 
@@ -4724,7 +4767,7 @@ iframe {
 }
 
 .pagination-two {
-    border: 1px solid #31795a;
+    border: 1px solid #ff725e;
     border-radius: 4px;
     overflow: hidden
 }
@@ -4736,8 +4779,8 @@ iframe {
     line-height: 35px;
     font-size: 15px;
     font-weight: 500;
-    color: #31795a;
-    border-right: 1px solid #31795a
+    color: #ff725e;
+    border-right: 1px solid #ff725e
 }
 
 .pagination-two .active a,
@@ -4818,7 +4861,7 @@ iframe {
 }
 
 .user-data-form p a {
-    color: #31795a
+    color: #ff725e
 }
 
 .user-data-form p a:hover {
@@ -4904,7 +4947,7 @@ iframe {
 }
 
 .user-data-form .agreement-checkbox label a {
-    color: #31795a;
+    color: #ff725e;
     text-decoration: underline
 }
 
@@ -4928,7 +4971,7 @@ iframe {
 }
 
 .user-data-form .agreement-checkbox input[type=checkbox]:checked+label:before {
-    content: "ï˜³";
+    content: "";
     font-family: bootstrap-icons !important;
     background: #000;
     color: #fff;
@@ -4943,7 +4986,7 @@ iframe {
 
 .user-data-form .agreement-checkbox a:hover {
     text-decoration: underline;
-    color: #31795a
+    color: #ff725e
 }
 
 .user-data-form .line {
@@ -4991,8 +5034,8 @@ iframe {
 }
 
 .user-data-form .nav .nav-item .nav-link.active {
-    color: #31795a;
-    border-color: #31795a
+    color: #ff725e;
+    border-color: #ff725e
 }
 
 .card-style-one .wrapper {
@@ -5010,14 +5053,14 @@ iframe {
 
 .card-style-one .wrapper.bg:hover,
 .card-style-one .wrapper.bg.active {
-    background: #d2f34c;
+    background: #bf0600;
     border-color: #b9d640
 }
 
 .card-style-one .wrapper:hover,
 .card-style-one .wrapper.active {
     transform: translateY(-5px);
-    border-color: #00bf58
+    border-color: #FF0000
 }
 
 .card-style-one .wrapper .icon {
@@ -5042,21 +5085,54 @@ iframe {
 .card-style-two .icon {
     width: 80px;
     height: 80px;
-    background: #d2f34c
+    background: #f3f3f3
 }
+.select-container {
+    position: relative;
+    width: 100%;
+    max-width: 300px; /* Adjust as needed */
+  }
+  
+  /* Style the select box */
+  select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: rgba(49, 121, 90, .09);
+    color: #333;
+    font-size: 16px;
+    cursor: pointer;
+    outline: none;
+  }
+  
+  /* Style the arrow icon */
+  .select-container::after {
+    content: '▼'; /* Unicode character for down arrow */
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    font-size: 20px;
+    color: #555;
+    pointer-events: none;
+  }
 
 .card-style-two .title {
-    font-size: 22px;
-    margin: 25px 0 12px
+    font-size: 23px;
+    margin: 25px 0 12px;
+    font-weight: bold
 }
 
 .card-style-two p {
-    color: #81b197
+    color: #070707;
+    font-weight: 400;
+    font-size: 16px;
 }
 
 .card-style-two.arrow:before,
 .card-style-two.arrow:after {
-    content: url(../images/shape/arrow_01.svg);
+    content: url(../images/shape/arrow_02.svg);
     position: absolute;
     top: 25px;
     left: -150px
@@ -5102,7 +5178,7 @@ iframe {
 }
 
 .card-style-four:hover .icon {
-    background: #d2f34c
+    background: #bf0600
 }
 
 .card-style-four .title {
@@ -5111,7 +5187,7 @@ iframe {
 }
 
 .card-style-four:hover .title {
-    color: #00bf58
+    color: #FF0000
 }
 
 .card-style-four .total-job {
@@ -5121,7 +5197,7 @@ iframe {
 
 .card-style-four.bg-color {
     box-shadow: none;
-    background: #00bf58
+    background: #FF0000
 }
 
 .card-style-four.bg-color a {
@@ -5129,7 +5205,7 @@ iframe {
 }
 
 .card-style-four.bg-color .title {
-    font-family: "EB Garamond", serif;
+    font-family: 'Source Code Pro', monospace !important;
     font-size: 72px;
     line-height: initial;
     margin: 0 0 5px
@@ -5144,7 +5220,7 @@ iframe {
     position: absolute;
     width: 100%;
     height: 1px;
-    background: #00bf58;
+    background: #FF0000;
     left: 0;
     bottom: 0;
     transition: all .2s ease-in-out 0s;
@@ -5177,7 +5253,7 @@ iframe {
     width: 42px;
     height: 42px;
     border-radius: 10px;
-    background: #00bf58;
+    background: #FF0000;
     color: #fff;
     font-size: 15px;
     line-height: initial
@@ -5186,7 +5262,7 @@ iframe {
 .card-style-five .icon {
     width: 80px;
     height: 80px;
-    background: #00bf58
+    background: #FF0000
 }
 
 .card-style-six {
@@ -5260,7 +5336,7 @@ iframe {
 }
 
 .card-style-eight .name:hover {
-    color: #00bf58
+    color: #FF0000
 }
 
 .card-style-nine {
@@ -5272,7 +5348,7 @@ iframe {
 .card-style-nine .icon {
     width: 52px;
     height: 52px;
-    background: #00bf58
+    background: #FF0000
 }
 
 .card-style-nine .text {
@@ -5282,7 +5358,7 @@ iframe {
 .card-style-nine .text a {
     font-size: 12px;
     letter-spacing: 1px;
-    color: #00bf58;
+    color: #FF0000;
     margin-top: auto
 }
 
@@ -5302,14 +5378,14 @@ iframe {
 
 .card-style-ten .open-job-btn {
     font-size: 15px;
-    color: #00bf58;
+    color: #FF0000;
     padding: 4px 20px;
-    border: 1px solid #00bf58;
+    border: 1px solid #FF0000;
     border-radius: 30px
 }
 
 .card-style-ten .open-job-btn:hover {
-    background: #00bf58;
+    background: #FF0000;
     color: #fff
 }
 
@@ -5333,10 +5409,10 @@ iframe {
 }
 
 .pricing-card-one .price {
-    font-family: "EB Garamond", serif;
+    font-family: 'Source Code Pro', monospace !important;
     font-size: 72px;
     letter-spacing: -1px;
-    color: #31795a;
+    color: #ff725e;
     line-height: initial;
     margin: -4px 0 36px
 }
@@ -5353,13 +5429,13 @@ iframe {
 
 .pricing-card-one ul li {
     font-size: 18px;
-    color: #31795a;
+    color: #ff725e;
     margin-bottom: 17px
 }
 
 .pricing-card-one .get-plan-btn {
     line-height: 54px;
-    background: #31795a;
+    background: #ff725e;
     border-radius: 30px;
     font-weight: 500;
     letter-spacing: -0.36px;
@@ -5368,8 +5444,8 @@ iframe {
 }
 
 .pricing-card-one .get-plan-btn:hover {
-    background: #d2f34c;
-    color: #31795a
+    background: #bf0600;
+    color: #ff725e
 }
 
 .pricing-card-one .popular-badge {
@@ -5379,7 +5455,7 @@ iframe {
     text-transform: uppercase;
     font-size: 12px;
     font-weight: 500;
-    color: #31795a;
+    color: #ff725e;
     left: -5px;
     top: 35px;
     padding: 0 12px 0 20px;
@@ -5391,7 +5467,7 @@ iframe {
     position: absolute;
     width: 100%;
     height: 50%;
-    background: #d2f34c;
+    background: #bf0600;
     bottom: 0;
     left: 0;
     z-index: -1;
@@ -5403,7 +5479,7 @@ iframe {
     position: absolute;
     width: 100%;
     height: 50%;
-    background: #d2f34c;
+    background: #bf0600;
     top: 0;
     left: 0;
     z-index: -1;
@@ -5416,17 +5492,17 @@ iframe {
 }
 
 .pricing-card-one.popular .get-plan-btn {
-    background: #d2f34c;
-    color: #31795a
+    background: #bf0600;
+    color: #ff725e
 }
 
 .pricing-card-one.popular-two {
-    border-color: #31795a
+    border-color: #ff725e
 }
 
 .pricing-card-one.popular-two .get-plan-btn {
-    background: #d2f34c;
-    color: #31795a
+    background: #bf0600;
+    color: #ff725e
 }
 
 .pricing-card-one.popular-two .popular-badge {
@@ -5435,7 +5511,7 @@ iframe {
 
 .pricing-card-one.popular-two .popular-badge:before,
 .pricing-card-one.popular-two .popular-badge:after {
-    background: #31795a
+    background: #ff725e
 }
 
 .accordion-box {
@@ -5468,7 +5544,7 @@ iframe {
 }
 
 .filter-area-tab .filter-header:before {
-    content: "ïŠ‚";
+    content: "";
     font-family: "bootstrap-icons";
     width: 35px;
     height: 35px;
@@ -5481,7 +5557,7 @@ iframe {
     right: 25px;
     top: 27px;
     text-align: center;
-    color: #31795a;
+    color: #ff725e;
     transition: all .2s ease-in-out 0s
 }
 
@@ -5516,12 +5592,12 @@ iframe {
 }
 
 .filter-area-tab a.filter-title:before {
-    content: "ï“¾";
+    content: "";
     font-family: "bootstrap-icons";
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background: #31795a;
+    background: #ff725e;
     position: absolute;
     right: 0;
     top: 3px;
@@ -5532,7 +5608,7 @@ iframe {
 }
 
 .filter-area-tab a.filter-title:not(.collapsed):before {
-    content: "ï‹ª"
+    content: ""
 }
 
 .filter-area-tab .nice-select {
@@ -5582,12 +5658,12 @@ iframe {
 }
 
 .filter-area-tab .loccation-range-select {
-    color: #31795a;
+    color: #ff725e;
     font-size: 15px
 }
 
 .filter-area-tab .loccation-range-select input[type=range] {
-    background: #31795a;
+    background: #ff725e;
     border-radius: 8px;
     height: 7px;
     width: 100%;
@@ -5603,7 +5679,7 @@ iframe {
     width: 14px;
     border-radius: 50%;
     background: #fff;
-    border: 2px solid #00bf58;
+    border: 2px solid #FF0000;
     cursor: pointer;
     pointer-events: auto;
     appearance: none;
@@ -5615,7 +5691,7 @@ iframe {
     width: 14px;
     border-radius: 50%;
     background: #fff;
-    border: 2px solid #00bf58;
+    border: 2px solid #FF0000;
     cursor: pointer;
     pointer-events: auto;
     appearance: none;
@@ -5678,10 +5754,10 @@ iframe {
 }
 
 .filter-area-tab .filter-input li input[type=checkbox]:checked+label:before {
-    content: "ï˜³";
-    background: #31795a;
+    content: "";
+    background: #ff725e;
     color: #fff;
-    border-color: #31795a
+    border-color: #ff725e
 }
 
 .filter-area-tab .filter-input li input[type=checkbox]:checked+label {
@@ -5689,7 +5765,7 @@ iframe {
 }
 
 .filter-area-tab .filter-input li:hover label {
-    color: #31795a;
+    color: #ff725e;
     background: rgba(49, 121, 90, .02)
 }
 
@@ -5720,7 +5796,7 @@ iframe {
 }
 
 .filter-area-tab .more-btn:hover {
-    background: #00bf58;
+    background: #FF0000;
     color: #fff
 }
 
@@ -5769,7 +5845,7 @@ iframe {
     right: 70%;
     position: absolute;
     border-radius: 7px;
-    background: #00bf58
+    background: #FF0000
 }
 
 .filter-area-tab .salary-slider .range-input {
@@ -5793,7 +5869,7 @@ iframe {
     width: 12px;
     border-radius: 50%;
     background: #fff;
-    border: 2px solid #00bf58;
+    border: 2px solid #FF0000;
     cursor: pointer;
     pointer-events: auto;
     appearance: none;
@@ -5805,7 +5881,7 @@ iframe {
     width: 12px;
     border-radius: 50%;
     background: #fff;
-    border: 2px solid #00bf58;
+    border: 2px solid #FF0000;
     cursor: pointer;
     pointer-events: auto;
     appearance: none;
@@ -5824,7 +5900,7 @@ iframe {
     font-weight: 500;
     line-height: 20px;
     background: #fff;
-    color: #31795a;
+    color: #ff725e;
     border-radius: 30px;
     padding: 0 12px;
     transition: all .1s ease-in-out 0s
@@ -5843,7 +5919,7 @@ iframe {
 
 .filter-area-tab .radio-filter li input[type=radio]:checked+label,
 .filter-area-tab .radio-filter li input[type=checkbox]:checked+label {
-    background: #31795a;
+    background: #ff725e;
     color: #fff
 }
 
@@ -5934,8 +6010,8 @@ iframe {
 
 .upper-filter .style-changer-btn:hover {
     color: #fff;
-    background: #31795a;
-    border-color: #31795a
+    background: #ff725e;
+    border-color: #ff725e
 }
 
 .upper-filter .style-changer-btn.active {
@@ -6010,7 +6086,7 @@ iframe {
 }
 
 .job-list-one .title:hover {
-    color: #00bf58
+    color: #FF0000
 }
 
 .job-list-one .split-box1 {
@@ -6025,7 +6101,7 @@ iframe {
 
 .job-list-one .job-duration {
     font-size: 15px;
-    color: #00bf58
+    color: #FF0000
 }
 
 .job-list-one .job-duration:hover {
@@ -6084,7 +6160,7 @@ iframe {
 .job-list-one .save-btn:hover {
     background: #e7f6ef;
     border-color: #e7f6ef;
-    color: #005025
+    color: #E81919
 }
 
 .job-list-one .apply-btn {
@@ -6096,11 +6172,11 @@ iframe {
     color: #fff;
     text-transform: uppercase;
     border-radius: 17px;
-    background: #00bf58
+    background: #FF0000
 }
 
 .job-list-one .apply-btn:hover {
-    background: #005025
+    background: #E81919
 }
 
 .job-list-one.style-two {
@@ -6109,15 +6185,15 @@ iframe {
 }
 
 .job-list-one.style-two .apply-btn {
-    background: #31795a
+    background: #ff725e
 }
 
 .job-list-one.style-two .apply-btn:hover {
-    background: #00bf58
+    background: #FF0000
 }
 
 .job-list-one.style-two .title:hover {
-    color: #31795a
+    color: #ff725e
 }
 
 .g-control-nav li {
@@ -6138,7 +6214,7 @@ iframe {
     height: 1px;
     left: 0;
     bottom: 0;
-    background: #00bf58;
+    background: #FF0000;
     opacity: 0;
     transition: all .1s ease-in-out 0s
 }
@@ -6148,7 +6224,7 @@ iframe {
 }
 
 .g-control-nav li.is-checked {
-    color: #00bf58
+    color: #FF0000
 }
 
 .g-control-nav li:first-child {
@@ -6186,7 +6262,7 @@ iframe {
 
 .job-list-two .job-duration {
     font-size: 13px;
-    color: #00bf58;
+    color: #FF0000;
     padding: 2px 12px;
     background: #e7f6ef;
     border-radius: 3px;
@@ -6205,7 +6281,7 @@ iframe {
 }
 
 .job-list-two .title:hover {
-    color: #00bf58
+    color: #FF0000
 }
 
 .job-list-two .job-date {
@@ -6239,11 +6315,11 @@ iframe {
     color: #fff;
     text-transform: uppercase;
     border-radius: 17px;
-    background: #00bf58
+    background: #FF0000
 }
 
 .job-list-two .apply-btn:hover {
-    background: #005025
+    background: #E81919
 }
 
 .job-list-two .save-btn {
@@ -6261,7 +6337,7 @@ iframe {
 .job-list-two .save-btn:hover {
     background: #e7f6ef;
     border-color: #e7f6ef;
-    color: #005025
+    color: #E81919
 }
 
 .job-list-two.style-two {
@@ -6270,13 +6346,13 @@ iframe {
 
 .job-list-two.style-two:hover {
     background: #f8fde4;
-    border-color: #31795a;
+    border-color: #ff725e;
     box-shadow: none
 }
 
 .job-list-two.style-two .job-duration {
     background: #e7f6ef;
-    color: #31795a
+    color: #ff725e
 }
 
 .job-list-two.style-two .job-duration.part-time {
@@ -6285,15 +6361,15 @@ iframe {
 }
 
 .job-list-two.style-two .title:hover {
-    color: #31795a
+    color: #ff725e
 }
 
 .job-list-two.style-two .apply-btn {
-    background: #31795a
+    background: #ff725e
 }
 
 .job-list-two.style-two .apply-btn:hover {
-    background: #00bf58
+    background: #FF0000
 }
 
 .job-listing-three.bg-color {
@@ -6341,7 +6417,7 @@ iframe {
 }
 
 .job-list-three .main-wrapper .title:hover {
-    color: #31795a
+    color: #ff725e
 }
 
 .job-list-three .main-wrapper .info-data li {
@@ -6382,7 +6458,7 @@ iframe {
 .job-list-three .main-wrapper .save-btn:hover {
     background: #e7f6ef;
     border-color: #e7f6ef;
-    color: #005025
+    color: #E81919
 }
 
 .job-list-three .main-wrapper p {
@@ -6398,7 +6474,7 @@ iframe {
 
 .job-list-three .main-wrapper .job-duration {
     font-size: 14px;
-    color: #00bf58
+    color: #FF0000
 }
 
 .job-list-three .main-wrapper .job-duration:hover {
@@ -6418,11 +6494,11 @@ iframe {
     color: #fff;
     text-transform: uppercase;
     border-radius: 17px;
-    background: #31795a
+    background: #ff725e
 }
 
 .job-list-three .main-wrapper .apply-btn:hover {
-    background: #005025
+    background: #E81919
 }
 
 .job-company-info {
@@ -6449,7 +6525,7 @@ iframe {
 }
 
 .job-company-info .website-btn:hover {
-    background: #31795a
+    background: #ff725e
 }
 
 .job-company-info .website-btn-two {
@@ -6461,7 +6537,7 @@ iframe {
 }
 
 .job-company-info .website-btn-two:hover {
-    color: #31795a
+    color: #ff725e
 }
 
 .job-company-info .job-meta-data span {
@@ -6521,7 +6597,7 @@ iframe {
 
 .job-details .post-title {
     font-size: 36px;
-    font-family: 'Source Code Pro', monospace;
+    font-family: 'Source Code Pro', monospace !important;
     margin: 10px 0 15px
 }
 
@@ -6559,7 +6635,7 @@ iframe {
 
 .job-details .block-title {
     font-size: 22px;
-    font-family: 'Source Code Pro', monospace;
+    font-family: 'McLaren', sans-serif !important; 
     margin: 0
 }
 
@@ -6568,7 +6644,7 @@ iframe {
     height: 25px;
     line-height: 25px;
     font-size: 14px;
-    background: #31795a
+    background: #ff725e
 }
 
 .job-details p {
@@ -6584,7 +6660,7 @@ iframe {
 }
 
 .job-details p a:hover {
-    color: #00bf58
+    color: #FF0000
 }
 
 .job-details .list-type-one li {
@@ -6596,16 +6672,16 @@ iframe {
 }
 
 .job-details .list-type-one li:before {
-    content: "ï‰ª";
+    content: "";
     font-family: bootstrap-icons;
     position: absolute;
     left: 0;
     top: 0;
-    color: #31795a
+    color: #ff725e
 }
 
 .job-details .border-style .list-type-one li:before {
-    content: "ï˜³"
+    content: ""
 }
 
 .job-details .list-type-two li {
@@ -6684,14 +6760,14 @@ iframe {
     position: absolute;
     width: 90px;
     height: 90px;
-    background: #31795a;
+    background: #ff725e;
     top: -45px;
     left: -45px;
     transform: rotate(45deg)
 }
 
 .company-grid-layout.favourite::after {
-    content: "ï–†";
+    content: "";
     font-family: bootstrap-icons !important;
     position: absolute;
     color: #fff;
@@ -6709,12 +6785,12 @@ iframe {
 
 .company-grid-layout .company-name {
     font-size: 24px;
-    font-family: 'Source Code Pro', monospace;
+    font-family: 'McLaren', sans-serif !important; 
     margin: 22px 0 8px
 }
 
 .company-grid-layout .company-name:hover {
-    color: #31795a
+    color: #ff725e
 }
 
 .company-grid-layout .bottom-line {
@@ -6727,7 +6803,7 @@ iframe {
     width: 50%;
     font-size: 15px;
     font-weight: 500;
-    color: #00bf58;
+    color: #FF0000;
     text-align: center;
     padding: 18px 0;
     transition: all .2s ease-in-out 0s
@@ -6739,7 +6815,7 @@ iframe {
 }
 
 .company-grid-layout .bottom-line a:hover {
-    background: #00bf58;
+    background: #FF0000;
     color: #fff
 }
 
@@ -6761,14 +6837,14 @@ iframe {
     position: absolute;
     width: 60px;
     height: 60px;
-    background: #31795a;
+    background: #ff725e;
     top: -30px;
     left: -30px;
     transform: rotate(45deg)
 }
 
 .company-list-layout.favourite::after {
-    content: "ï–†";
+    content: "";
     font-family: bootstrap-icons !important;
     position: absolute;
     color: #fff;
@@ -6791,11 +6867,11 @@ iframe {
 
 .company-list-layout .company-name {
     font-size: 24px;
-    font-family: "gordita"
+    font-family: 'McLaren', sans-serif !important; 
 }
 
 .company-list-layout .company-name:hover {
-    color: #31795a
+    color: #ff725e
 }
 
 .company-list-layout p {
@@ -6828,21 +6904,21 @@ iframe {
 .company-list-layout .save-btn:hover {
     background: #e7f6ef;
     border-color: #e7f6ef;
-    color: #005025
+    color: #E81919
 }
 
 .company-list-layout .open-job-btn {
     width: 120px;
     line-height: 31px;
     font-size: 15px;
-    color: #00bf58;
-    border: 1px solid #00bf58;
+    color: #FF0000;
+    border: 1px solid #FF0000;
     background: #eaf9e9;
     border-radius: 30px
 }
 
 .company-list-layout .open-job-btn:hover {
-    background: #00bf58;
+    background: #FF0000;
     color: #fff
 }
 
@@ -6851,7 +6927,7 @@ iframe {
 }
 
 .company-details .details-post-data h3 {
-    font-family: 'Source Code Pro', monospace;
+    font-family: 'McLaren', sans-serif !important; 
     font-size: 28px;
     margin-bottom: 20px
 }
@@ -6939,7 +7015,7 @@ iframe {
 }
 
 .candidate-profile-card.grid-layout .save-btn:hover {
-    color: #00bf58
+    color: #FF0000
 }
 
 .candidate-profile-card.favourite::before {
@@ -6947,14 +7023,14 @@ iframe {
     position: absolute;
     width: 60px;
     height: 60px;
-    background: #31795a;
+    background: #ff725e;
     top: -30px;
     left: -30px;
     transform: rotate(45deg)
 }
 
 .candidate-profile-card.favourite::after {
-    content: "ï–†";
+    content: "";
     font-family: bootstrap-icons !important;
     position: absolute;
     color: #fff;
@@ -6981,12 +7057,12 @@ iframe {
 }
 
 .candidate-profile-card .candidate-name {
-    font-family: 'Source Code Pro', monospace;
+    font-family: 'McLaren', sans-serif !important; 
     font-size: 18px
 }
 
 .candidate-profile-card .candidate-name a:hover {
-    color: #00bf58
+    color: #FF0000
 }
 
 .candidate-profile-card .candidate-post {
@@ -7010,7 +7086,7 @@ iframe {
 }
 
 .candidate-profile-card .cadidate-skills li.more {
-    background: #d2f34c;
+    background: #bf0600;
     color: #000
 }
 
@@ -7032,14 +7108,14 @@ iframe {
     letter-spacing: -0.5px;
     line-height: 40px;
     color: #fff;
-    background: #31795a;
+    background: #ff725e;
     text-align: center;
     padding: 0 18px;
     border-radius: 40px
 }
 
 .candidate-profile-card .profile-btn:hover {
-    background: #00bf58
+    background: #FF0000
 }
 
 .candidate-profile-card .msg-btn {
@@ -7047,16 +7123,16 @@ iframe {
     font-weight: 500;
     letter-spacing: -0.5px;
     line-height: 38px;
-    color: #31795a;
-    border: 1px solid #31795a;
+    color: #ff725e;
+    border: 1px solid #ff725e;
     text-align: center;
     padding: 0 15px;
     border-radius: 40px
 }
 
 .candidate-profile-card .msg-btn:hover {
-    background: #00bf58;
-    border-color: #00bf58;
+    background: #FF0000;
+    border-color: #FF0000;
     color: #fff
 }
 
@@ -7081,14 +7157,14 @@ iframe {
     line-height: 40px;
     border: 1px solid #e4e4e4;
     font-weight: 900;
-    color: #31795a;
+    color: #ff725e;
     font-size: 18px
 }
 
 .candidate-profile-card.list-layout .save-btn:hover {
     color: #fff;
-    background: #31795a;
-    border-color: #31795a
+    background: #ff725e;
+    border-color: #ff725e
 }
 
 .candidates-profile-details {
@@ -7120,7 +7196,7 @@ iframe {
 .candidates-profile-details .title {
     font-size: 28px;
     font-weight: 500;
-    font-family: 'Source Code Pro', monospace;
+    font-family: 'McLaren', sans-serif !important; 
     margin-bottom: 22px
 }
 
@@ -7134,7 +7210,7 @@ iframe {
 .candidates-profile-details .video-post .video-icon {
     width: 65px;
     height: 65px;
-    background: #d2f34c;
+    background: #bf0600;
     color: #000;
     font-size: 45px;
     line-height: 65px;
@@ -7142,7 +7218,7 @@ iframe {
 }
 
 .candidates-profile-details .video-post .video-icon:hover {
-    background: #00bf58;
+    background: #FF0000;
     color: #fff
 }
 
@@ -7171,8 +7247,8 @@ iframe {
 .candidates-profile-details .time-line-data .info .numb {
     width: 45px;
     height: 45px;
-    color: #31795a;
-    border: 1px solid #31795a;
+    color: #ff725e;
+    border: 1px solid #ff725e;
     position: absolute;
     left: 0;
     top: 3px
@@ -7180,12 +7256,12 @@ iframe {
 
 .candidates-profile-details .time-line-data .info .text_1 {
     font-size: 14px;
-    color: #31795a
+    color: #ff725e
 }
 
 .candidates-profile-details .time-line-data .info h4 {
     font-size: 18px;
-    font-family: 'Source Code Pro', monospace;
+    font-family: 'McLaren', sans-serif !important; 
     margin: 5px 0 12px
 }
 
@@ -7195,7 +7271,7 @@ iframe {
 
 .candidates-profile-details .skill-tags li {
     font-size: 16px;
-    color: #005025;
+    color: #E81919;
     margin: 18px 8px 0;
     line-height: 45px;
     padding: 0 30px;
@@ -7210,7 +7286,7 @@ iframe {
     padding: 0;
     color: #000;
     text-align: center;
-    background: #d2f34c
+    background: #bf0600
 }
 
 .candidates-profile-details .candidate-portfolio-slider .slick-dots {
@@ -7237,7 +7313,7 @@ iframe {
 }
 
 .cadidate-profile-sidebar .cadidate-bio .cadidate-name {
-    font-family: 'Source Code Pro', monospace;
+    font-family: 'McLaren', sans-serif !important; 
     font-size: 20px;
     margin: 18px 0 20px
 }
@@ -7272,7 +7348,7 @@ iframe {
 }
 
 .cadidate-profile-sidebar .sidebar-title {
-    font-family: 'Source Code Pro', monospace;
+    font-family: 'McLaren', sans-serif !important; 
     font-size: 20px;
     margin: 0 0 15px
 }
@@ -7292,7 +7368,7 @@ iframe {
 .cadidate-profile-sidebar .email-form label {
     font-size: 13px;
     font-weight: 500;
-    color: #31795a;
+    color: #ff725e;
     width: 65px;
     display: inline
 }
@@ -7334,7 +7410,7 @@ iframe {
 }
 
 .feedback-block-one:hover {
-    background: #d2f34c
+    background: #bf0600
 }
 
 .feedback-block-one .logo {
@@ -7391,7 +7467,7 @@ iframe {
 
 .feedback-section-two .rating-title {
     font-size: 42px;
-    color: #00bf58
+    color: #FF0000
 }
 
 .feedback-section-two .slider-wrapper {
@@ -7424,7 +7500,7 @@ iframe {
 
 .feedback-block-two .review {
     font-size: 28px;
-    color: #00bf58
+    color: #FF0000
 }
 
 .feedback-block-two .rating li a {
@@ -7502,8 +7578,8 @@ iframe {
 }
 
 .feedback-section-three #feedBack_carousel .carousel-btn:hover {
-    border-color: #00bf58;
-    background: #00bf58;
+    border-color: #FF0000;
+    background: #FF0000;
     color: #fff
 }
 
@@ -7607,7 +7683,7 @@ iframe {
 
 .feedback-block-three .review {
     font-size: 28px;
-    color: #00bf58
+    color: #FF0000
 }
 
 .feedback-block-three .rating li a {
@@ -7705,13 +7781,13 @@ iframe {
 }
 
 .blog-meta-one .blog-title {
-    font-family: 'Source Code Pro', monospace;
+    font-family: 'McLaren', sans-serif !important; 
     font-size: 24px;
     line-height: 1.5em
 }
 
 .blog-meta-one .blog-title:hover {
-    color: #00bf58
+    color: #FF0000
 }
 
 .blog-meta-one .author a:hover {
@@ -7739,7 +7815,7 @@ iframe {
     padding: 5px 18px;
     color: #fff;
     text-transform: uppercase;
-    background: #00bf58;
+    background: #FF0000;
     position: absolute;
     left: 30px;
     bottom: 30px
@@ -7750,7 +7826,7 @@ iframe {
 }
 
 .blog-meta-two .post-img .tags.color-two {
-    background: #d2f34c;
+    background: #bf0600;
     color: #244034
 }
 
@@ -7768,14 +7844,14 @@ iframe {
 }
 
 .blog-meta-two .blog-title {
-    font-family: 'Source Code Pro', monospace;
+    font-family: 'McLaren', sans-serif !important; 
     font-size: 32px;
     line-height: 1.28em;
     margin: 25px 0
 }
 
 .blog-meta-two .blog-title:hover {
-    color: #00bf58
+    color: #FF0000
 }
 
 .blog-meta-two .blog-title.xs {
@@ -7790,7 +7866,7 @@ iframe {
 }
 
 .blog-meta-two .continue-btn:hover {
-    color: #00bf58
+    color: #FF0000
 }
 
 .blog-meta-two.box-layout {
@@ -7827,7 +7903,7 @@ iframe {
 
 .blog-sidebar .sidebar-title {
     font-size: 24px;
-    font-family: 'Source Code Pro', monospace;
+    font-family: 'McLaren', sans-serif !important; 
     margin-bottom: 25px
 }
 
@@ -7838,7 +7914,7 @@ iframe {
 
 .blog-sidebar .category-list li a:hover {
     text-decoration: underline;
-    color: #31795a
+    color: #ff725e
 }
 
 .blog-sidebar .sidebar-recent-news img {
@@ -7851,14 +7927,14 @@ iframe {
 }
 
 .blog-sidebar .sidebar-recent-news .post .title {
-    font-family: 'Source Code Pro', monospace;
+    font-family: 'McLaren', sans-serif !important; 
     font-size: 18px;
     line-height: 1.44em
 }
 
 .blog-sidebar .sidebar-recent-news .post .title:hover {
     text-decoration: underline;
-    color: #31795a
+    color: #ff725e
 }
 
 .blog-sidebar .sidebar-recent-news .post .date {
@@ -7877,7 +7953,7 @@ iframe {
 .blog-sidebar .sidebar-keyword ul li a {
     font-size: 14px;
     padding: 0 25px;
-    color: #31795a;
+    color: #ff725e;
     line-height: 35px;
     border-radius: 30px;
     background: #eff6f3;
@@ -7903,7 +7979,7 @@ iframe {
 }
 
 .blog-details-meta .blog-heading {
-    font-family: 'Source Code Pro', monospace;
+    font-family: 'McLaren', sans-serif !important; 
     font-size: 50px;
     line-height: 1.5em;
     color: #244034;
@@ -7920,7 +7996,7 @@ iframe {
 }
 
 .blog-details-meta h5 {
-    font-family: 'Source Code Pro', monospace;
+    font-family: 'Source Code Pro', monospace !important;
     font-size: 20px;
     line-height: 1.65em;
     color: #244034
@@ -7935,7 +8011,7 @@ iframe {
 }
 
 .blog-details-meta .quote-text blockquote {
-    font-family: "EB Garamond", serif;
+    font-family: 'Source Code Pro', monospace !important;
     font-size: 48px;
     line-height: 1.062em;
     color: #244034;
@@ -7948,7 +8024,7 @@ iframe {
 }
 
 .blog-details-meta h3 {
-    font-family: 'Source Code Pro', monospace;
+    font-family: 'Source Code Pro', monospace !important;
     font-size: 32px;
     letter-spacing: -1px;
     color: #244034;
@@ -7994,12 +8070,12 @@ iframe {
 }
 
 .blog-details-meta .bottom-widget .share-icon a:hover {
-    background: #31795a;
+    background: #ff725e;
     color: #fff
 }
 
 .blog-details-page .blog-inner-title {
-    font-family: 'Source Code Pro', monospace;
+    font-family: 'Source Code Pro', monospace !important;
     font-size: 42px;
     color: #244034;
     letter-spacing: -1px
@@ -8025,7 +8101,7 @@ iframe {
 }
 
 .blog-details-page .blog-comment-area .comment .comment-text .name {
-    font-family: 'Source Code Pro', monospace;
+    font-family: 'Source Code Pro', monospace !important;
     font-size: 20px;
     letter-spacing: -1px
 }
@@ -8049,7 +8125,7 @@ iframe {
     text-align: center;
     width: 65px;
     line-height: 27px;
-    background: #31795a;
+    background: #ff725e;
     border-radius: 3px;
     position: absolute;
     right: 0;
@@ -8057,7 +8133,7 @@ iframe {
 }
 
 .blog-details-page .blog-comment-area .comment .comment-text .reply-btn:hover {
-    background: #00bf58
+    background: #FF0000
 }
 
 .blog-details-page .blog-comment-form {
@@ -8107,12 +8183,12 @@ iframe {
 
 .footer-one .email {
     font-size: 18px;
-    color: #00bf58;
+    color: #FF0000;
     text-decoration: underline
 }
 
 .footer-one .footer-title {
-    font-family: 'Source Code Pro', monospace;
+    font-family: 'Source Code Pro', monospace !important;
     font-size: 22px;
     margin-bottom: 30px
 }
@@ -8124,7 +8200,7 @@ iframe {
 }
 
 .footer-one .footer-nav-link a:hover {
-    color: #00bf58
+    color: #FF0000
 }
 
 .footer-one .footer-newsletter form {
@@ -8158,7 +8234,7 @@ iframe {
 }
 
 .footer-one .footer-newsletter form button:hover {
-    background: #d2f34c;
+    background: #bf0600;
     color: #244034
 }
 
@@ -8167,7 +8243,7 @@ iframe {
 }
 
 .footer-one .footer-newsletter form.border-style button {
-    background: #00bf58;
+    background: #FF0000;
     color: #fff
 }
 
@@ -8193,7 +8269,7 @@ iframe {
 }
 
 .footer-one .bottom-footer .social-icon a:hover {
-    color: #00bf58
+    color: #FF0000
 }
 
 .footer-one .bottom-footer .bottom-nav a {
@@ -10109,7 +10185,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 .nice-select .option:hover,
 .nice-select .option.focus,
 .nice-select .option.selected.focus {
-    color: #00bf58;
+    color: #FF0000;
     background: rgba(36, 64, 52, .03)
 }
 
@@ -10991,7 +11067,7 @@ body.compensate-for-scrollbar {
 }
 
 .slick-dots .slick-active button {
-    background: #00bf58
+    background: #FF0000
 }
 
 .slick-list {
@@ -11158,7 +11234,7 @@ body.compensate-for-scrollbar {
 }
 
 .dash-aside-navbar .user-data .user-name-data .dropdown-menu .dropdown-item:hover {
-    color: #31795a;
+    color: #ff725e;
     background: rgba(0, 0, 0, .01)
 }
 
@@ -11284,14 +11360,14 @@ body.compensate-for-scrollbar {
 }
 
 .dashboard-body .main-title {
-    font-family: 'Source Code Pro', monospace;
+    font-family: 'Source Code Pro', monospace !important;
     font-size: 36px;
     color: #244034;
     margin-bottom: 40px
 }
 
 .dashboard-body .dash-title-two {
-    font-family: 'Source Code Pro', monospace;
+    font-family: 'Source Code Pro', monospace !important;
     font-size: 20px;
     color: #244034;
     border-bottom: 1px solid #e3f0eb;
@@ -11300,9 +11376,9 @@ body.compensate-for-scrollbar {
 }
 
 .dashboard-body .dash-title-three {
-    font-family: 'Source Code Pro', monospace;
+    font-family: 'Source Code Pro', monospace !important;
     font-size: 24px;
-    color: #31795a;
+    color: #ff725e;
     margin: 0 0 30px
 }
 
@@ -11310,7 +11386,7 @@ body.compensate-for-scrollbar {
     font-size: 15px;
     font-weight: 500;
     letter-spacing: -0.15px;
-    color: #31795a;
+    color: #ff725e;
     border-radius: 7px;
     line-height: 40px;
     padding: 0 15px;
@@ -11328,7 +11404,7 @@ body.compensate-for-scrollbar {
 }
 
 .dashboard-body .dash-btn-one:hover {
-    background: #31795a;
+    background: #ff725e;
     color: #fff
 }
 
@@ -11353,13 +11429,13 @@ body.compensate-for-scrollbar {
 }
 
 .dashboard-body .dash-btn-two:hover {
-    background: #d2f34c;
+    background: #bf0600;
     color: #244034
 }
 
 .dashboard-body .dash-cancel-btn {
     font-weight: 500;
-    color: #31795a
+    color: #ff725e
 }
 
 .dashboard-body .dash-cancel-btn:hover {
@@ -11430,7 +11506,7 @@ body.compensate-for-scrollbar {
 }
 
 .dashboard-body .dashboard-header .profile-notification .dropdown-menu h4 {
-    font-family: 'Source Code Pro', monospace;
+    font-family: 'Source Code Pro', monospace !important;
     font-size: 18px;
     margin-bottom: 20px
 }
@@ -11458,7 +11534,7 @@ body.compensate-for-scrollbar {
 }
 
 .dashboard-body .dashboard-header .profile-notification .dropdown-menu .notify-list li h6 {
-    font-family: 'Source Code Pro', monospace;
+    font-family: 'Source Code Pro', monospace !important;
     font-size: 15px;
     margin-bottom: 3px;
     letter-spacing: -0.2px;
@@ -11489,7 +11565,7 @@ body.compensate-for-scrollbar {
 }
 
 .dashboard-body .dashboard-header .job-post-btn:hover {
-    background: #d2f34c;
+    background: #bf0600;
     color: #244034
 }
 
@@ -11563,7 +11639,7 @@ body.compensate-for-scrollbar {
 .dashboard-body .dash-card-one .icon {
     width: 65px;
     height: 65px;
-    background: #d2f34c
+    background: #bf0600
 }
 
 .dashboard-body .dash-card-one .value {
@@ -11630,7 +11706,7 @@ body.compensate-for-scrollbar {
 }
 
 .dashboard-body .recent-job-tab .wrapper .job-item-list .job-title h6 a {
-    font-family: 'Source Code Pro', monospace;
+    font-family: 'Source Code Pro', monospace !important;
     font-size: 16px;
     color: #244034;
     display: block;
@@ -11642,7 +11718,7 @@ body.compensate-for-scrollbar {
 
 .dashboard-body .recent-job-tab .wrapper .job-item-list .job-title h6 a:hover {
     text-decoration: underline;
-    color: #31795a
+    color: #ff725e
 }
 
 .dashboard-body .recent-job-tab .wrapper .job-item-list .job-title .meta {
@@ -11715,12 +11791,12 @@ body.compensate-for-scrollbar {
 }
 
 .dashboard-body .recent-job-tab .wrapper .job-item-list .job-action .action-btn:hover span {
-    background: #00bf58
+    background: #FF0000
 }
 
 .dashboard-body .recent-job-tab .wrapper .job-item-list .job-action .action-btn:hover span:before,
 .dashboard-body .recent-job-tab .wrapper .job-item-list .job-action .action-btn:hover span:after {
-    background: #00bf58
+    background: #FF0000
 }
 
 .dashboard-body .user-avatar-setting .user-img {
@@ -11739,12 +11815,12 @@ body.compensate-for-scrollbar {
     text-align: center;
     border-radius: 7px;
     color: #244034;
-    background: #d2f34c;
+    background: #bf0600;
     cursor: pointer
 }
 
 .dashboard-body .user-avatar-setting .upload-btn:hover {
-    background: #31795a;
+    background: #ff725e;
     color: #fff
 }
 
@@ -11852,7 +11928,7 @@ body.compensate-for-scrollbar {
 .dashboard-body .dash-input-wrapper .attached-file .remove-btn {
     font-size: 22px;
     font-weight: 700;
-    color: #31795a
+    color: #ff725e
 }
 
 .dashboard-body .dash-input-wrapper .attached-file .remove-btn:hover {
@@ -11875,7 +11951,7 @@ body.compensate-for-scrollbar {
 
 .dashboard-body .dash-input-wrapper .skills-wrapper ul li.is_tag button {
     font-size: 15px;
-    color: #31795a;
+    color: #ff725e;
     line-height: 42px;
     padding: 0 40px 0 22px;
     background: #fff;
@@ -11900,7 +11976,7 @@ body.compensate-for-scrollbar {
     width: 42px;
     height: 42px;
     border-radius: 50%;
-    background: #d2f34c
+    background: #bf0600
 }
 
 .dashboard-body .dash-input-wrapper .info-text {
@@ -11912,7 +11988,7 @@ body.compensate-for-scrollbar {
 }
 
 .dashboard-body .dash-input-wrapper .info-text p a {
-    color: #31795a
+    color: #ff725e
 }
 
 .dashboard-body .dash-input-wrapper .info-text p a:hover {
@@ -11920,7 +11996,7 @@ body.compensate-for-scrollbar {
 }
 
 .dashboard-body .dash-input-wrapper .info-text .chng-pass {
-    color: #31795a;
+    color: #ff725e;
     text-decoration: underline
 }
 
@@ -11963,7 +12039,7 @@ body.compensate-for-scrollbar {
 .dashboard-body .intro-video-post .video-icon {
     width: 65px;
     height: 65px;
-    background: #d2f34c;
+    background: #bf0600;
     color: #000;
     font-size: 45px;
     line-height: 65px;
@@ -11971,7 +12047,7 @@ body.compensate-for-scrollbar {
 }
 
 .dashboard-body .intro-video-post .video-icon:hover {
-    background: #00bf58;
+    background: #FF0000;
     color: #fff
 }
 
@@ -12052,7 +12128,7 @@ body.compensate-for-scrollbar {
 }
 
 .dashboard-body .tab-filter-btn .nav-link.active {
-    background: #d2f34c
+    background: #bf0600
 }
 
 .dashboard-body .short-filter {
@@ -12226,12 +12302,12 @@ body.compensate-for-scrollbar {
 }
 
 .dashboard-body .action-dots .action-btn:hover span {
-    background: #00bf58
+    background: #FF0000
 }
 
 .dashboard-body .action-dots .action-btn:hover span:before,
 .dashboard-body .action-dots .action-btn:hover span:after {
-    background: #00bf58
+    background: #FF0000
 }
 
 .dashboard-body .dash-pagination li {
@@ -12253,7 +12329,7 @@ body.compensate-for-scrollbar {
 
 .dashboard-body .dash-pagination li a:hover,
 .dashboard-body .dash-pagination li a.active {
-    background: #31795a;
+    background: #ff725e;
     color: #fff
 }
 
@@ -12360,7 +12436,7 @@ body.compensate-for-scrollbar {
 }
 
 .dashboard-body .message-wrapper .message-sidebar .message_filter button.active {
-    background: #31795a;
+    background: #ff725e;
     color: #fff
 }
 
@@ -12490,13 +12566,13 @@ body.compensate-for-scrollbar {
 }
 
 .dashboard-body .message-wrapper .open-email-container .email-body h2 {
-    font-family: 'Source Code Pro', monospace;
+    font-family: 'Source Code Pro', monospace !important;
     font-size: 24px;
     margin-bottom: 25px
 }
 
 .dashboard-body .message-wrapper .open-email-container .email-body p a {
-    color: #31795a
+    color: #ff725e
 }
 
 .dashboard-body .message-wrapper .open-email-container .email-footer {
@@ -12504,14 +12580,14 @@ body.compensate-for-scrollbar {
 }
 
 .dashboard-body .message-wrapper .open-email-container .email-footer .attachments h6 {
-    font-family: 'Source Code Pro', monospace;
+    font-family: 'Source Code Pro', monospace !important;
     font-size: 15px
 }
 
 .dashboard-body .message-wrapper .open-email-container .email-footer .attachments .all-download {
     font-size: 14px;
     font-weight: 500;
-    color: #31795a
+    color: #ff725e
 }
 
 .dashboard-body .message-wrapper .open-email-container .email-footer .attachments .file {
@@ -12561,7 +12637,7 @@ body.compensate-for-scrollbar {
 }
 
 .dashboard-body .membership-plan-wrapper h4 {
-    font-family: 'Source Code Pro', monospace;
+    font-family: 'Source Code Pro', monospace !important;
     font-size: 20px;
     color: #254035
 }
@@ -12574,13 +12650,13 @@ body.compensate-for-scrollbar {
 
 .dashboard-body .membership-plan-wrapper h3 {
     font-size: 60px;
-    color: #31795a
+    color: #ff725e
 }
 
 .dashboard-body .membership-plan-wrapper h6 {
-    font-family: 'Source Code Pro', monospace;
+    font-family: 'Source Code Pro', monospace !important;
     font-size: 18px;
-    color: #31795a
+    color: #ff725e
 }
 
 .dashboard-body .membership-plan-wrapper .text1 {
@@ -12596,7 +12672,7 @@ body.compensate-for-scrollbar {
 .dashboard-body .membership-plan-wrapper .cancel-plan {
     font-size: 15px;
     font-weight: 500;
-    color: #31795a;
+    color: #ff725e;
     text-decoration: underline
 }
 
@@ -12684,7 +12760,7 @@ body.compensate-for-scrollbar {
 }
 
 .compose-new-email-container .reply-btn:hover {
-    background: #d2f34c;
+    background: #bf0600;
     color: #244034
 }
 
@@ -12720,7 +12796,7 @@ body.compensate-for-scrollbar {
 }
 
 .remove-account-popup h2 {
-    font-family: 'Source Code Pro', monospace;
+    font-family: 'Source Code Pro', monospace !important;
     font-size: 36px;
     color: #254035;
     margin: 20px 0
@@ -12733,7 +12809,7 @@ body.compensate-for-scrollbar {
     text-align: center;
     font-size: 16px;
     color: #fff;
-    background: #31795a
+    background: #ff725e
 }
 
 .remove-account-popup .confirm-btn:hover {
@@ -12751,4 +12827,3 @@ body.compensate-for-scrollbar {
     opacity: 1;
     box-shadow: none
 }
-

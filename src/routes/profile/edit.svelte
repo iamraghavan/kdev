@@ -226,7 +226,7 @@
 <div class="main-page-wrapper">
   <div class="dashboard-body">
     <div class="position-relative">
-      <h2 class="main-title px-3">Account Settings</h2>
+      <h2 class="main-title px-3">Account Settings | User Id : {user.uid}</h2>
 
       <div class="bg-white card-box border-20">
         <h4 class="dash-title-three">Gendral Information</h4>
