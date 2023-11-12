@@ -24,6 +24,7 @@ let rememberMe;
       inputFields.forEach((input) => {
         input.setAttribute('autocomplete', 'new-password');
       });
+
     });
 
   

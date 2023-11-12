@@ -14,6 +14,7 @@
   onMount(async () => {
     // Check if the user is signed in using Firebase Authentication
     const user = auth.currentUser;
+    
 
     if (!user) {
       // Redirect to the home page if the user is not signed in

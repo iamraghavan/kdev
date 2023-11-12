@@ -1,46 +1,10 @@
-/* @import"https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700&display=swap";
+@import"https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700&display=swap";
 @import"../fonts/gordita/stylesheet.css";
 @import"../fonts/bootstrap-icons-1.10.2/font.css";
- */
 
- @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Source+Code+Pro:wght@200;300;400;500;600;700;800;900&display=swap');
 
- .select-container {
-    position: relative;
-    width: 100%;
-    max-width: 300px; /* Adjust as needed */
-  }
-  
-  /* Style the select box */
-  select {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: rgba(49, 121, 90, .09);
-    color: #333;
-    font-size: 16px;
-    cursor: pointer;
-    outline: none;
-  }
-  
-  /* Style the arrow icon */
-  .select-container::after {
-    content: '▼'; /* Unicode character for down arrow */
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    transform: translateY(-50%);
-    font-size: 20px;
-    color: #555;
-    pointer-events: none;
-  }
-  
-  /* Style the select when focused */
-  select:focus {
-    border-color: #31795a; /* Change to your preferred focus color */
-    box-shadow: 0 0 5px rgba(49, 121, 90, 0.657); /* Change to your preferred focus shadow */
-  }
+  @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 
 ::-webkit-scrollbar {
     width: 5px
@@ -51,12 +15,12 @@
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #bf0600;
+    background: #d2f34c;
     border-radius: 0
 }
 
 body {
-    font-family: 'Source Code Pro', monospace !important;
+    font-family: 'Source Code Pro', monospace;
     font-weight: normal;
     font-size: 16px;
     position: relative;
@@ -79,14 +43,13 @@ h4,
 h5,
 .h6,
 h6 {
-    font-family: 'Source Code Pro', monospace !important;
+    font-family: "EB Garamond", serif;
     font-weight: 500;
     color: #000
 }
 
 .h1,
 h1 {
-    font-family: 'Montserrat', sans-serif !important;
     font-size: 85px;
     letter-spacing: -1px;
     line-height: 1.058em
@@ -94,7 +57,6 @@ h1 {
 
 .h2,
 h2 {
-    font-family: 'Montserrat', sans-serif !important;
     font-size: 70px;
     line-height: 1.041em
 }
@@ -154,7 +116,7 @@ hr {
 }
 
 .ctn-preloader .txt-loading .letters-loading {
-    font-family: 'Source Code Pro', monospace !important;
+    font-family: "EB Garamond", serif;
     font-weight: 700;
     letter-spacing: 8px;
     display: inline-block;
@@ -166,7 +128,7 @@ hr {
 
 .ctn-preloader .txt-loading .letters-loading::before {
     animation: letters-loading 4s infinite;
-    color: #FF0000;
+    color: #00bf58;
     content: attr(data-text-preloader);
     left: 0;
     opacity: 0;
@@ -238,7 +200,7 @@ hr {
     font-size: 25px;
     cursor: pointer;
     border-radius: 50%;
-    background: #FF0000;
+    background: #00bf58;
     transition: all .3s ease-in-out
 }
 
@@ -277,7 +239,7 @@ hr {
     text-align: center;
     border-radius: 50px;
     color: #000;
-    background-color: #bf0600;
+    background-color: #d2f34c;
     border: 2px solid rgba(0, 0, 0, 0);
     transition: all .3s ease-in-out 0s
 }
@@ -288,8 +250,8 @@ hr {
 
 .btn-one:hover {
     background-color: #244034;
-    color: #bf0600;
-    border-color: #bf0600
+    color: #d2f34c;
+    border-color: #d2f34c
 }
 
 .btn-two {
@@ -344,7 +306,7 @@ hr {
     text-align: center;
     border-radius: 6px;
     color: #244034;
-    background: #bf0600;
+    background: #d2f34c;
     transition: all .3s ease-in-out 0s
 }
 
@@ -360,7 +322,7 @@ hr {
     text-align: center;
     border-radius: 50px;
     color: #fff;
-    background: #FF0000;
+    background: #00bf58;
     transition: all .3s ease-in-out 0s
 }
 
@@ -375,21 +337,21 @@ hr {
 
 .btn-six {
     font-weight: 500;
-    color: #FF0000;
+    color: #00bf58;
     position: relative;
     padding-right: 12px;
-    border-bottom: 2px solid #FF0000;
+    border-bottom: 2px solid #00bf58;
     transition: all .3s ease-in-out 0s
 }
 
 .btn-six:hover {
-    color: #FF0000;
+    color: #00bf58;
     letter-spacing: .2px
 }
 
 .btn-six:after {
-    border-bottom: 2px solid #FF0000;
-    border-right: 2px solid #FF0000;
+    border-bottom: 2px solid #00bf58;
+    border-right: 2px solid #00bf58;
     content: "";
     display: block;
     margin-top: -4px;
@@ -419,8 +381,8 @@ hr {
     min-width: 150px;
     text-align: center;
     border-radius: 50px;
-    color: #FF0000;
-    border: 1px solid #FF0000;
+    color: #00bf58;
+    border: 1px solid #00bf58;
     transition: all .3s ease-in-out 0s
 }
 
@@ -444,17 +406,17 @@ hr {
 }
 
 .btn-eight.style-two {
-    border: 2px solid #FF0000;
+    border: 2px solid #00bf58;
     background: rgba(0, 0, 0, 0)
 }
 
 .btn-eight span {
-    color: #FF0000
+    color: #00bf58
 }
 
 .btn-eight a {
     font-weight: normal;
-    color: #FF0000;
+    color: #00bf58;
     text-decoration: underline
 }
 
@@ -465,7 +427,7 @@ hr {
 }
 
 .btn-nine:hover {
-    color: #FF0000
+    color: #00bf58
 }
 
 .btn-nine i {
@@ -481,7 +443,7 @@ hr {
 }
 
 .btn-ten:hover {
-    background: #FF0000
+    background: #00bf58
 }
 
 .btn-eleven {
@@ -497,7 +459,7 @@ hr {
 
 .btn-eleven:hover,
 .btn-eleven:focus {
-    background: #FF0000
+    background: #00bf58
 }
 
 .title-one h2 {
@@ -506,14 +468,14 @@ hr {
 }
 
 .title-one h2.main-font {
-    font-family: 'Montserrat', sans-serif !important;
+    font-family: 'Source Code Pro', monospace;
     font-size: 60px;
     color: #000;
     line-height: 1.333em
 }
 
 .title-one h2.main-font.color-blue {
-    color: #E81919
+    color: #005025
 }
 
 .title-one span img {
@@ -543,20 +505,20 @@ hr {
 }
 
 .title-two h2.color-blue {
-    color: #E81919
+    color: #005025
 }
 
 .title-two h2 span {
-    color: #bf0600
+    color: #d2f34c
 }
 
 .title-two h2.main-font {
-    font-family: 'Montserrat', sans-serif !important;
+    font-family: 'Source Code Pro', monospace;
     font-size: 58px
 }
 
 .title-two .sub-title {
-    color: #FF0000;
+    color: #00bf58;
     font-weight: 500;
     font-size: 18px;
     margin-bottom: 15px
@@ -570,16 +532,16 @@ hr {
 }
 
 .title-three h2.main-font {
-    font-family: 'Montserrat', sans-serif !important;
+    font-family: 'Source Code Pro', monospace;
     color: #000
 }
 
 .title-three h2.color-blue {
-    color: #E81919
+    color: #005025
 }
 
 .title-four h2 {
-    font-family: 'Montserrat', sans-serif !important;
+    font-family: 'Source Code Pro', monospace;
     font-size: 32px;
     color: #000;
     margin: 0
@@ -2586,8 +2548,8 @@ iframe {
 }
 
 .theme-main-menu .category-dropdown .item:hover .icon {
-    background: #bf0600;
-    border-color: #bf0600
+    background: #d2f34c;
+    border-color: #d2f34c
 }
 
 .theme-main-menu .category-dropdown .explore-all-btn {
@@ -2624,11 +2586,11 @@ iframe {
     position: relative;
     z-index: 99;
     border: none;
-    background: #FF0000
+    background: #00bf58
 }
 
 .theme-main-menu.menu-style-one .navbar-toggler {
-    background: #bf0600
+    background: #d2f34c
 }
 
 .theme-main-menu .navbar-toggler:focus {
@@ -2688,8 +2650,7 @@ iframe {
 }
 
 .navbar .nav-item .nav-link {
-    font-weight: 600;
-    font-family: 'Montserrat', sans-serif !important;
+    font-weight: 500;
     font-size: 1em;
     line-height: initial;
     color: #000;
@@ -2700,16 +2661,15 @@ iframe {
 }
 
 .navbar .nav-item:hover .nav-link {
-    color: #FF0000
+    color: #00bf58
 }
 
 .navbar .dropdown-menu .dropdown-item {
-    text-transform: capitalize !important;
-    font-family: 'Montserrat', sans-serif !important;
-    line-height: 41px;
+    text-transform: capitalize;
+    line-height: 38px;
     padding: 0 15px;
     color: #000;
-    font-size: .90em;
+    font-size: .88em;
     background: rgba(0, 0, 0, 0);
     position: relative;
     letter-spacing: -0.3px;
@@ -2718,8 +2678,8 @@ iframe {
 }
 
 .navbar .dropdown-menu .dropdown-item:hover {
-    color: #1e1e1e;
-    background: rgba(191, 6, 0, 0.06)
+    color: #005025;
+    background: rgba(0, 191, 88, .06)
 }
 
 .dashboard-menu .nav-link::before {
@@ -2743,7 +2703,7 @@ iframe {
 }
 
 .menu-style-one .navbar .nav-item:hover .nav-link {
-    color: #bf0600
+    color: #d2f34c
 }
 
 .menu-style-one .navbar .nav-item.category-btn .nav-link {
@@ -2752,7 +2712,7 @@ iframe {
     padding: 0 17px;
     border-radius: 25px;
     margin: 10px 35px 10px 0;
-    color: #bf0600
+    color: #d2f34c
 }
 
 .menu-style-one .navbar .nav-item.category-btn .nav-link i {
@@ -2769,7 +2729,7 @@ iframe {
 }
 
 .menu-style-two .navbar .nav-item:hover .nav-link {
-    color: #FF0000
+    color: #00bf58
 }
 
 .theme-main-menu .mega-dropdown,
@@ -2806,13 +2766,13 @@ iframe {
 }
 
 .navbar [class*=mega-dropdown] .menu-column .mega-menu-title {
-    font-family: 'Montserrat', sans-serif !important;
-    font-size: 18px;
-    font-weight: 600;
-    color: #E81919;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 14px;
+    font-weight: 500;
+    color: #005025;
     display: inline-block;
     position: relative;
-    margin: 0 0 10px;
+    margin: 0 0 5px;
     padding-left: 15px
 }
 
@@ -2826,11 +2786,11 @@ iframe {
 }
 
 .menu-style-one .job-post-btn:hover {
-    color: #bf0600
+    color: #d2f34c
 }
 
 .theme-main-menu .login-btn-one {
-    color: #bf0600;
+    color: #d2f34c;
     font-weight: 500
 }
 
@@ -2839,7 +2799,7 @@ iframe {
 }
 
 .theme-main-menu .login-btn-two {
-    color: #FF0000
+    color: #00bf58
 }
 
 .theme-main-menu .login-btn-two:hover {
@@ -2854,8 +2814,8 @@ iframe {
 }
 
 .theme-main-menu .login-btn-three:hover {
-    background: #FF0000;
-    border-color: #FF0000
+    background: #00bf58;
+    border-color: #00bf58
 }
 
 .theme-main-menu .login-btn-three.dark-style {
@@ -2864,8 +2824,8 @@ iframe {
 }
 
 .theme-main-menu .login-btn-three.dark-style:hover {
-    background: #FF0000;
-    border-color: #FF0000;
+    background: #00bf58;
+    border-color: #00bf58;
     color: #fff
 }
 
@@ -2943,7 +2903,7 @@ iframe {
 }
 
 .category-menu li a:hover {
-    color: #FF0000
+    color: #00bf58
 }
 
 .category-menu .dropdown-menu {
@@ -3118,7 +3078,7 @@ iframe {
 
 .hero-banner-one h1 span {
     display: block;
-    color: #bf0600
+    color: #d2f34c
 }
 
 .hero-banner-one .img-box {
@@ -3239,11 +3199,11 @@ iframe {
 .hero-banner-three h1 {
     font-weight: 700;
     letter-spacing: -1px;
-    color: #E81919
+    color: #005025
 }
 
 .hero-banner-three .partner-title {
-    font-family: 'Source Code Pro', monospace !important;
+    font-family: "EB Garamond", serif;
     color: #93ad9f;
     font-size: 24px
 }
@@ -3308,7 +3268,7 @@ iframe {
 }
 
 .hero-banner-five h1 {
-    font-family: 'Montserrat', sans-serif !important;
+    font-family: 'Source Code Pro', monospace;
     font-size: 72px;
     line-height: 1.277em;
     letter-spacing: -1px
@@ -3337,7 +3297,7 @@ iframe {
     text-align: center;
     line-height: 90px;
     font-size: 30px;
-    color: #FF0000;
+    color: #00bf58;
     right: 0;
     bottom: 0;
     background: #fff;
@@ -3345,7 +3305,7 @@ iframe {
 }
 
 .hero-banner-five .chat-btn:hover {
-    background: #FF0000;
+    background: #00bf58;
     color: #fff
 }
 
@@ -3356,7 +3316,7 @@ iframe {
 }
 
 .hero-banner-six h1 {
-    font-family: 'Montserrat', sans-serif !important;
+    font-family: 'Source Code Pro', monospace;
     color: #fff;
     font-weight: 500;
     line-height: 1.15em
@@ -3385,7 +3345,7 @@ iframe {
 }
 
 .hero-banner-seven h1 {
-    font-family: 'Montserrat', sans-serif !important;
+    font-family: 'Source Code Pro', monospace;
     font-weight: 500;
     font-size: 74px;
     line-height: 1.243em
@@ -3437,7 +3397,7 @@ iframe {
     height: 55px;
     border-radius: 6px;
     overflow: hidden;
-    background: #bf0600;
+    background: #d2f34c;
     transition: all .2s ease-in-out 0s
 }
 
@@ -3494,11 +3454,11 @@ iframe {
     padding: 0 25px;
     line-height: 35px;
     border-radius: 30px;
-    background: #FF0000
+    background: #00bf58
 }
 
 .fancy-banner-two .bg-wrapper .text-wrapper .explore-btn:hover {
-    background: #bf0600;
+    background: #d2f34c;
     color: #244034
 }
 
@@ -3547,11 +3507,11 @@ iframe {
     color: #fff;
     font-size: 40px;
     padding-left: 5px;
-    background: #FF0000
+    background: #00bf58
 }
 
 .fancy-banner-three .bg-wrapper .text-wrapper .video-icon:hover {
-    background: #bf0600;
+    background: #d2f34c;
     color: #244034
 }
 
@@ -3576,7 +3536,7 @@ iframe {
     width: 35px;
     height: 35px;
     font-size: 18px;
-    background: #FF0000
+    background: #00bf58
 }
 
 .fancy-banner-three .bg-wrapper .bottom-content .text {
@@ -3586,7 +3546,7 @@ iframe {
 .fancy-banner-three .bg-wrapper .bottom-content .text a {
     font-size: 12px;
     letter-spacing: 1px;
-    color: #FF0000
+    color: #00bf58
 }
 
 .fancy-banner-three .bg-wrapper .bottom-content .text a:hover {
@@ -3715,7 +3675,7 @@ iframe {
     height: 55px;
     border-radius: 6px;
     overflow: hidden;
-    background: #FF0000;
+    background: #00bf58;
     cursor: pointer;
     transition: all .2s ease-in-out 0s
 }
@@ -3758,21 +3718,19 @@ iframe {
     font-size: 55px
 }
 
-
-
 .inner-banner-one {
-    background: #ffffff;
-    padding: 150px 0 5px;
+    background-image: linear-gradient(to top, #dfe9f3 0%, white 100%);
+    padding: 150px 0 115px;
     z-index: 9
 }
 
 .inner-banner-one h1 {
-    color: #000000
+    color: #fff
 }
 
 .inner-banner-one h1 span {
     display: block;
-    color: #bf0600
+    color: #d2f34c
 }
 
 .inner-banner-one .post-date {
@@ -3806,7 +3764,7 @@ iframe {
 }
 
 .inner-banner-one .share-buttons li a:hover {
-    background: #FF0000;
+    background: #00bf58;
     color: #fff
 }
 
@@ -3836,7 +3794,7 @@ iframe {
 }
 
 .inner-banner-one .candidate-profile-card {
-    /* background: url(../images/shape/shape_34.svg) repeat-x; */
+    background: url(../images/shape/shape_34.svg) repeat-x;
     background-size: cover;
     border: none
 }
@@ -3864,8 +3822,8 @@ iframe {
 }
 
 .inner-banner-one .candidate-profile-card .cv-download-btn:hover {
-    background: #FF0000;
-    border-color: #a9a9a9
+    background: #375749;
+    border-color: #375749
 }
 
 .inner-banner-one .candidate-profile-card .cadidate-skills li {
@@ -3874,7 +3832,7 @@ iframe {
 }
 
 .inner-banner-one .candidate-profile-card.list-layout .save-btn {
-    background: #FF0000;
+    background: #375749;
     border-color: #fff;
     color: #fff
 }
@@ -3941,7 +3899,7 @@ iframe {
 
 .slick-arrow-two li:hover {
     background: #f5f5f5;
-    color: #E81919
+    color: #005025
 }
 
 .slick-arrow-two li .bi:before {
@@ -3961,7 +3919,7 @@ iframe {
 }
 
 .category-section-four .list-item a:hover {
-    color: #FF0000
+    color: #00bf58
 }
 
 .category-section-five .card-wrapper {
@@ -4023,7 +3981,7 @@ iframe {
     line-height: 120px;
     color: #fff;
     font-size: 70px;
-    background: #FF0000;
+    background: #00bf58;
     position: absolute;
     left: 40%;
     bottom: 29%;
@@ -4031,7 +3989,7 @@ iframe {
 }
 
 .text-feature-one .img-data .video-icon:hover {
-    background: #bf0600;
+    background: #d2f34c;
     color: #244034
 }
 
@@ -4133,7 +4091,7 @@ iframe {
 .text-feature-three .video-post .video-icon {
     width: 65px;
     height: 65px;
-    background: #bf0600;
+    background: #d2f34c;
     color: #000;
     font-size: 45px;
     line-height: 65px;
@@ -4141,7 +4099,7 @@ iframe {
 }
 
 .text-feature-three .video-post .video-icon:hover {
-    background: #FF0000;
+    background: #00bf58;
     color: #fff
 }
 
@@ -4167,7 +4125,7 @@ iframe {
 }
 
 .text-feature-four .bg-wrapper .brand span {
-    font-family: 'Source Code Pro', monospace !important;
+    font-family: "EB Garamond", serif;
     font-size: 70px;
     color: #00ef6e;
     display: block;
@@ -4220,7 +4178,7 @@ iframe {
 }
 
 .how-it-works.bg-color {
-    background: #ea5252
+    background: #244034
 }
 
 .how-it-works.bg-color .shape_01 {
@@ -4258,11 +4216,11 @@ iframe {
 }
 
 .slick-arrow-one li:hover {
-    background: #bf0600
+    background: #d2f34c
 }
 
 .slick-arrow-one.color-two li:hover {
-    background: #FF0000;
+    background: #00bf58;
     color: #fff
 }
 
@@ -4303,7 +4261,7 @@ iframe {
 }
 
 .partner-logos .title span {
-    color: #FF0000
+    color: #00bf58
 }
 
 .partner-logos .logo {
@@ -4347,7 +4305,7 @@ iframe {
 }
 
 .address-block-one .title {
-    font-family: 'Source Code Pro', monospace !important;
+    font-family: 'Source Code Pro', monospace;
     font-size: 24px;
     padding: 20px 0 5px
 }
@@ -4384,7 +4342,7 @@ iframe {
 }
 
 .faq-section .nav .nav-link.active {
-    background: #bf0600;
+    background: #d2f34c;
     color: #244034
 }
 
@@ -4394,7 +4352,7 @@ iframe {
 }
 
 .error-page .error {
-    font-family: 'Source Code Pro', monospace !important;
+    font-family: "EB Garamond", serif;
     font-size: 100px;
     line-height: initial;
     letter-spacing: 5px;
@@ -4469,7 +4427,7 @@ iframe {
 
 .job-search-one form .search-btn {
     letter-spacing: .8px;
-    background: #bf0600;
+    background: #d2f34c;
     color: #000;
     border-radius: 0 10px 10px 0;
     width: 195px;
@@ -4478,12 +4436,12 @@ iframe {
 }
 
 .job-search-one form .search-btn:hover {
-    background: #FF0000;
+    background: #00bf58;
     color: #fff
 }
 
 .job-search-one form .search-btn-two {
-    background: #FF0000;
+    background: #00bf58;
     color: #fff;
     border-radius: 0 10px 10px 0;
     margin-right: -1px;
@@ -4491,7 +4449,7 @@ iframe {
 }
 
 .job-search-one form .search-btn-two:hover {
-    background: #E81919;
+    background: #005025;
     color: #fff
 }
 
@@ -4666,7 +4624,7 @@ iframe {
 }
 
 .accordion-style-one.color-two .accordion-button {
-    color: #E81919
+    color: #005025
 }
 
 .accordion-style-one.color-two .accordion-button::after {
@@ -4710,7 +4668,7 @@ iframe {
 .accordion-style-two .accordion-button:not(.collapsed):after {
     content: "-";
     font-size: 24px;
-    background: #FF0000;
+    background: #00bf58;
     color: #fff
 }
 
@@ -4970,7 +4928,7 @@ iframe {
 }
 
 .user-data-form .agreement-checkbox input[type=checkbox]:checked+label:before {
-    content: "";
+    content: "ï˜³";
     font-family: bootstrap-icons !important;
     background: #000;
     color: #fff;
@@ -5052,14 +5010,14 @@ iframe {
 
 .card-style-one .wrapper.bg:hover,
 .card-style-one .wrapper.bg.active {
-    background: #bf0600;
+    background: #d2f34c;
     border-color: #b9d640
 }
 
 .card-style-one .wrapper:hover,
 .card-style-one .wrapper.active {
     transform: translateY(-5px);
-    border-color: #FF0000
+    border-color: #00bf58
 }
 
 .card-style-one .wrapper .icon {
@@ -5084,54 +5042,21 @@ iframe {
 .card-style-two .icon {
     width: 80px;
     height: 80px;
-    background: #f3f3f3
+    background: #d2f34c
 }
-.select-container {
-    position: relative;
-    width: 100%;
-    max-width: 300px; /* Adjust as needed */
-  }
-  
-  /* Style the select box */
-  select {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: rgba(49, 121, 90, .09);
-    color: #333;
-    font-size: 16px;
-    cursor: pointer;
-    outline: none;
-  }
-  
-  /* Style the arrow icon */
-  .select-container::after {
-    content: '▼'; /* Unicode character for down arrow */
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    transform: translateY(-50%);
-    font-size: 20px;
-    color: #555;
-    pointer-events: none;
-  }
 
 .card-style-two .title {
-    font-size: 23px;
-    margin: 25px 0 12px;
-    font-weight: bold
+    font-size: 22px;
+    margin: 25px 0 12px
 }
 
 .card-style-two p {
-    color: #070707;
-    font-weight: 400;
-    font-size: 16px;
+    color: #81b197
 }
 
 .card-style-two.arrow:before,
 .card-style-two.arrow:after {
-    content: url(../images/shape/arrow_02.svg);
+    content: url(../images/shape/arrow_01.svg);
     position: absolute;
     top: 25px;
     left: -150px
@@ -5177,7 +5102,7 @@ iframe {
 }
 
 .card-style-four:hover .icon {
-    background: #bf0600
+    background: #d2f34c
 }
 
 .card-style-four .title {
@@ -5186,7 +5111,7 @@ iframe {
 }
 
 .card-style-four:hover .title {
-    color: #FF0000
+    color: #00bf58
 }
 
 .card-style-four .total-job {
@@ -5196,7 +5121,7 @@ iframe {
 
 .card-style-four.bg-color {
     box-shadow: none;
-    background: #FF0000
+    background: #00bf58
 }
 
 .card-style-four.bg-color a {
@@ -5204,7 +5129,7 @@ iframe {
 }
 
 .card-style-four.bg-color .title {
-    font-family: 'Source Code Pro', monospace !important;
+    font-family: "EB Garamond", serif;
     font-size: 72px;
     line-height: initial;
     margin: 0 0 5px
@@ -5219,7 +5144,7 @@ iframe {
     position: absolute;
     width: 100%;
     height: 1px;
-    background: #FF0000;
+    background: #00bf58;
     left: 0;
     bottom: 0;
     transition: all .2s ease-in-out 0s;
@@ -5252,7 +5177,7 @@ iframe {
     width: 42px;
     height: 42px;
     border-radius: 10px;
-    background: #FF0000;
+    background: #00bf58;
     color: #fff;
     font-size: 15px;
     line-height: initial
@@ -5261,7 +5186,7 @@ iframe {
 .card-style-five .icon {
     width: 80px;
     height: 80px;
-    background: #FF0000
+    background: #00bf58
 }
 
 .card-style-six {
@@ -5335,7 +5260,7 @@ iframe {
 }
 
 .card-style-eight .name:hover {
-    color: #FF0000
+    color: #00bf58
 }
 
 .card-style-nine {
@@ -5347,7 +5272,7 @@ iframe {
 .card-style-nine .icon {
     width: 52px;
     height: 52px;
-    background: #FF0000
+    background: #00bf58
 }
 
 .card-style-nine .text {
@@ -5357,7 +5282,7 @@ iframe {
 .card-style-nine .text a {
     font-size: 12px;
     letter-spacing: 1px;
-    color: #FF0000;
+    color: #00bf58;
     margin-top: auto
 }
 
@@ -5377,14 +5302,14 @@ iframe {
 
 .card-style-ten .open-job-btn {
     font-size: 15px;
-    color: #FF0000;
+    color: #00bf58;
     padding: 4px 20px;
-    border: 1px solid #FF0000;
+    border: 1px solid #00bf58;
     border-radius: 30px
 }
 
 .card-style-ten .open-job-btn:hover {
-    background: #FF0000;
+    background: #00bf58;
     color: #fff
 }
 
@@ -5408,7 +5333,7 @@ iframe {
 }
 
 .pricing-card-one .price {
-    font-family: 'Source Code Pro', monospace !important;
+    font-family: "EB Garamond", serif;
     font-size: 72px;
     letter-spacing: -1px;
     color: #31795a;
@@ -5443,7 +5368,7 @@ iframe {
 }
 
 .pricing-card-one .get-plan-btn:hover {
-    background: #bf0600;
+    background: #d2f34c;
     color: #31795a
 }
 
@@ -5466,7 +5391,7 @@ iframe {
     position: absolute;
     width: 100%;
     height: 50%;
-    background: #bf0600;
+    background: #d2f34c;
     bottom: 0;
     left: 0;
     z-index: -1;
@@ -5478,7 +5403,7 @@ iframe {
     position: absolute;
     width: 100%;
     height: 50%;
-    background: #bf0600;
+    background: #d2f34c;
     top: 0;
     left: 0;
     z-index: -1;
@@ -5491,7 +5416,7 @@ iframe {
 }
 
 .pricing-card-one.popular .get-plan-btn {
-    background: #bf0600;
+    background: #d2f34c;
     color: #31795a
 }
 
@@ -5500,7 +5425,7 @@ iframe {
 }
 
 .pricing-card-one.popular-two .get-plan-btn {
-    background: #bf0600;
+    background: #d2f34c;
     color: #31795a
 }
 
@@ -5543,7 +5468,7 @@ iframe {
 }
 
 .filter-area-tab .filter-header:before {
-    content: "";
+    content: "ïŠ‚";
     font-family: "bootstrap-icons";
     width: 35px;
     height: 35px;
@@ -5591,7 +5516,7 @@ iframe {
 }
 
 .filter-area-tab a.filter-title:before {
-    content: "";
+    content: "ï“¾";
     font-family: "bootstrap-icons";
     width: 20px;
     height: 20px;
@@ -5607,7 +5532,7 @@ iframe {
 }
 
 .filter-area-tab a.filter-title:not(.collapsed):before {
-    content: ""
+    content: "ï‹ª"
 }
 
 .filter-area-tab .nice-select {
@@ -5678,7 +5603,7 @@ iframe {
     width: 14px;
     border-radius: 50%;
     background: #fff;
-    border: 2px solid #FF0000;
+    border: 2px solid #00bf58;
     cursor: pointer;
     pointer-events: auto;
     appearance: none;
@@ -5690,7 +5615,7 @@ iframe {
     width: 14px;
     border-radius: 50%;
     background: #fff;
-    border: 2px solid #FF0000;
+    border: 2px solid #00bf58;
     cursor: pointer;
     pointer-events: auto;
     appearance: none;
@@ -5753,7 +5678,7 @@ iframe {
 }
 
 .filter-area-tab .filter-input li input[type=checkbox]:checked+label:before {
-    content: "";
+    content: "ï˜³";
     background: #31795a;
     color: #fff;
     border-color: #31795a
@@ -5795,7 +5720,7 @@ iframe {
 }
 
 .filter-area-tab .more-btn:hover {
-    background: #FF0000;
+    background: #00bf58;
     color: #fff
 }
 
@@ -5844,7 +5769,7 @@ iframe {
     right: 70%;
     position: absolute;
     border-radius: 7px;
-    background: #FF0000
+    background: #00bf58
 }
 
 .filter-area-tab .salary-slider .range-input {
@@ -5868,7 +5793,7 @@ iframe {
     width: 12px;
     border-radius: 50%;
     background: #fff;
-    border: 2px solid #FF0000;
+    border: 2px solid #00bf58;
     cursor: pointer;
     pointer-events: auto;
     appearance: none;
@@ -5880,7 +5805,7 @@ iframe {
     width: 12px;
     border-radius: 50%;
     background: #fff;
-    border: 2px solid #FF0000;
+    border: 2px solid #00bf58;
     cursor: pointer;
     pointer-events: auto;
     appearance: none;
@@ -6085,7 +6010,7 @@ iframe {
 }
 
 .job-list-one .title:hover {
-    color: #FF0000
+    color: #00bf58
 }
 
 .job-list-one .split-box1 {
@@ -6100,7 +6025,7 @@ iframe {
 
 .job-list-one .job-duration {
     font-size: 15px;
-    color: #FF0000
+    color: #00bf58
 }
 
 .job-list-one .job-duration:hover {
@@ -6159,7 +6084,7 @@ iframe {
 .job-list-one .save-btn:hover {
     background: #e7f6ef;
     border-color: #e7f6ef;
-    color: #E81919
+    color: #005025
 }
 
 .job-list-one .apply-btn {
@@ -6171,11 +6096,11 @@ iframe {
     color: #fff;
     text-transform: uppercase;
     border-radius: 17px;
-    background: #FF0000
+    background: #00bf58
 }
 
 .job-list-one .apply-btn:hover {
-    background: #E81919
+    background: #005025
 }
 
 .job-list-one.style-two {
@@ -6188,7 +6113,7 @@ iframe {
 }
 
 .job-list-one.style-two .apply-btn:hover {
-    background: #FF0000
+    background: #00bf58
 }
 
 .job-list-one.style-two .title:hover {
@@ -6213,7 +6138,7 @@ iframe {
     height: 1px;
     left: 0;
     bottom: 0;
-    background: #FF0000;
+    background: #00bf58;
     opacity: 0;
     transition: all .1s ease-in-out 0s
 }
@@ -6223,7 +6148,7 @@ iframe {
 }
 
 .g-control-nav li.is-checked {
-    color: #FF0000
+    color: #00bf58
 }
 
 .g-control-nav li:first-child {
@@ -6261,7 +6186,7 @@ iframe {
 
 .job-list-two .job-duration {
     font-size: 13px;
-    color: #FF0000;
+    color: #00bf58;
     padding: 2px 12px;
     background: #e7f6ef;
     border-radius: 3px;
@@ -6280,7 +6205,7 @@ iframe {
 }
 
 .job-list-two .title:hover {
-    color: #FF0000
+    color: #00bf58
 }
 
 .job-list-two .job-date {
@@ -6314,11 +6239,11 @@ iframe {
     color: #fff;
     text-transform: uppercase;
     border-radius: 17px;
-    background: #FF0000
+    background: #00bf58
 }
 
 .job-list-two .apply-btn:hover {
-    background: #E81919
+    background: #005025
 }
 
 .job-list-two .save-btn {
@@ -6336,7 +6261,7 @@ iframe {
 .job-list-two .save-btn:hover {
     background: #e7f6ef;
     border-color: #e7f6ef;
-    color: #E81919
+    color: #005025
 }
 
 .job-list-two.style-two {
@@ -6368,7 +6293,7 @@ iframe {
 }
 
 .job-list-two.style-two .apply-btn:hover {
-    background: #FF0000
+    background: #00bf58
 }
 
 .job-listing-three.bg-color {
@@ -6457,7 +6382,7 @@ iframe {
 .job-list-three .main-wrapper .save-btn:hover {
     background: #e7f6ef;
     border-color: #e7f6ef;
-    color: #E81919
+    color: #005025
 }
 
 .job-list-three .main-wrapper p {
@@ -6473,7 +6398,7 @@ iframe {
 
 .job-list-three .main-wrapper .job-duration {
     font-size: 14px;
-    color: #FF0000
+    color: #00bf58
 }
 
 .job-list-three .main-wrapper .job-duration:hover {
@@ -6497,7 +6422,7 @@ iframe {
 }
 
 .job-list-three .main-wrapper .apply-btn:hover {
-    background: #E81919
+    background: #005025
 }
 
 .job-company-info {
@@ -6596,7 +6521,7 @@ iframe {
 
 .job-details .post-title {
     font-size: 36px;
-    font-family: 'Source Code Pro', monospace !important;
+    font-family: 'Source Code Pro', monospace;
     margin: 10px 0 15px
 }
 
@@ -6634,7 +6559,7 @@ iframe {
 
 .job-details .block-title {
     font-size: 22px;
-    font-family: 'Montserrat', sans-serif !important;
+    font-family: 'Source Code Pro', monospace;
     margin: 0
 }
 
@@ -6659,7 +6584,7 @@ iframe {
 }
 
 .job-details p a:hover {
-    color: #FF0000
+    color: #00bf58
 }
 
 .job-details .list-type-one li {
@@ -6671,7 +6596,7 @@ iframe {
 }
 
 .job-details .list-type-one li:before {
-    content: "";
+    content: "ï‰ª";
     font-family: bootstrap-icons;
     position: absolute;
     left: 0;
@@ -6680,7 +6605,7 @@ iframe {
 }
 
 .job-details .border-style .list-type-one li:before {
-    content: ""
+    content: "ï˜³"
 }
 
 .job-details .list-type-two li {
@@ -6766,7 +6691,7 @@ iframe {
 }
 
 .company-grid-layout.favourite::after {
-    content: "";
+    content: "ï–†";
     font-family: bootstrap-icons !important;
     position: absolute;
     color: #fff;
@@ -6784,7 +6709,7 @@ iframe {
 
 .company-grid-layout .company-name {
     font-size: 24px;
-    font-family: 'Montserrat', sans-serif !important;
+    font-family: 'Source Code Pro', monospace;
     margin: 22px 0 8px
 }
 
@@ -6802,7 +6727,7 @@ iframe {
     width: 50%;
     font-size: 15px;
     font-weight: 500;
-    color: #FF0000;
+    color: #00bf58;
     text-align: center;
     padding: 18px 0;
     transition: all .2s ease-in-out 0s
@@ -6814,7 +6739,7 @@ iframe {
 }
 
 .company-grid-layout .bottom-line a:hover {
-    background: #FF0000;
+    background: #00bf58;
     color: #fff
 }
 
@@ -6843,7 +6768,7 @@ iframe {
 }
 
 .company-list-layout.favourite::after {
-    content: "";
+    content: "ï–†";
     font-family: bootstrap-icons !important;
     position: absolute;
     color: #fff;
@@ -6866,7 +6791,7 @@ iframe {
 
 .company-list-layout .company-name {
     font-size: 24px;
-    font-family: 'Montserrat', sans-serif !important;
+    font-family: "gordita"
 }
 
 .company-list-layout .company-name:hover {
@@ -6903,21 +6828,21 @@ iframe {
 .company-list-layout .save-btn:hover {
     background: #e7f6ef;
     border-color: #e7f6ef;
-    color: #E81919
+    color: #005025
 }
 
 .company-list-layout .open-job-btn {
     width: 120px;
     line-height: 31px;
     font-size: 15px;
-    color: #FF0000;
-    border: 1px solid #FF0000;
+    color: #00bf58;
+    border: 1px solid #00bf58;
     background: #eaf9e9;
     border-radius: 30px
 }
 
 .company-list-layout .open-job-btn:hover {
-    background: #FF0000;
+    background: #00bf58;
     color: #fff
 }
 
@@ -6926,7 +6851,7 @@ iframe {
 }
 
 .company-details .details-post-data h3 {
-    font-family: 'Montserrat', sans-serif !important;
+    font-family: 'Source Code Pro', monospace;
     font-size: 28px;
     margin-bottom: 20px
 }
@@ -7014,7 +6939,7 @@ iframe {
 }
 
 .candidate-profile-card.grid-layout .save-btn:hover {
-    color: #FF0000
+    color: #00bf58
 }
 
 .candidate-profile-card.favourite::before {
@@ -7029,7 +6954,7 @@ iframe {
 }
 
 .candidate-profile-card.favourite::after {
-    content: "";
+    content: "ï–†";
     font-family: bootstrap-icons !important;
     position: absolute;
     color: #fff;
@@ -7056,12 +6981,12 @@ iframe {
 }
 
 .candidate-profile-card .candidate-name {
-    font-family: 'Montserrat', sans-serif !important;
+    font-family: 'Source Code Pro', monospace;
     font-size: 18px
 }
 
 .candidate-profile-card .candidate-name a:hover {
-    color: #FF0000
+    color: #00bf58
 }
 
 .candidate-profile-card .candidate-post {
@@ -7085,7 +7010,7 @@ iframe {
 }
 
 .candidate-profile-card .cadidate-skills li.more {
-    background: #bf0600;
+    background: #d2f34c;
     color: #000
 }
 
@@ -7114,7 +7039,7 @@ iframe {
 }
 
 .candidate-profile-card .profile-btn:hover {
-    background: #FF0000
+    background: #00bf58
 }
 
 .candidate-profile-card .msg-btn {
@@ -7130,8 +7055,8 @@ iframe {
 }
 
 .candidate-profile-card .msg-btn:hover {
-    background: #FF0000;
-    border-color: #FF0000;
+    background: #00bf58;
+    border-color: #00bf58;
     color: #fff
 }
 
@@ -7195,7 +7120,7 @@ iframe {
 .candidates-profile-details .title {
     font-size: 28px;
     font-weight: 500;
-    font-family: 'Montserrat', sans-serif !important;
+    font-family: 'Source Code Pro', monospace;
     margin-bottom: 22px
 }
 
@@ -7209,7 +7134,7 @@ iframe {
 .candidates-profile-details .video-post .video-icon {
     width: 65px;
     height: 65px;
-    background: #bf0600;
+    background: #d2f34c;
     color: #000;
     font-size: 45px;
     line-height: 65px;
@@ -7217,7 +7142,7 @@ iframe {
 }
 
 .candidates-profile-details .video-post .video-icon:hover {
-    background: #FF0000;
+    background: #00bf58;
     color: #fff
 }
 
@@ -7260,7 +7185,7 @@ iframe {
 
 .candidates-profile-details .time-line-data .info h4 {
     font-size: 18px;
-    font-family: 'Montserrat', sans-serif !important;
+    font-family: 'Source Code Pro', monospace;
     margin: 5px 0 12px
 }
 
@@ -7270,7 +7195,7 @@ iframe {
 
 .candidates-profile-details .skill-tags li {
     font-size: 16px;
-    color: #E81919;
+    color: #005025;
     margin: 18px 8px 0;
     line-height: 45px;
     padding: 0 30px;
@@ -7285,7 +7210,7 @@ iframe {
     padding: 0;
     color: #000;
     text-align: center;
-    background: #bf0600
+    background: #d2f34c
 }
 
 .candidates-profile-details .candidate-portfolio-slider .slick-dots {
@@ -7312,7 +7237,7 @@ iframe {
 }
 
 .cadidate-profile-sidebar .cadidate-bio .cadidate-name {
-    font-family: 'Montserrat', sans-serif !important;
+    font-family: 'Source Code Pro', monospace;
     font-size: 20px;
     margin: 18px 0 20px
 }
@@ -7347,7 +7272,7 @@ iframe {
 }
 
 .cadidate-profile-sidebar .sidebar-title {
-    font-family: 'Montserrat', sans-serif !important;
+    font-family: 'Source Code Pro', monospace;
     font-size: 20px;
     margin: 0 0 15px
 }
@@ -7409,7 +7334,7 @@ iframe {
 }
 
 .feedback-block-one:hover {
-    background: #bf0600
+    background: #d2f34c
 }
 
 .feedback-block-one .logo {
@@ -7466,7 +7391,7 @@ iframe {
 
 .feedback-section-two .rating-title {
     font-size: 42px;
-    color: #FF0000
+    color: #00bf58
 }
 
 .feedback-section-two .slider-wrapper {
@@ -7499,7 +7424,7 @@ iframe {
 
 .feedback-block-two .review {
     font-size: 28px;
-    color: #FF0000
+    color: #00bf58
 }
 
 .feedback-block-two .rating li a {
@@ -7577,8 +7502,8 @@ iframe {
 }
 
 .feedback-section-three #feedBack_carousel .carousel-btn:hover {
-    border-color: #FF0000;
-    background: #FF0000;
+    border-color: #00bf58;
+    background: #00bf58;
     color: #fff
 }
 
@@ -7682,7 +7607,7 @@ iframe {
 
 .feedback-block-three .review {
     font-size: 28px;
-    color: #FF0000
+    color: #00bf58
 }
 
 .feedback-block-three .rating li a {
@@ -7780,13 +7705,13 @@ iframe {
 }
 
 .blog-meta-one .blog-title {
-    font-family: 'Montserrat', sans-serif !important;
+    font-family: 'Source Code Pro', monospace;
     font-size: 24px;
     line-height: 1.5em
 }
 
 .blog-meta-one .blog-title:hover {
-    color: #FF0000
+    color: #00bf58
 }
 
 .blog-meta-one .author a:hover {
@@ -7814,7 +7739,7 @@ iframe {
     padding: 5px 18px;
     color: #fff;
     text-transform: uppercase;
-    background: #FF0000;
+    background: #00bf58;
     position: absolute;
     left: 30px;
     bottom: 30px
@@ -7825,7 +7750,7 @@ iframe {
 }
 
 .blog-meta-two .post-img .tags.color-two {
-    background: #bf0600;
+    background: #d2f34c;
     color: #244034
 }
 
@@ -7843,14 +7768,14 @@ iframe {
 }
 
 .blog-meta-two .blog-title {
-    font-family: 'Montserrat', sans-serif !important;
+    font-family: 'Source Code Pro', monospace;
     font-size: 32px;
     line-height: 1.28em;
     margin: 25px 0
 }
 
 .blog-meta-two .blog-title:hover {
-    color: #FF0000
+    color: #00bf58
 }
 
 .blog-meta-two .blog-title.xs {
@@ -7865,7 +7790,7 @@ iframe {
 }
 
 .blog-meta-two .continue-btn:hover {
-    color: #FF0000
+    color: #00bf58
 }
 
 .blog-meta-two.box-layout {
@@ -7902,7 +7827,7 @@ iframe {
 
 .blog-sidebar .sidebar-title {
     font-size: 24px;
-    font-family: 'Montserrat', sans-serif !important;
+    font-family: 'Source Code Pro', monospace;
     margin-bottom: 25px
 }
 
@@ -7926,7 +7851,7 @@ iframe {
 }
 
 .blog-sidebar .sidebar-recent-news .post .title {
-    font-family: 'Montserrat', sans-serif !important;
+    font-family: 'Source Code Pro', monospace;
     font-size: 18px;
     line-height: 1.44em
 }
@@ -7978,7 +7903,7 @@ iframe {
 }
 
 .blog-details-meta .blog-heading {
-    font-family: 'Montserrat', sans-serif !important;
+    font-family: 'Source Code Pro', monospace;
     font-size: 50px;
     line-height: 1.5em;
     color: #244034;
@@ -7995,7 +7920,7 @@ iframe {
 }
 
 .blog-details-meta h5 {
-    font-family: 'Source Code Pro', monospace !important;
+    font-family: 'Source Code Pro', monospace;
     font-size: 20px;
     line-height: 1.65em;
     color: #244034
@@ -8010,7 +7935,7 @@ iframe {
 }
 
 .blog-details-meta .quote-text blockquote {
-    font-family: 'Source Code Pro', monospace !important;
+    font-family: "EB Garamond", serif;
     font-size: 48px;
     line-height: 1.062em;
     color: #244034;
@@ -8023,7 +7948,7 @@ iframe {
 }
 
 .blog-details-meta h3 {
-    font-family: 'Source Code Pro', monospace !important;
+    font-family: 'Source Code Pro', monospace;
     font-size: 32px;
     letter-spacing: -1px;
     color: #244034;
@@ -8074,7 +7999,7 @@ iframe {
 }
 
 .blog-details-page .blog-inner-title {
-    font-family: 'Source Code Pro', monospace !important;
+    font-family: 'Source Code Pro', monospace;
     font-size: 42px;
     color: #244034;
     letter-spacing: -1px
@@ -8100,7 +8025,7 @@ iframe {
 }
 
 .blog-details-page .blog-comment-area .comment .comment-text .name {
-    font-family: 'Source Code Pro', monospace !important;
+    font-family: 'Source Code Pro', monospace;
     font-size: 20px;
     letter-spacing: -1px
 }
@@ -8132,7 +8057,7 @@ iframe {
 }
 
 .blog-details-page .blog-comment-area .comment .comment-text .reply-btn:hover {
-    background: #FF0000
+    background: #00bf58
 }
 
 .blog-details-page .blog-comment-form {
@@ -8182,12 +8107,12 @@ iframe {
 
 .footer-one .email {
     font-size: 18px;
-    color: #FF0000;
+    color: #00bf58;
     text-decoration: underline
 }
 
 .footer-one .footer-title {
-    font-family: 'Source Code Pro', monospace !important;
+    font-family: 'Source Code Pro', monospace;
     font-size: 22px;
     margin-bottom: 30px
 }
@@ -8199,7 +8124,7 @@ iframe {
 }
 
 .footer-one .footer-nav-link a:hover {
-    color: #FF0000
+    color: #00bf58
 }
 
 .footer-one .footer-newsletter form {
@@ -8233,7 +8158,7 @@ iframe {
 }
 
 .footer-one .footer-newsletter form button:hover {
-    background: #bf0600;
+    background: #d2f34c;
     color: #244034
 }
 
@@ -8242,7 +8167,7 @@ iframe {
 }
 
 .footer-one .footer-newsletter form.border-style button {
-    background: #FF0000;
+    background: #00bf58;
     color: #fff
 }
 
@@ -8268,7 +8193,7 @@ iframe {
 }
 
 .footer-one .bottom-footer .social-icon a:hover {
-    color: #FF0000
+    color: #00bf58
 }
 
 .footer-one .bottom-footer .bottom-nav a {
@@ -10184,7 +10109,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 .nice-select .option:hover,
 .nice-select .option.focus,
 .nice-select .option.selected.focus {
-    color: #FF0000;
+    color: #00bf58;
     background: rgba(36, 64, 52, .03)
 }
 
@@ -11066,7 +10991,7 @@ body.compensate-for-scrollbar {
 }
 
 .slick-dots .slick-active button {
-    background: #FF0000
+    background: #00bf58
 }
 
 .slick-list {
@@ -11359,14 +11284,14 @@ body.compensate-for-scrollbar {
 }
 
 .dashboard-body .main-title {
-    font-family: 'Source Code Pro', monospace !important;
+    font-family: 'Source Code Pro', monospace;
     font-size: 36px;
     color: #244034;
     margin-bottom: 40px
 }
 
 .dashboard-body .dash-title-two {
-    font-family: 'Source Code Pro', monospace !important;
+    font-family: 'Source Code Pro', monospace;
     font-size: 20px;
     color: #244034;
     border-bottom: 1px solid #e3f0eb;
@@ -11375,7 +11300,7 @@ body.compensate-for-scrollbar {
 }
 
 .dashboard-body .dash-title-three {
-    font-family: 'Source Code Pro', monospace !important;
+    font-family: 'Source Code Pro', monospace;
     font-size: 24px;
     color: #31795a;
     margin: 0 0 30px
@@ -11424,12 +11349,12 @@ body.compensate-for-scrollbar {
     padding: 0 15px;
     line-height: 45px;
     border-radius: 50px;
-    background: #070707
+    background: #244034
 }
 
 .dashboard-body .dash-btn-two:hover {
-    background: #244034;
-    color: #fff
+    background: #d2f34c;
+    color: #244034
 }
 
 .dashboard-body .dash-cancel-btn {
@@ -11505,7 +11430,7 @@ body.compensate-for-scrollbar {
 }
 
 .dashboard-body .dashboard-header .profile-notification .dropdown-menu h4 {
-    font-family: 'Source Code Pro', monospace !important;
+    font-family: 'Source Code Pro', monospace;
     font-size: 18px;
     margin-bottom: 20px
 }
@@ -11533,7 +11458,7 @@ body.compensate-for-scrollbar {
 }
 
 .dashboard-body .dashboard-header .profile-notification .dropdown-menu .notify-list li h6 {
-    font-family: 'Source Code Pro', monospace !important;
+    font-family: 'Source Code Pro', monospace;
     font-size: 15px;
     margin-bottom: 3px;
     letter-spacing: -0.2px;
@@ -11564,7 +11489,7 @@ body.compensate-for-scrollbar {
 }
 
 .dashboard-body .dashboard-header .job-post-btn:hover {
-    background: #bf0600;
+    background: #d2f34c;
     color: #244034
 }
 
@@ -11638,7 +11563,7 @@ body.compensate-for-scrollbar {
 .dashboard-body .dash-card-one .icon {
     width: 65px;
     height: 65px;
-    background: #bf0600
+    background: #d2f34c
 }
 
 .dashboard-body .dash-card-one .value {
@@ -11705,7 +11630,7 @@ body.compensate-for-scrollbar {
 }
 
 .dashboard-body .recent-job-tab .wrapper .job-item-list .job-title h6 a {
-    font-family: 'Source Code Pro', monospace !important;
+    font-family: 'Source Code Pro', monospace;
     font-size: 16px;
     color: #244034;
     display: block;
@@ -11790,12 +11715,12 @@ body.compensate-for-scrollbar {
 }
 
 .dashboard-body .recent-job-tab .wrapper .job-item-list .job-action .action-btn:hover span {
-    background: #FF0000
+    background: #00bf58
 }
 
 .dashboard-body .recent-job-tab .wrapper .job-item-list .job-action .action-btn:hover span:before,
 .dashboard-body .recent-job-tab .wrapper .job-item-list .job-action .action-btn:hover span:after {
-    background: #FF0000
+    background: #00bf58
 }
 
 .dashboard-body .user-avatar-setting .user-img {
@@ -11814,7 +11739,7 @@ body.compensate-for-scrollbar {
     text-align: center;
     border-radius: 7px;
     color: #244034;
-    background: #bf0600;
+    background: #d2f34c;
     cursor: pointer
 }
 
@@ -11975,7 +11900,7 @@ body.compensate-for-scrollbar {
     width: 42px;
     height: 42px;
     border-radius: 50%;
-    background: #bf0600
+    background: #d2f34c
 }
 
 .dashboard-body .dash-input-wrapper .info-text {
@@ -12038,7 +11963,7 @@ body.compensate-for-scrollbar {
 .dashboard-body .intro-video-post .video-icon {
     width: 65px;
     height: 65px;
-    background: #bf0600;
+    background: #d2f34c;
     color: #000;
     font-size: 45px;
     line-height: 65px;
@@ -12046,7 +11971,7 @@ body.compensate-for-scrollbar {
 }
 
 .dashboard-body .intro-video-post .video-icon:hover {
-    background: #FF0000;
+    background: #00bf58;
     color: #fff
 }
 
@@ -12127,7 +12052,7 @@ body.compensate-for-scrollbar {
 }
 
 .dashboard-body .tab-filter-btn .nav-link.active {
-    background: #bf0600
+    background: #d2f34c
 }
 
 .dashboard-body .short-filter {
@@ -12301,12 +12226,12 @@ body.compensate-for-scrollbar {
 }
 
 .dashboard-body .action-dots .action-btn:hover span {
-    background: #FF0000
+    background: #00bf58
 }
 
 .dashboard-body .action-dots .action-btn:hover span:before,
 .dashboard-body .action-dots .action-btn:hover span:after {
-    background: #FF0000
+    background: #00bf58
 }
 
 .dashboard-body .dash-pagination li {
@@ -12565,7 +12490,7 @@ body.compensate-for-scrollbar {
 }
 
 .dashboard-body .message-wrapper .open-email-container .email-body h2 {
-    font-family: 'Source Code Pro', monospace !important;
+    font-family: 'Source Code Pro', monospace;
     font-size: 24px;
     margin-bottom: 25px
 }
@@ -12579,7 +12504,7 @@ body.compensate-for-scrollbar {
 }
 
 .dashboard-body .message-wrapper .open-email-container .email-footer .attachments h6 {
-    font-family: 'Source Code Pro', monospace !important;
+    font-family: 'Source Code Pro', monospace;
     font-size: 15px
 }
 
@@ -12636,7 +12561,7 @@ body.compensate-for-scrollbar {
 }
 
 .dashboard-body .membership-plan-wrapper h4 {
-    font-family: 'Source Code Pro', monospace !important;
+    font-family: 'Source Code Pro', monospace;
     font-size: 20px;
     color: #254035
 }
@@ -12653,7 +12578,7 @@ body.compensate-for-scrollbar {
 }
 
 .dashboard-body .membership-plan-wrapper h6 {
-    font-family: 'Source Code Pro', monospace !important;
+    font-family: 'Source Code Pro', monospace;
     font-size: 18px;
     color: #31795a
 }
@@ -12759,7 +12684,7 @@ body.compensate-for-scrollbar {
 }
 
 .compose-new-email-container .reply-btn:hover {
-    background: #bf0600;
+    background: #d2f34c;
     color: #244034
 }
 
@@ -12795,7 +12720,7 @@ body.compensate-for-scrollbar {
 }
 
 .remove-account-popup h2 {
-    font-family: 'Source Code Pro', monospace !important;
+    font-family: 'Source Code Pro', monospace;
     font-size: 36px;
     color: #254035;
     margin: 20px 0
@@ -12826,3 +12751,4 @@ body.compensate-for-scrollbar {
     opacity: 1;
     box-shadow: none
 }
+

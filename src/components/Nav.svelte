@@ -19,7 +19,7 @@
   import { writable } from 'svelte/store';
   import { goto } from '@sapper/app';
   import { navigationEvent } from './navigation';
-
+  import { setupAutoLogout } from '../routes/autoLogout';
   import { onDestroy } from 'svelte';
 // import { navigationEvent } from './navigation';
 
@@ -44,6 +44,7 @@ onDestroy(() => {
 
 
   onMount(() => {
+
   // Example: Trigger the event when navigating to a different route
   document.querySelector('a').addEventListener('click', () => {
     navigationEvent.set('navigate');
@@ -257,10 +258,10 @@ onDestroy(() => {
                   data-bs-auto-close="outside" aria-expanded="false">Find a Donar
                 </a>
                 <ul class="dropdown-menu">
-                  <li><a href="blog-v1.html" class="dropdown-item"><span>Blog Standard</span></a></li>
-                  <li><a href="blog-v2.html" class="dropdown-item"><span>Blog Grid</span></a></li>
-                  <li><a href="blog-v3.html" class="dropdown-item"><span>Blog Full width</span></a></li>
-                  <li><a href="blog-details.html" class="dropdown-item"><span>Blog Details</span></a></li>
+                  <li><a href="/donar/search-blood-donors-by-pincode" class="dropdown-item"><span>Find Donar with Pincode</span></a></li>
+                  <li><a href="blog-v2.html" class="dropdown-item"><span>Find Local Donar</span></a></li>
+                  <!-- <li><a href="blog-v3.html" class="dropdown-item"><span>Blog Full width</span></a></li>
+                  <li><a href="blog-details.html" class="dropdown-item"><span>Blog Details</span></a></li> -->
                 </ul> 
               </li>
 

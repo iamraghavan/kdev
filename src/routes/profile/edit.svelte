@@ -137,14 +137,16 @@
       riskyActivities: userData?.riskyActivities || "",
       tattoosPiercings: userData?.tattoosPiercings || "",
       lddate: userData?.lddate || "",
-      instagram: userData?.instagram || "",
-      facebook: userData?.facebook || "",
-      twitter: userData?.twitter || "",
-      linkedin: userData?.linkedin || "",
+      instagram: userData?.Instagram || "",
+      facebook: userData?.Facebook || "",
+      twitter: userData?.Twitter || "",
+      linkedin: userData?.Linkedin || "",
     };
   };
 
   onMount(async () => {
+
+    
     const currentUser = auth.currentUser;
 
     if (!currentUser) {
