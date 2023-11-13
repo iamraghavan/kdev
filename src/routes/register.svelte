@@ -113,6 +113,21 @@
     showPassword = !showPassword;
   }
 
+  function initializeTurnstile() {
+    if (window.turnstileV2 && window.turnstileV2.callback) {
+      window.turnstileV2.callback(
+        {
+          sitekey: '0x4AAAAAAACC60E1r0uX5QL4',
+          action: 'registration',
+          // Additional parameters if needed
+        },
+        handleRegistration
+      );
+    } else {
+      setTimeout(initializeTurnstile, 500); // Retry after 500 milliseconds
+    }
+  }
+
   async function handleRegistration() {
     try {
       const userCredential = await createUserWithEmailAndPassword(
@@ -215,6 +230,8 @@
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
   />
+
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </svelte:head>
 
 <!-- Add your styles here -->
@@ -499,14 +516,13 @@
                       </div>
                     {/if}
 
-                    <!-- <div class="col-12">
+                    <div class="col-12">
                     <div class="agreement-checkbox d-flex justify-content-between align-items-center">
                       <div>
-                        <input type="checkbox" id="remember">
-                        <label for="remember">By hitting the "Register" button, you agree to the <a href="/">Terms conditions</a> & <a href="/">Privacy Policy</a></label>
+                        <div class="cf-turnstile" data-sitekey="0x4AAAAAAACC60E1r0uX5QL4" data-theme="light" data-callback="initializeTurnstile"></div>
                       </div>
                     </div>
-                  </div> -->
+                  </div>
 
                     <div class="col-12">
                       <button

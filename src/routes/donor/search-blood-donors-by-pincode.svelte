@@ -1,4 +1,6 @@
 <script>
+
+
   import Banner from "../../components/InnerBanner.svelte";
   import { getDatabase, ref, get, set } from "firebase/database";
 import { onMount } from 'svelte';
@@ -21,14 +23,15 @@ let country = "India";
   let filteredData = [];
 
   import { goto } from '@sapper/app';
+
   function viewUserProfile(uid) {
-  event.preventDefault();
+    event.preventDefault();
+let a = uid.toString();
+    console.log('UID before goto:', a); // Log to check the value
 
-  console.log('UID before goto:', uid); // Log to check the value
-
-  // Use goto to navigate to the user's profile page and include uid in the state
-  goto(`donor/${uid}`, { state: { uid } });
-}
+    // Use goto to navigate to the user's profile page and include uid in the state
+    goto(`donor/${uid}`, { state: { value: a } });
+  }
 
 
   let pages = [1, 2, 3]; // Example array of pages
@@ -63,7 +66,7 @@ let country = "India";
       noofresults = filteredData.length;
 
       // Log the filtered data
-      console.log(filteredData);
+      console.log(filteredData.uid);
     } catch (err) {
       error = err.message || 'Error fetching data from Firebase';
     }
@@ -300,7 +303,7 @@ let country = "India";
                     <div class="row">
                     
                         
-                        {#each filteredData as { uid, fullName, age, gender, email, phoneNumber, whatsapp }}
+                        {#each filteredData as {uid, fullName, age, gender, email, phoneNumber, whatsapp }}
     <div class="col-xxl-4 col-sm-6 d-flex">
       <div class="candidate-profile-card text-center grid-layout border-0 mb-25">
         <h4 class="candidate-name mt-15 mb-0"><a href class="tran3s">{fullName}</a></h4>
