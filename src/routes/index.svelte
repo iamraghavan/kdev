@@ -1,5 +1,7 @@
 <script>
-  import HomeComponentOne from "../components/HomeComponentOne.svelte";
+  import BloodCta from "../components/BloodCTA.svelte";
+import HomeComponentOne from "../components/HomeComponentOne.svelte";
+  import Testmonial from "../components/Testmonial.svelte";
 
 
 	let searchInput = "";
@@ -43,7 +45,9 @@
 		</div>
 		
 	   <HomeComponentOne/>
-		
+		<Testmonial/>
+
+		<BloodCta/>
   
   </div>  
   
