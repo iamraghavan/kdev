@@ -3,6 +3,7 @@
     import { getDatabase, ref, get } from "firebase/database";
     import { firebaseApp } from "../../firebase";
   
+    let callnow = "Dial the digits, let's chat now!";
     export async function preload({ params }) {
       const uid = params.uid;
       const db = getDatabase(firebaseApp);
@@ -13,10 +14,29 @@
       return {
         uid,
         userData: {
-          uid: uid,
+          
           name: fetchedUserData?.fullName || "",
-          gender: fetchedUserData?.gender || "",
-          // ... other properties
+      gender: fetchedUserData?.gender || "",
+      country: fetchedUserData?.country || "",
+      dateOfBirth: fetchedUserData?.dateOfBirth || "",
+      age: fetchedUserData?.age || "",
+      phoneNumber: fetchedUserData?.phoneNumber || "",
+      pincode: fetchedUserData?.pincode || "",
+      city: fetchedUserData?.city || "",
+      state: fetchedUserData?.state || "",
+      division: fetchedUserData?.division || "",
+      whatsappNum: fetchedUserData?.whatsapp || "WhatsApp Number",
+      email: fetchedUserData?.email || "",
+      bloodGroup: fetchedUserData?.bloodGroup || "",
+      rhFactor: fetchedUserData?.rhFactor || "",
+      travelHistory: fetchedUserData?.travelHistory || "",
+      riskyActivities: fetchedUserData?.riskyActivities || "",
+      tattoosPiercings: fetchedUserData?.tattoosPiercings || "",
+      lddate: fetchedUserData?.lddate || "",
+      instagram: fetchedUserData?.Instagram || "",
+      facebook: fetchedUserData?.Facebook || "",
+      twitter: fetchedUserData?.Twitter || "",
+      linkedin: fetchedUserData?.Linkedin || "",
         },
       };
     }
@@ -31,9 +51,111 @@
     onMount(() => {
       // The userData is already provided via preload, no need to fetch again
     });
-</script>
+
+    import Banner from "../../components/InnerBanner.svelte";
   
-<h1>User ID: {uid}</h1>
-<h1>Name: {userData.name}</h1>
-<h1>Gender: {userData.gender}</h1>
-<!-- Add other properties as needed -->
+  let pageLinks = [
+    { text: 'Home', url: '/' },
+    { text: 'About' },
+  ];
+
+</script>
+
+<style>
+    .none{
+        display: none;
+    }
+    </style>
+  <div class="none">{uid}</div>
+  
+<div class="main-page-wrapper">
+
+    <div>
+    <Banner title={`${userData.name} kurudhi.com profile, check it out!`}  />
+  </div>
+
+<section class="company-details pt-10 lg-pt-10 pb-160 xl-pb-150 lg-pb-80 bg-white">
+        <div class="container">
+            <div class="row">
+                <div class="col-xxl-12 col-xl-12 ">
+                    <div class="job-company-info ms-xl-5 ms-xxl-0 lg-mb-50">
+        
+                        <div class="text-md text-dark text-center mt-15 mb-20 lg-mb-10"><h3>{userData.name}</h3></div>
+                        <p>
+  Hey there! Meet {userData.name}, our awesome donor. 🌟 Give it up for {userData.name}! 👏
+  Don't forget to share the love! 💖 #DonationHero
+</p>
+                        <div class="border-top mt-35 lg-mt-20 pt-25">
+                            <ul class="job-meta-data row style-none">
+                                <li class="col-lg-6">
+                                    <span>Location: </span>
+                                    <div>{userData.city}, {userData.state}, {userData.country} </div>
+                                </li>
+                                <li class="col-lg-6">
+                                    <span>Date of Birth:</span>
+                                    <div>{userData.dateOfBirth}</div>
+                                </li>
+                                <li class="col-lg-6">
+                                    <span>Email: </span>
+                                    <div><a href={`mailto:${userData.email}`}>{userData.email}</a></div>
+                                </li>
+                                <li class="col-lg-6">
+                                    <span>Phone Number: </span>
+                                    <div><a href={`tel:+91${userData.phoneNumber}`}>{userData.phoneNumber}</a></div>
+                                </li>
+                                <li class="col-lg-6">
+                                    <span>WhatsApp Number:</span>
+                                    <div><a href={`tel:+91${userData.whatsappNum}`}>{userData.whatsappNum || "Sorry, the donor has no WhatsApp number."}</a></div>
+                                </li>
+                                <li class="col-lg-6">
+                                    <span>Last Donation Date: </span>
+                                    <div>{userData.LastDonationDate || "None of Donation"}</div>
+                                </li>
+
+                                <li class="col-lg-6">
+                                    <span>Travel History : </span>
+                                    <div>{#if userData.travelHistory === 'yes'}
+                        Yes, I have a travel history
+                      {:else if userData.travelHistory === 'no'}
+                        No, I don't have a travel history
+                      {/if} </div>
+                                </li>
+
+                                <li class="col-lg-6">
+                                    <span>Risky Activities : </span>
+                                    <div>{#if userData.riskyActivities === 'yes'}
+                        Yes, I engage in risky activities
+                      {:else if userData.riskyActivities === 'no'}
+                      No, I don't engage in risky activities
+                      {/if}</div>
+                                </li>
+                                <li class="col-lg-6">
+                                    <span>Tattoos and Piercings : </span>
+                                    <div>{#if userData.tattoosPiercings === 'yes'}
+                        Yes, I have tattoos or piercings
+                      {:else if userData.tattoosPiercings === 'no'}
+                      No, I don't have tattoos or piercings
+                      {/if}</div>
+                                </li>
+                                <li class="col-lg-6">
+                                    <span>Social: </span>
+                                    <div>
+                                        <a href="{`https://www.facebook.com/${userData.facebook}`}" target="_blank" class="me-3"><i class="bi bi-facebook"></i></a>
+                          <a href="{`https://instagram.com/${userData.instagram}`}" target="_blank" class="me-3"><i class="bi bi-instagram"></i></a>
+                          <a href="{`https://twitter.com/${userData.twitter}`}" target="_blank" class="me-3"><i class="bi bi-twitter"></i></a>
+                          <a href="{`https://www.linkedin.com/in/${userData.linkedin}`}" target="_blank"><i class="bi bi-linkedin"></i></a>
+                                    </div>
+                                </li>
+                            </ul>
+
+                            <a href="{`tel:+91${userData.phoneNumber}`}" class="btn-ten fw-500 text-white w-100 text-center tran3s mt-25">{callnow}</a>
+                        </div>
+                    </div>
+                 
+                </div>
+             
+            </div>
+        </div>
+    </section>
+
+</div>

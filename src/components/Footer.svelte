@@ -29,24 +29,29 @@
     };
 
     let services = [
-        { text: "Browse Jobs", link: "job-grid-v2.html" },
-        { text: "Companies", link: "company-v1.html" },
+        { text: "Become a Donor", link: "/register" },
+        { text: "Covid-19", link: "/CovidChart" },
         { text: "Candidates", link: "candidates-v1.html" },
         { text: "Pricing", link: "pricing.html" },
     ];
 
     let company = [
-        { text: "About us", link: "/about" },
-        { text: "Covid-19", link: "/CovidChart" },
-        { text: "FAQ’s", link: "faq.html" },
-        { text: "Contact", link: "contact.html" },
+        { text: "Legal & Financials", link: "/legal" },
+
+    { text: "Accessibility", link: "/accessibility" },
+        { text: "Sitemap", link: "/sitemap" },
+        { text: "Mission & Vision", link: "/mission-and-vision" },
+        { text: "Programs", link: "/programs" },
+        
     ];
 
     let support = [
-        { text: "Terms of use", link: "contact.html" },
-        { text: "Terms & conditions", link: "contact.html" },
-        { text: "Privacy", link: "contact.html" },
-        { text: "Cookie policy", link: "contact.html" },
+      
+        { text: "Privacy Notice", link: "/privacy" },
+        { text: "Site Terms", link: "/site-terms" },
+        { text: "Cookie Policy", link: "/cookie-policy" },
+        { text: "Do Not Share My Data (DPDP)", link: "/cookie-policy" },
+        { text: "Cookie Policy", link: "/cookie-policy" },
     ];
 
     let newsletter = {

@@ -26,11 +26,11 @@ let country = "India";
 
   function viewUserProfile(uid) {
     event.preventDefault();
-let a = uid.toString();
-    console.log('UID before goto:', a); // Log to check the value
+let a = uid
+    console.log('UID before goto:', uid); // Log to check the value
 
     // Use goto to navigate to the user's profile page and include uid in the state
-    goto(`donor/${uid}`, { state: { value: a } });
+    goto(`donor/${uid}`, { state: { value: uid } });
   }
 
 
