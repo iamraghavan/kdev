@@ -1,15 +1,17 @@
+
 <script>
   import { onMount } from "svelte";
-  import { getDatabase, ref, get, update } from "firebase/database";
+  import { getDatabase, ref, update } from "firebase/database";
   import { auth } from "../../firebase";
   import { goto } from "@sapper/app";
   import Swal from "sweetalert2";
+  import axios from "axios";
+  import Toast from "svelte-toast";
   import { firebaseApp } from "../../firebase";
 
   const db = getDatabase(firebaseApp);
 
   let error = "";
-
   let user = {
     uid: "",
     name: "",
@@ -33,14 +35,11 @@
   function handleBloodGroupChange(event) {
     user.bloodGroup = event.target.value;
 
-    // If the selected blood group is Rh factor relevant, initialize the Rh factor to an empty string
-    // Otherwise, set it to null
     if (user.bloodGroup.includes("+")) {
       user.rhFactor = "+ve";
     } else if (user.bloodGroup.includes("-")) {
       user.rhFactor = "-ve";
     } else {
-      // For other blood groups, set rhFactor to null or an empty string
       user.rhFactor =
         user.bloodGroup === "INRA" || user.bloodGroup === "Bombay Blood Group"
           ? "null"
@@ -53,7 +52,6 @@
     const today = new Date();
     let age = today.getFullYear() - dob.getFullYear();
 
-    // Check if the birthday has occurred this year
     if (today < new Date(today.getFullYear(), dob.getMonth(), dob.getDate())) {
       age--;
     }
@@ -78,19 +76,12 @@
   }
 
   async function fetchAddressData() {
-    if (user.pincode.length === 6) {
-      try {
-        const apiUrl = `https://api.postalpincode.in/pincode/${user.pincode}`;
-        const response = await fetch(apiUrl);
+    try {
+      const apiUrl = `https://api.postalpincode.in/pincode/${user.pincode}`;
+      const response = await axios.get(apiUrl);
 
-        if (!response.ok) {
-          throw new Error(
-            "Invalid pincode. Please enter a valid 6-digit pincode."
-          );
-        }
-
-        const data = await response.json();
-
+      if (response.status === 200) {
+        const data = response.data;
         if (data.length > 0 && data[0].Status === "Success") {
           const postOffice = data[0].PostOffice[0];
           user.state = postOffice.State;
@@ -98,17 +89,13 @@
           user.city = postOffice.Name;
           error = "";
         } else {
-          throw new Error(
-            "Invalid pincode. Please enter a valid 6-digit pincode."
-          );
+          throw new Error("Invalid pincode. Please enter a valid 6-digit pincode.");
         }
-      } catch (err) {
-        error =
-          err.message ||
-          "An error occurred while fetching data. Please try again.";
       }
-    } else {
-      error = "";
+    } catch (err) {
+      error =
+        err.message || "An error occurred while fetching data. Please try again.";
+      Toast.push(error, { duration: 3000, type: "error" });
     }
   }
 
@@ -145,8 +132,6 @@
   };
 
   onMount(async () => {
-
-    
     const currentUser = auth.currentUser;
 
     if (!currentUser) {
@@ -211,6 +196,8 @@
     }
   };
 </script>
+
+
 
 <svelte:head>
   <link
