@@ -4,13 +4,6 @@ import HomeComponentOne from "../components/HomeComponentOne.svelte";
   import Testmonial from "../components/Testmonial.svelte";
 
 
-	let searchInput = "";
-	
-  
-	function search() {
-	  // Handle the search functionality here
-	  console.log("Search for:", searchInput);
-	}
   
   </script>
 
