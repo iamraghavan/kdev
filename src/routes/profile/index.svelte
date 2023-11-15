@@ -2,19 +2,18 @@
 
 <script>
   import { onMount } from 'svelte';
-  import { auth, db } from '../../firebase'; // Import your Firebase configuration
+  import { auth, db } from '../../firebase';
   import { signInWithEmailAndPassword } from 'firebase/auth';
   import { ref, get } from 'firebase/database';
   import { goto } from '@sapper/app';
-
-  import edit from './edit.svelte'
+  import BloodCta from '../../components/BloodCTA.svelte';
+  import html2canvas from 'html2canvas';
 
   let userData = {};
 
   onMount(async () => {
     // Check if the user is signed in using Firebase Authentication
     const user = auth.currentUser;
-    
 
     if (!user) {
       // Redirect to the home page if the user is not signed in
@@ -34,21 +33,15 @@
   });
 
   const navigateToEditPage = () => {
-    goto(`/profile/edit`); 
+    goto(`/profile/edit`);
   };
 
-  let genderIcon;
-
   let genderIconClass = userData.gender === 'male' ? 'fa-mars' : userData.gender === 'female' ? 'fa-venus' : 'fa-question';
-
 
   let pageTitle = userData.fullName;
   let pageBlood = userData.bloodGroup;
 
-
-  import html2canvas from 'html2canvas';
-  import BloodCta from '../../components/BloodCTA.svelte';
-  let logoImage = 'https://firebasestorage.googleapis.com/v0/b/waggy-tails-8d2ab.appspot.com/o/Untitled-2.png?alt=media&token=cafbf7fb-ee7a-4dcb-8fab-ad428beddf70'
+  let logoImage = 'https://firebasestorage.googleapis.com/v0/b/waggy-tails-8d2ab.appspot.com/o/Untitled-2.png?alt=media&token=cafbf7fb-ee7a-4dcb-8fab-ad428beddf70';
 
   let showDownloadButton = true;
 
@@ -71,9 +64,8 @@
     // Hide the download button and show the logo image after clicking
     showDownloadButton = false;
   };
-
-
 </script>
+
 
 <!-- 
 <svelte:head>

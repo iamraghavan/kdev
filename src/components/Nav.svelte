@@ -15,7 +15,7 @@
   import { onMount, setContext } from 'svelte';
   import { auth } from '../firebase';
   import { getDatabase, ref, get } from 'firebase/database';
-  import { onAuthStateChanged } from 'firebase/auth';
+  import { getAuth, onAuthStateChanged } from 'firebase/auth';
   import { writable } from 'svelte/store';
   import { goto } from '@sapper/app';
   import { navigationEvent } from './navigation';
@@ -24,6 +24,29 @@
 // import { navigationEvent } from './navigation';
 
 let updateCount = 0;
+
+
+
+let isLoggedIn = false;
+
+onMount(() => {
+  const unsubscribe = onAuthStateChanged(auth, (user) => {
+    isLoggedIn = !!user;
+  });
+
+  return () => unsubscribe();
+});
+
+function handleProfileClick() {
+  if (isLoggedIn) {
+    goto("/profile");
+  } else {
+    goto("/login");
+  }
+}
+
+
+
 
 onMount(() => {
   const unsubscribe = navigationEvent.subscribe((event) => {
@@ -227,7 +250,14 @@ onDestroy(() => {
                           </h6>
                         <ul class="style-none mega-dropdown-list">
                          
-                          <li><a href="company-v1.html" class="dropdown-item"><span>My Profile</span></a></li>
+                          <li>
+
+
+                            <button on:click={handleProfileClick} class="dropdown-item">
+                              <span>My Profile</span>
+                            </button>
+                            
+                          </li>
                           <li><a href="company-v2.html" class="dropdown-item"><span>Forget Donor Account</span></a></li>
                           <!-- <li><a href="company-v3.html" class="dropdown-item"><span>Go to My Profile</span></a></li> -->
                           <li><a href="company-v4.html" class="dropdown-item"><span>Get Digital Donor Card</span></a></li>
@@ -259,14 +289,14 @@ onDestroy(() => {
                 </a>
                 <ul class="dropdown-menu">
                   <li><a href="/donor/search-blood-donors-by-pincode" class="dropdown-item"><span>Find Donor with Pincode</span></a></li>
-                  <li><a href="blog-v2.html" class="dropdown-item"><span>Find Local Donor</span></a></li>
+                  <li><a href="/donor/find-local-donor" class="dropdown-item"><span>Find Local Donor</span></a></li>
                   <!-- <li><a href="blog-v3.html" class="dropdown-item"><span>Blog Full width</span></a></li>
                   <li><a href="blog-details.html" class="dropdown-item"><span>Blog Details</span></a></li> -->
                 </ul> 
               </li>
 
               <li class="nav-item">
-                <a class="nav-link" href="contact.html" role="button">Contact</a>
+                <a class="nav-link" href="/Contact" role="button">Contact</a>
               </li>
               {#if $userContext !== null}
               <li class="nav-item dropdown d-md-none mt-5">

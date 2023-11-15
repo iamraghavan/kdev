@@ -9,6 +9,7 @@
 
   import { afterUpdate } from 'svelte';
   import Banner from "../components/InnerBanner.svelte";
+  import HealthNews from './HealthNews.svelte';
 
   let pageLinks = [
     { text: 'Home', url: '/' },
@@ -82,3 +83,6 @@
     </div>
   </section>
 </div>
+
+
+<HealthNews />

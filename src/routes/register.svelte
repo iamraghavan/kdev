@@ -5,6 +5,8 @@
   import { updateProfile, sendEmailVerification } from "firebase/auth";
   import Swal from "sweetalert2";
   import { goto } from "@sapper/app";
+  import axios from 'axios';
+  import Toastify from 'toastify-js';
 
   import { firebaseApp } from "../firebase";
 
@@ -61,18 +63,10 @@
     if (pincode.length === 6) {
       try {
         const apiUrl = `https://api.postalpincode.in/pincode/${pincode}`;
-        const response = await fetch(apiUrl);
+        const response = await axios.get(apiUrl);
 
-        if (!response.ok) {
-          throw new Error(
-            "Invalid pincode. Please enter a valid 6-digit pincode."
-          );
-        }
-
-        const data = await response.json();
-
-        if (data.length > 0 && data[0].Status === "Success") {
-          const postOffice = data[0].PostOffice[0];
+        if (response.data.length > 0 && response.data[0].Status === "Success") {
+          const postOffice = response.data[0].PostOffice[0];
           state = postOffice.State;
           division = postOffice.Division;
           city = postOffice.Name;
@@ -86,6 +80,15 @@
         error =
           err.message ||
           "An error occurred while fetching data. Please try again.";
+
+        // Use Toastify to display the error message
+        Toastify({
+          text: error,
+          duration: 3000,
+          gravity: 'top', // Display the toast at the top of the page
+          position: 'left', // Position the toast on the left side
+          backgroundColor: '#ff4d4d', // Set background color to red (or any other color you prefer)
+        }).showToast();
       }
     } else {
       error = ""; // Reset the error if the pincode is not 6 digits

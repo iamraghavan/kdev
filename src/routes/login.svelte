@@ -1,72 +1,11 @@
 <script>
-    import { onMount } from 'svelte';
-    import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
-    // import { navigate } from 'svelte-routing';
-    import Swal from 'sweetalert2';
-    import { goto } from '@sapper/app';
-    import Banner from "../components/InnerBanner.svelte";
+  import { onMount } from 'svelte';
+  import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail, signOut } from 'firebase/auth';
+  import { ref, get, set } from 'firebase/database';
+  import Swal from 'sweetalert2';
+  import { goto } from '@sapper/app';
 
-    import { get, ref } from 'firebase/database';
-  import { db } from '../firebase';
-  
-    import { firebaseApp } from '../firebase';
-const auth = getAuth(firebaseApp);
-// const db = getDatabase(firebaseApp);
-
-
-let rememberMe;
-
-    let email = '';
-    let password = '';
-  
-    onMount(() => {
-      const inputFields = document.querySelectorAll('input[autocomplete="off"]');
-      inputFields.forEach((input) => {
-        input.setAttribute('autocomplete', 'new-password');
-      });
-
-    });
-
-  
-  
-
-     const handleLogin = async () => {
-    try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-
-      // Check if "Keep me logged in" is selected
-      if (rememberMe) {
-        
-        localStorage.setItem('userLoggedIn', true);
-      }
-
-      localStorage.setItem('loggedIn', true);
-      
-
-      // Show a success message with SweetAlert
-      Swal.fire({
-        icon: 'success',
-        title: '🎉 Login Successful 🎉',
-        text: `You are logged in at ${window.navigator.userAgent}.`,
-        showConfirmButton: false, // Remove the OK button
-        timer: 5000, // Show the message for 5 seconds (5000 milliseconds),
-      });
-
-      // Redirect to the dashboard or profile page after a delay
-      setTimeout(() => {
-        goto('/profile');
-      }, 5000);
-    } catch (error) {
-      // Login failed, show an error message
-      Swal.fire({
-        icon: 'error',
-        title: 'Login Failed',
-        text: error.message,
-      });
-    }
-  };
-
-
+  import Banner from "../components/InnerBanner.svelte";
   const showForgotPassword = async () => {
     const { value: email } = await Swal.fire({
       title: 'Forgot Password',
@@ -98,22 +37,119 @@ let rememberMe;
     }
   };
 
-  // Check for stored authentication state on component mount
-  onMount(() => {
-    const userLoggedIn = localStorage.getItem('userLoggedIn');
+  import { firebaseApp } from '../firebase';
 
-    if (userLoggedIn) {
-      goto('/profile');
-      console.log('User already logged in.');
-    }
+  const auth = getAuth(firebaseApp);
+  const db = ref(firebaseApp.database());
+
+  let rememberMe = false;
+  let email = '';
+  let password = '';
+  let visitorId;
+
+  onMount(() => {
+    // Generate a custom visitor ID based on user agent and screen resolution
+    visitorId = getVisitorId();
+
+    // Check if the user is already logged in from another browser
+    checkExistingSession();
   });
 
-    let showPassword = false;
+  const getVisitorId = () => {
+    // You can create a custom visitor ID by combining various factors,
+    // such as user agent, screen resolution, and more.
+    const userAgent = window.navigator.userAgent;
+    const screenResolution = window.screen.width + 'x' + window.screen.height;
+    const combinedInfo = userAgent + screenResolution;
 
-    function togglePasswordVisibility() {
+    // You can hash the combined information to generate a visitor ID.
+    // Here, we use a simple example with the 'btoa' function, which encodes
+    // the information as base64.
+    const visitorId = btoa(combinedInfo);
+
+    return visitorId;
+  };
+
+  const checkExistingSession = async () => {
+    try {
+      // Check if the user is already logged in from another browser
+      const userSessionRef = ref(db, `userSessions/${auth.currentUser?.uid}`);
+      const existingSession = await get(userSessionRef);
+
+      if (existingSession && existingSession.val().visitorId !== visitorId) {
+        // User is already logged in from another browser
+        Swal.fire({
+          icon: 'error',
+          title: 'Login Error',
+          text: 'You are already logged in from another browser.',
+        });
+
+        // Redirect to a login page or perform any other action
+        goto('/login');
+
+        // Optionally, sign out the current user
+        // await signOut(auth);
+
+        return;
+      }
+    } catch (error) {
+      console.error('Error checking existing session:', error);
+    }
+  };
+
+  const handleLogin = async () => {
+    try {
+      // Check if the user is already logged in from another browser
+      await checkExistingSession();
+
+      // Log in the user
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+
+      // Store the user's session in the database
+      const userSessionRef = ref(db, `userSessions/${userCredential.user.uid}`);
+      await set(userSessionRef, { visitorId });
+
+      // Check if "Keep me logged in" is selected
+      if (rememberMe) {
+        localStorage.setItem('userLoggedIn', true);
+      }
+
+      localStorage.setItem('loggedIn', true);
+
+      // Show a success message with SweetAlert
+      Swal.fire({
+        icon: 'success',
+        title: '🎉 Login Successful 🎉',
+        text: `You are logged in at ${window.navigator.userAgent}.`,
+        showConfirmButton: false,
+        timer: 5000,
+      });
+
+      // Redirect to the dashboard or profile page after a delay
+      setTimeout(() => {
+        goto('/profile');
+      }, 5000);
+    } catch (error) {
+      // Login failed, show an error message
+      Swal.fire({
+        icon: 'error',
+        title: 'Login Failed',
+        text: error.message,
+      });
+    }
+  };
+
+  let showPassword = false;
+
+  function togglePasswordVisibility() {
     showPassword = !showPassword;
   }
-  </script>
+</script>
+
+<style>
+  /* Add your styles here */
+</style>
+
   
   <!-- Your login form HTML here -->
   

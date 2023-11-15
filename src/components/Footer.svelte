@@ -11,13 +11,6 @@
     osplatform = navigator.platform;
   }
 
-  // let browserLanguage = navigator.language;
-
-  let logo = {
-    src: "images/logo/logo_04.png",
-    alt: "Logo",
-  };
-
   let services = [
     { text: "Become a Donor", link: "/register" },
     { text: "Covid-19", link: "/CovidChart" },
@@ -27,7 +20,6 @@
 
   let company = [
     { text: "Legal & Financials", link: "/legal" },
-
     { text: "Accessibility", link: "/accessibility" },
     { text: "Sitemap", link: "/sitemap" },
     { text: "Mission & Vision", link: "/mission-and-vision" },
@@ -38,8 +30,7 @@
     { text: "Privacy Notice", link: "/privacy" },
     { text: "Site Terms", link: "/site-terms" },
     { text: "Cookie Policy", link: "/cookie-policy" },
-    { text: "Do Not Share My Data (DPDP)", link: "/cookie-policy" },
-    { text: "Cookie Policy", link: "/cookie-policy" },
+    { text: "Do Not Share My Data (DPDP)", link: "/cookie-policy" }, // Remove duplicate
   ];
 
   let newsletter = {
@@ -73,11 +64,7 @@
         <div class="col-lg-3 col-md-3 footer-intro mb-6">
           <div class="logo mb-15">
             <a href="index.html" class="d-flex align-items-center">
-              <img
-                src={logo.src}
-                alt={logo.alt}
-                style="height: auto; width: 14rem;"
-              />
+              <img src="images/logo/logo_04.png" alt="Logo" style="height: auto; width: 14rem;" />
             </a>
             <div class="mt-4">
               <p>{browserVersion}</p>
@@ -89,7 +76,7 @@
           <h5 class="footer-title">Services​</h5>
           <ul class="footer-nav-link style-none">
             {#each services as service (service.text)}
-              <li><a href={service.link}>{service.text}</a></li>
+              <li key={service.text}><a href={service.link}>{service.text}</a></li>
             {/each}
           </ul>
         </div>
@@ -105,7 +92,7 @@
           <h5 class="footer-title">Support</h5>
           <ul class="footer-nav-link style-none">
             {#each support as s (s.text)}
-              <li><a href={s.link}>{s.text}</a></li>
+              <li key={s.text}><a href={s.link}>{s.text}</a></li>
             {/each}
           </ul>
         </div>
