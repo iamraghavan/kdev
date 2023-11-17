@@ -1,3 +1,5 @@
+
+
 <script>
   import { onMount } from "svelte";
   import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
@@ -7,6 +9,7 @@
   import { goto } from "@sapper/app";
   import axios from 'axios';
   import Toastify from 'toastify-js';
+  import toastr from 'toastr';
 
   import { firebaseApp } from "../firebase";
 
@@ -29,6 +32,27 @@
   let isSubmitDisabled = true;
   let isBelow18 = false;
   let age;
+  let remember = false;
+
+  toastr.options = {
+  "closeButton": true,
+  "debug": false,
+  "newestOnTop": true,
+  "progressBar": true,
+  "positionClass": "toast-bottom-right",
+  "preventDuplicates": true,
+  "onclick": null,
+  "showDuration": "300",
+  "hideDuration": "1000",
+  "timeOut": "5000",
+  "extendedTimeOut": "1000",
+  "showEasing": "swing",
+  "hideEasing": "linear",
+  "showMethod": "fadeIn",
+  "hideMethod": "fadeOut"
+}
+
+
 
   function calculateAge(dateOfBirth) {
     const dob = new Date(dateOfBirth);
@@ -132,6 +156,17 @@
   }
 
   async function handleRegistration() {
+
+    if (!email || !password || !pincode || !phoneNumber || !dateOfBirth || !bloodGroup || !fullName || !gender) {
+      toastr.error('Please fill in all required fields.');
+      return;
+    }
+
+    if (!remember) {
+      toastr.error('Please accept the terms and conditions.');
+      return;
+    }
+
     try {
       const userCredential = await createUserWithEmailAndPassword(
         auth,
@@ -527,10 +562,20 @@
                     </div>
                   </div>
 
+                  <div class="col-12">
+                    <div class="agreement-checkbox d-flex justify-content-between align-items-center">
+                        <div>
+                            <input type="checkbox" bind:checked={remember} id="remember">
+                            <label for="remember">Clicking 'Register' means you <a href="/privacy"> accept terms </a>. I allow displaying my name and phone for emergencies. </label>
+                        </div>
+                    </div> <!-- /.agreement-checkbox -->
+                </div>
+
                     <div class="col-12">
                       <button
+                     
                         type="button"
-                        class="btn-eleven fw-500 tran3s d-block mt-20"
+                        class="btn-eleven fw-500 tran3s d-block mt-20 {remember ? '' : 'disabled'}"
                         on:click={handleRegistration}>Register</button
                       >
                     </div>
@@ -566,6 +611,12 @@
 </div>
 
 <style>
+
+.btn-eleven.disabled {
+        background-color: #9fa5aa;
+        color: black;
+        /* Add any other styles for the disabled state */
+    }
   .gender-radio-group {
     display: flex;
     flex-direction: column;

@@ -258,7 +258,7 @@ onDestroy(() => {
                             </button>
                             
                           </li>
-                          <li><a href="company-v2.html" class="dropdown-item"><span>Forget Donor Account</span></a></li>
+                          <li><a href="/forget" class="dropdown-item"><span>Forget Donor Account</span></a></li>
                           <!-- <li><a href="company-v3.html" class="dropdown-item"><span>Go to My Profile</span></a></li> -->
                           <li><a href="company-v4.html" class="dropdown-item"><span>Get Digital Donor Card</span></a></li>
                           
