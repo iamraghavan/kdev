@@ -1,96 +1,91 @@
 <script>
   import { onMount } from 'svelte';
-  import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail, signOut } from 'firebase/auth';
-  import { ref, get, set } from 'firebase/database';
+  import {
+    getAuth,
+    signInWithEmailAndPassword,
+    onAuthStateChanged,
+    signOut,
+    sendPasswordResetEmail,
+  } from 'firebase/auth';
+  import { getDatabase, ref, get, set } from 'firebase/database';
   import Swal from 'sweetalert2';
   import { goto } from '@sapper/app';
-
-  import Banner from "../components/InnerBanner.svelte";
-  const showForgotPassword = async () => {
-    const { value: email } = await Swal.fire({
-      title: 'Forgot Password',
-      html: '<input id="swal-input1" class="swal2-input" placeholder="Enter your email">',
-      focusConfirm: false,
-      preConfirm: () => {
-        return document.getElementById('swal-input1').value;
-      },
-    });
-
-    if (email) {
-      try {
-        await sendPasswordResetEmail(auth, email);
-
-        // Password reset email sent successfully
-        Swal.fire({
-          icon: 'success',
-          title: 'Password Reset Email Sent',
-          text: 'Please check your email for instructions on resetting your password.',
-        });
-      } catch (error) {
-        // Password reset email failed
-        Swal.fire({
-          icon: 'error',
-          title: 'Password Reset Failed',
-          text: error.message,
-        });
-      }
-    }
-  };
-
+  import { v4 as uuidv4 } from 'uuid';
   import { firebaseApp } from '../firebase';
+  import Banner from "../components/InnerBanner.svelte";
 
   const auth = getAuth(firebaseApp);
-  const db = ref(firebaseApp.database());
+  const db = getDatabase(firebaseApp);
 
-  let rememberMe = false;
+  let rememberMe;
   let email = '';
   let password = '';
-  let visitorId;
+  let showPassword = false;
+  let fingerprint;
 
-  onMount(() => {
-    // Generate a custom visitor ID based on user agent and screen resolution
-    visitorId = getVisitorId();
+  onMount(async () => {
+    const inputFields = document.querySelectorAll('input[autocomplete="off"]');
+    inputFields.forEach((input) => {
+      input.setAttribute('autocomplete', 'new-password');
+    });
 
-    // Check if the user is already logged in from another browser
-    checkExistingSession();
+    // Check if the user is already logged in from another device
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        checkExistingSession(user.uid);
+      }
+    });
+
+    // Generate fingerprint
+    fingerprint = generateFingerprint();
   });
 
-  const getVisitorId = () => {
-    // You can create a custom visitor ID by combining various factors,
-    // such as user agent, screen resolution, and more.
+  const generateFingerprint = () => {
+    // Check if a fingerprint is already stored in local storage
+    const storedFingerprint = localStorage.getItem('userFingerprint');
+
+    if (storedFingerprint) {
+      return storedFingerprint;
+    }
+
     const userAgent = window.navigator.userAgent;
     const screenResolution = window.screen.width + 'x' + window.screen.height;
-    const combinedInfo = userAgent + screenResolution;
+    const language = window.navigator.language;
+    const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const platform = window.navigator.platform;
+    const plugins = Array.from(navigator.plugins).map((plugin) => plugin.name);
 
-    // You can hash the combined information to generate a visitor ID.
-    // Here, we use a simple example with the 'btoa' function, which encodes
-    // the information as base64.
-    const visitorId = btoa(combinedInfo);
+    const combinedInfo = userAgent + screenResolution + language + timeZone + platform + plugins;
+
+    // Use uuid to generate a unique ID
+    const visitorId = uuidv4();
+
+    // Store the fingerprint in local storage
+    localStorage.setItem('userFingerprint', visitorId);
+    console.log(visitorId);
 
     return visitorId;
   };
 
-  const checkExistingSession = async () => {
+  const checkExistingSession = async (userId) => {
     try {
-      // Check if the user is already logged in from another browser
-      const userSessionRef = ref(db, `userSessions/${auth.currentUser?.uid}`);
+      // Check if the user has an existing session
+      const userSessionRef = ref(db, `users/${userId}/userSessions`);
       const existingSession = await get(userSessionRef);
 
-      if (existingSession && existingSession.val().visitorId !== visitorId) {
-        // User is already logged in from another browser
+      if (existingSession && existingSession.val().fingerprint !== fingerprint) {
+        // User is already logged in from another device
         Swal.fire({
           icon: 'error',
           title: 'Login Error',
-          text: 'You are already logged in from another browser.',
+          text: 'You are already logged in from another device.',
         });
+
+        // Sign out the current user
+        await signOut(auth);
 
         // Redirect to a login page or perform any other action
         goto('/login');
-
-        // Optionally, sign out the current user
-        // await signOut(auth);
-
-        return;
       }
     } catch (error) {
       console.error('Error checking existing session:', error);
@@ -99,15 +94,16 @@
 
   const handleLogin = async () => {
     try {
-      // Check if the user is already logged in from another browser
-      await checkExistingSession();
-
       // Log in the user
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
 
       // Store the user's session in the database
-      const userSessionRef = ref(db, `userSessions/${userCredential.user.uid}`);
-      await set(userSessionRef, { visitorId });
+      const userSessionRef = ref(db, `users/${userCredential.user.uid}/userSessions`);
+      await set(userSessionRef, {
+        fingerprint,
+        userAgent: window.navigator.userAgent,
+        platform: window.navigator.platform,
+      });
 
       // Check if "Keep me logged in" is selected
       if (rememberMe) {
@@ -139,104 +135,129 @@
     }
   };
 
-  let showPassword = false;
+  const showForgotPassword = async () => {
+    const { value: email } = await Swal.fire({
+      title: 'Forgot Password',
+      html: '<input id="swal-input1" class="swal2-input" placeholder="Enter your email">',
+      focusConfirm: false,
+      preConfirm: () => {
+        return document.getElementById('swal-input1').value;
+      },
+    });
 
-  function togglePasswordVisibility() {
+    if (email) {
+      try {
+        await sendPasswordResetEmail(auth, email);
+
+        // Password reset email sent successfully
+        Swal.fire({
+          icon: 'success',
+          title: 'Password Reset Email Sent',
+          text: 'Please check your email for instructions on resetting your password.',
+        });
+      } catch (error) {
+        // Password reset email failed
+        Swal.fire({
+          icon: 'error',
+          title: 'Password Reset Failed',
+          text: error.message,
+        });
+      }
+    }
+  };
+
+  const togglePasswordVisibility = () => {
     showPassword = !showPassword;
-  }
+  };
 </script>
 
-<style>
-  /* Add your styles here */
-</style>
 
-  
-  <!-- Your login form HTML here -->
-  
+<!-- Your login form HTML here -->
+
 
 <div class="main-page-wrapper">
-    <div>
-      <Banner title="Donor Candidates Login"  />
-      <!-- Other content for the "About" page -->
-    </div>
-  
-    <section class="registration-section position-relative pt-100 lg-pt-80 pb-150 lg-pb-80">
-      <div class="container">
-        <div class="user-data-form">
-          <div class="text-center">
-            <h2>Login to your Account</h2>
-          </div>
-          <div class="form-wrapper m-auto">
-          
-            <div class="tab-content mt-40">
-              <div class="tab-pane fade show active" role="tabpanel" id="fc1">
-                <form>
-                  <div class="row">
-                 
-  
-  
-                    <div class="col-12">
-                      <div class="input-group-meta position-relative mb-25">
-                        <label for="phoneNumber">Email*</label>
-                        <input type="email" placeholder="Enter your Email" bind:value={email} autocomplete="off"/>
-                      </div>
-                    </div>
-                    <div class="col-12">
-                      <div class="input-group-meta position-relative mb-20">
-                        <label for="password">Password* </label>
-                        {#if showPassword}
-                          <input
-                            type="text"
-                            placeholder="Enter Password"
-                            bind:value={password}
-                            autocomplete="off"
-                            
-                          />
-                        {:else}
-                          <input
-                            type="password"
-                            placeholder="Enter Password"
-                            bind:value={password}
-                            autocomplete="off"
-                          />
-                        {/if}
-                        <div class="mt-3">
-                          <button type="button" class="toggle-password" on:click={togglePasswordVisibility}>
-                              {showPassword ? 'Hide Password' : 'Show Password'}
-                            </button>
-                        </div>
-                        
-                      </div>
-                    </div>
-                    
-                  
-                    <div class="agreement-checkbox d-flex justify-content-between align-items-center">
-											<div>
-												<input type="checkbox" bind:checked={rememberMe} id="remember">
-<label for="remember">Keep me logged in</label>
+  <div>
+    <Banner title="Donor Candidates Login"  />
+    <!-- Other content for the "About" page -->
+  </div>
 
-											</div>
-											<a href on:click|preventDefault={showForgotPassword}>Forget Password?</a>
-										</div>
-                    <div class="col-12">
-<button type="button" class="btn-eleven fw-500 tran3s d-block mt-20" on:click={handleLogin}>Login</button>
+  <section class="registration-section position-relative pt-100 lg-pt-80 pb-150 lg-pb-80">
+    <div class="container">
+      <div class="user-data-form">
+        <div class="text-center">
+          <h2>Login to your Account</h2>
+        </div>
+        <div class="form-wrapper m-auto">
+        
+          <div class="tab-content mt-40">
+            <div class="tab-pane fade show active" role="tabpanel" id="fc1">
+              <form>
+                <div class="row">
+               
+
+
+                  <div class="col-12">
+                    <div class="input-group-meta position-relative mb-25">
+                      <label for="phoneNumber">Email*</label>
+                      <input type="email" placeholder="Enter your Email" bind:value={email} autocomplete="off"/>
                     </div>
                   </div>
-                </form>
-              </div>
+                  <div class="col-12">
+                    <div class="input-group-meta position-relative mb-20">
+                      <label for="password">Password* </label>
+                      {#if showPassword}
+                        <input
+                          type="text"
+                          placeholder="Enter Password"
+                          bind:value={password}
+                          autocomplete="off"
+                          
+                        />
+                      {:else}
+                        <input
+                          type="password"
+                          placeholder="Enter Password"
+                          bind:value={password}
+                          autocomplete="off"
+                        />
+                      {/if}
+                      <div class="mt-3">
+                        <button type="button" class="toggle-password" on:click={togglePasswordVisibility}>
+                            {showPassword ? 'Hide Password' : 'Show Password'}
+                          </button>
+                      </div>
+                      
+                    </div>
+                  </div>
+                  
+                
+                  <div class="agreement-checkbox d-flex justify-content-between align-items-center">
+                    <div>
+                      <input type="checkbox" bind:checked={rememberMe} id="remember">
+<label for="remember">Keep me logged in</label>
+
+                    </div>
+                    <a href on:click|preventDefault={showForgotPassword}>Forget Password?</a>
+                  </div>
+                  <div class="col-12">
+<button type="button" class="btn-eleven fw-500 tran3s d-block mt-20" on:click={handleLogin}>Login</button>
+                  </div>
+                </div>
+              </form>
             </div>
-    
-            <div class="d-flex align-items-center mt-30 mb-10">
-              <div class="line"></div>
-              <span class="pe-3 ps-3">OR</span>
-              <div class="line"></div>
-            </div>
-          
-            <p class="text-center mt-10">Have an account? <a href="/" class="fw-500" data-bs-toggle="modal" data-bs-target="#loginModal">Sign In</a></p>
           </div>
-          <!-- /.form-wrapper -->
+  
+          <div class="d-flex align-items-center mt-30 mb-10">
+            <div class="line"></div>
+            <span class="pe-3 ps-3">OR</span>
+            <div class="line"></div>
+          </div>
+        
+          <p class="text-center mt-10">Have an account? <a href="/" class="fw-500" data-bs-toggle="modal" data-bs-target="#loginModal">Sign In</a></p>
         </div>
-        <!-- /.user-data-form -->
+        <!-- /.form-wrapper -->
       </div>
-    </section>
-  </div>
+      <!-- /.user-data-form -->
+    </div>
+  </section>
+</div>

@@ -1176,7 +1176,7 @@
   }
 
   .theme-main-menu .category-dropdown .explore-all-btn:hover {
-    background: #fe725e;
+    background: #333333;
   }
 
   .feedback-block-one .logo {
@@ -1419,7 +1419,7 @@
     line-height: 40px;
     border-radius: 50px;
     padding: 0 5px;
-    background: #fe725e;
+    background: #333333;
   }
 
   .expert-section-one .slick-arrow-one,

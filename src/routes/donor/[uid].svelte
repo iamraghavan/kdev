@@ -148,7 +148,18 @@
                                 </li>
                             </ul>
 
-                            <a href="{`tel:+91${userData.phoneNumber}`}" class="btn-ten fw-500 text-white w-100 text-center tran3s mt-25">{callnow}</a>
+                            <div class="row">
+  <div class="col-md-4" >
+    <a style="background-color: #333333;" href="{`tel:+91${userData.phoneNumber}`}" class="btn-ten fw-500 text-white w-100 text-center tran3s mt-25">{callnow}</a>
+  </div>
+  <div class="col-md-4">
+    <a style="background-color: #333333;" href="{`tel:+91${userData.phoneNumber}`}" class="btn-ten fw-500 text-white w-100 text-center tran3s mt-25">{callnow}</a>
+  </div>
+  <div class="col-md-4">
+    <a style="background-color: #333333;" href="{`tel:+91${userData.phoneNumber}`}" class="btn-ten fw-500 text-white w-100 text-center tran3s mt-25">{callnow}</a>
+  </div>
+</div>
+
                         </div>
                     </div>
                  

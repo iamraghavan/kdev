@@ -183,7 +183,7 @@ onDestroy(() => {
               <!-- Display the user's full name and create a dropdown menu -->
               <div class="nav-item dropdown">
                 <a class="dropdown-toggle fw-500 text-dark" data-bs-theme="dark" href="/" role="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                  {getGreeting()}, <span style="color: #b24f41;
+                  {getGreeting()}, <span style="color: #333333;
                   text-transform: capitalize;
                   font-family: 'McLaren';"> {$userContext} </span>
                 </a>
@@ -303,7 +303,7 @@ onDestroy(() => {
                 <a class="dropdown-toggle fw-500 text-dark" data-bs-theme="dark" href="/" role="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                   {getGreeting()}, <br> <span style="font-size: 1.5rem;
                   text-transform: capitalize;
-                  color: #b24f41;
+                  color: #333333;
                   font-family: 'McLaren';
                   font-weight: 600;"> {$userContext} </span>
                 </a>

@@ -23,7 +23,7 @@
   <section class="how-it-works position-relative bg-color pt-110 lg-pt-80 pb-110 lg-pb-70">
     <div class="container">
       <div class="title-one text-center mb-65 lg-mb-40">
-        <h2 class="text-black fw-900">How it’s <span class="position-relative">work? <img src="images/shape/shape_07_black.svg" alt="" class="lazy-img shapes shape" style=""></span></h2>
+        <h2 class="text-white fw-900">How it’s <span class="position-relative">work? <img src="images/shape/shape_07_black.svg" alt="" class="lazy-img shapes shape" style=""></span></h2>
       </div>
   
       <div class="row justify-content-center">
@@ -34,7 +34,7 @@
               <img src={step.icon} alt="" class="lazy-img" style="">
             </div>
             <div class="title fw-500 text-white">{step.title}</div>
-            <p>{step.description}</p>
+            <p class="text-white">{step.description}</p>
           </div>
           <!-- /.card-style-two -->
         </div>
