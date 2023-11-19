@@ -270,8 +270,8 @@ onDestroy(() => {
                         <h6 class="mega-menu-title">How to Donate</h6>
                         <ul class="style-none mega-dropdown-list">
                           <li><a href="/first-time-blood-donors" class="dropdown-item"><span>First Time Blood Donors</span></a></li>
-                          <li><a href="candidates-v2.html" class="dropdown-item"><span>Eligibility  Requirements</span></a></li>
-                          <li><a href="candidates-v3.html" class="dropdown-item"><span>Types of Blood Donations</span></a></li>
+                          <li><a href="/eligibility-requirements" class="dropdown-item"><span>Eligibility  Requirements</span></a></li>
+                          <li><a href="/types-of-blood-donations" class="dropdown-item"><span>Types of Blood Donations</span></a></li>
                           <li><a href="candidates-v4.html" class="dropdown-item"><span>Learn About Blood</span></a></li>
                           
 

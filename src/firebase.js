@@ -4,7 +4,7 @@ import { initializeApp } from 'firebase/app';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import { getDatabase, ref, set } from 'firebase/database';
 import { updateProfile, sendEmailVerification } from 'firebase/auth';
-
+import { getStorage } from 'firebase/storage';
 const firebaseConfig = {
     apiKey: "AIzaSyAQSiYoYcm4-a2672XHJDvi2wYzXfgKxk8",
     authDomain: "waggy-tails-8d2ab.firebaseapp.com",
@@ -22,4 +22,8 @@ const auth = getAuth(firebaseApp); // Export auth here once.
 
 const db = getDatabase(firebaseApp);
 
-export { auth, createUserWithEmailAndPassword, updateProfile, sendEmailVerification, db, firebaseApp };
+const storage = getStorage(firebaseApp);
+
+export { firebaseApp, storage };
+
+export { auth, createUserWithEmailAndPassword, updateProfile, sendEmailVerification, db };

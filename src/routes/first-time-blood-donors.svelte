@@ -1,5 +1,6 @@
 <script>
-  import BlogDetails from "./BlogDetails.svelte";
+  import BloodCta from "../components/BloodCTA.svelte";
+import BlogDetails from "./BlogDetails.svelte";
 
   // Define your blog data here or fetch it from an API
   let blogData = {
@@ -68,3 +69,4 @@
 
 
 <BlogDetails {blogData} />
+<BloodCta/>

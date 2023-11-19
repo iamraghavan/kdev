@@ -1,6 +1,6 @@
 
 <script>
-    export let blogData;
+    export let blogData3;
 
     import { getDatabase, ref, get, set } from "firebase/database";
     import { onMount } from 'svelte';
@@ -64,7 +64,7 @@
 
 <div class="main-page-wrapper">
   <div>
-    <Banner title={blogData.title}  />
+    <Banner title={blogData3.title}  />
   </div>
 
   <section class="blog-section pt-10 lg-pt-80">
@@ -73,12 +73,12 @@
         <div class="row">
           <div class="col-lg-9">
             <div class="blog-details-page pe-xxl-5 me-xxl-3">
-              {#if blogData}
+              {#if blogData3}
                 <article class="blog-details-meta">
             
                 
-                  <div class="img-meta mb-15"><img src={blogData.image} alt={blogData.title} class="lazy-img" style=""></div>
-                  {@html blogData.content}
+                  <div class="img-meta mb-15"><img src={blogData3.image} alt={blogData3.title} class="lazy-img" style=""></div>
+                  {@html blogData3.content}
                   <div class="bottom-widget border-bottom d-sm-flex align-items-center justify-content-between">
                     
                     <ul class="d-flex share-icon align-items-center style-none pb-20">
