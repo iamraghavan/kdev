@@ -1,3 +1,13 @@
+<svelte:head>
+	<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kurudhi.com India's No 1 Blood Donor Platform</title>
+<meta name="description" content="Connecting blood donors with recipients – Kurudhi.com, the pioneering website in India. Join the lifesaving community today.">
+<meta name="author" content="J S Raghavan">
+<meta name="copyright" content="J S Raghavan">
+<meta name="robots" content="index, follow">
+</svelte:head>
+
 <script>
   import BloodCta from "../components/BloodCTA.svelte";
 import HomeComponentOne from "../components/HomeComponentOne.svelte";

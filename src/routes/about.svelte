@@ -1,5 +1,11 @@
 <svelte:head>
-    <title>Kurudhi About</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>About Kurudhi.com: Empowering Lives Through Blood Donation</title>
+  <meta name="description" content="Discover the heart behind Kurudhi.com – your go-to platform connecting blood donors with recipients. Join our mission of saving lives and fostering hope.">
+  <meta name="author" content="J S Raghavan">
+  <meta name="copyright" content="J S Raghavan">
+  <meta name="robots" content="index, follow">
 </svelte:head>
 
 <script>

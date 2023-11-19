@@ -260,7 +260,7 @@ onDestroy(() => {
                           </li>
                           <li><a href="/forget" class="dropdown-item"><span>Forget Donor Account</span></a></li>
                           <!-- <li><a href="company-v3.html" class="dropdown-item"><span>Go to My Profile</span></a></li> -->
-                          <li><a href="company-v4.html" class="dropdown-item"><span>Get Digital Donor Card</span></a></li>
+                          <li><a href="/get-digital-donor-card" class="dropdown-item"><span>Get Digital Donor Card</span></a></li>
                           
                       </ul>
                       </div> 
@@ -269,7 +269,7 @@ onDestroy(() => {
                       <div class="menu-column">
                         <h6 class="mega-menu-title">How to Donate</h6>
                         <ul class="style-none mega-dropdown-list">
-                          <li><a href="candidates-v1.html" class="dropdown-item"><span>Find a Blood Drive</span></a></li>
+                          <li><a href="/first-time-blood-donors" class="dropdown-item"><span>First Time Blood Donors</span></a></li>
                           <li><a href="candidates-v2.html" class="dropdown-item"><span>Eligibility  Requirements</span></a></li>
                           <li><a href="candidates-v3.html" class="dropdown-item"><span>Types of Blood Donations</span></a></li>
                           <li><a href="candidates-v4.html" class="dropdown-item"><span>Learn About Blood</span></a></li>
