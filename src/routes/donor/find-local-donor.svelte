@@ -1,82 +1,60 @@
 <script>
   import Banner from "../../components/InnerBanner.svelte";
-  import { getDatabase, ref, get, set } from "firebase/database";
+  import { getDatabase, ref, get } from "firebase/database";
   import { onMount, afterUpdate } from "svelte";
   import axios from "axios";
   import { firebaseApp } from "../../firebase";
-
-  const noimage = {
-    img: "./images/no-data-pana.svg",
-  };
+  import { goto } from "@sapper/app";
 
   const db = getDatabase(firebaseApp);
 
   let error = "";
   let bloodGroup = "";
   let filteredData = [];
-
-  import { goto } from "@sapper/app";
+  let noofresults = 0;
 
   function viewUserProfile(uid) {
-    event.preventDefault();
-    let a = uid;
-    console.log("UID before goto:", uid); // Log to check the value
-
-    // Use goto to navigate to the user's profile page and include uid in the state
     goto(`donor/${uid}`, { state: { value: uid } });
   }
 
-  let pages = [1, 2, 3]; // Example array of pages
-  let currentPage = 1; // Example current page
-  let noofresults = 0; // Variable to store the count of filtered results
-
+  let pages = [1, 2, 3];
+  let currentPage = 1;
+  let noimage = { img: "./images/no-data-pana.svg" };
 
   const applyFilter = async (event) => {
-  if (event) {
-    event.preventDefault(); // Prevent the default behavior of the anchor tag
-  }
+    try {
+      const snapshot = await get(ref(db, "users"));
 
-  try {
-    const snapshot = await get(ref(db, "users"));
+      filteredData = [];
+      snapshot.forEach((childSnapshot) => {
+        const data = childSnapshot.val();
 
-    filteredData = [];
-    snapshot.forEach((childSnapshot) => {
-      const data = childSnapshot.val();
+        if (data.city === selectedSuggestion && data.bloodGroup === bloodGroup) {
+          filteredData.push({
+            uid: data.uid,
+            fullName: data.fullName,
+            age: data.age,
+            gender: data.gender,
+            email: data.email,
+            phoneNumber: data.phoneNumber,
+            whatsapp: data.whatsapp,
+          });
+        }
+      });
 
-      // Apply your filtering logic here
-      if (data.city === selectedSuggestion && data.bloodGroup === bloodGroup) {
-        filteredData.push({
-          uid: data.uid,
-          fullName: data.fullName,
-          age: data.age,
-          gender: data.gender,
-          email: data.email,
-          phoneNumber: data.phoneNumber,
-          whatsapp: data.whatsapp,
-        });
-      }
-    });
+      noofresults = filteredData.length;
 
-    // Update the count of filtered results
-    noofresults = filteredData.length;
+      filteredData.forEach((item) => {
+        console.log(item.uid);
+      });
+    } catch (err) {
+      error = err.message || "Error fetching data from Firebase";
+    }
+  };
 
-    // Log the uid of each item in filteredData
-    filteredData.forEach((item) => {
-      console.log(item.uid);
-    });
-  } catch (err) {
-    error = err.message || "Error fetching data from Firebase";
-  }
-};
-
-
-
-
-  // Reactively update the count when filteredData changes
   $: noofresults = filteredData.length;
 
   onMount(() => {
-    // Optionally, you can fetch initial data on component mount
     applyFilter();
   });
 
@@ -84,8 +62,8 @@
   let suggestions = [];
   let selectedSuggestion = null;
 
-  const geonamesUsername = "iamraghavan"; // Replace with your Geonames username
-  const geonamesApiUrl = "http://api.geonames.org/searchJSON";
+  const geonamesUsername = "iamraghavan";
+  const geonamesApiUrl = "https://secure.geonames.org/searchJSON";
 
   function debounce(func, wait) {
     let timeout;
@@ -111,12 +89,11 @@
         params: {
           q: inputValue,
           username: geonamesUsername,
-          maxRows: 5, // Adjust as needed
+          maxRows: 5,
         },
       });
 
       if (response.data && response.data.geonames) {
-        // Use an index as a suffix to make keys unique
         suggestions = response.data.geonames.map((result, index) => ({
           name: result.name,
           key: `${result.name}-${index}`,
@@ -132,7 +109,7 @@
   function handleSuggestionClick(city) {
     inputValue = city;
     selectedSuggestion = city;
-    suggestions = []; // Reset suggestions after selecting a location
+    suggestions = [];
   }
 
   function handleKeyDown(event, suggestion) {
@@ -140,11 +117,6 @@
       handleSuggestionClick(suggestion);
     }
   }
-
-  onMount(() => {
-    // Fetch initial suggestions (optional)
-    // debouncedFetchLocationSuggestions();
-  });
 
   afterUpdate(() => {
     debouncedFetchLocationSuggestions();
