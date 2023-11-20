@@ -22,6 +22,7 @@
   let noimage = { img: "./images/no-data-pana.svg" };
 
   const applyFilter = async (event) => {
+    event.preventDefault();
     try {
       const snapshot = await get(ref(db, "users"));
 

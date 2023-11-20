@@ -8,6 +8,7 @@
   import { goto } from '@sapper/app';
   import BloodCta from '../../components/BloodCTA.svelte';
   import html2canvas from 'html2canvas';
+  import Team from '../../components/Team.svelte';
 
   let userData = {};
 
@@ -260,5 +261,7 @@
     </div>
   </div>
 </div>
+
+<Team />
 
 <BloodCta />

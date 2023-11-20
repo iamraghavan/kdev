@@ -1,15 +1,17 @@
-
-
 <script>
   import { onMount } from "svelte";
-  import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+  import {
+    getAuth,
+    createUserWithEmailAndPassword,
+    updateProfile,
+    sendEmailVerification,
+  } from "firebase/auth";
   import { getDatabase, ref, set } from "firebase/database";
-  import { updateProfile, sendEmailVerification } from "firebase/auth";
   import Swal from "sweetalert2";
+  import axios from "axios";
+  import Toastify from "toastify-js";
+  import toastr from "toastr";
   import { goto } from "@sapper/app";
-  import axios from 'axios';
-  import Toastify from 'toastify-js';
-  import toastr from 'toastr';
 
   import { firebaseApp } from "../firebase";
 
@@ -24,7 +26,7 @@
   let dateOfBirth = "";
   let phoneNumber = "";
   let pincode = "";
-  let country = "India"; // Default country
+  let country = "India";
   let state = "";
   let division = "";
   let city = "";
@@ -35,31 +37,16 @@
   let remember = false;
 
   toastr.options = {
-  "closeButton": true,
-  "debug": false,
-  "newestOnTop": true,
-  "progressBar": true,
-  "positionClass": "toast-bottom-right",
-  "preventDuplicates": true,
-  "onclick": null,
-  "showDuration": "300",
-  "hideDuration": "1000",
-  "timeOut": "5000",
-  "extendedTimeOut": "1000",
-  "showEasing": "swing",
-  "hideEasing": "linear",
-  "showMethod": "fadeIn",
-  "hideMethod": "fadeOut"
-}
-
-
+    "closeButton": true,
+    "debug": false,
+    // ... (your toastr options)
+  };
 
   function calculateAge(dateOfBirth) {
     const dob = new Date(dateOfBirth);
     const today = new Date();
     age = today.getFullYear() - dob.getFullYear();
 
-    // Check if the birthday has occurred this year
     if (today < new Date(today.getFullYear(), dob.getMonth(), dob.getDate())) {
       age--;
     }
@@ -74,10 +61,10 @@
 
   async function handlePincodeInput(event) {
     const input = event.target;
-    pincode = input.value; // Update the pincode
+    pincode = input.value;
 
     if (pincode.length === 6) {
-      await fetchAddressData(); // Fetch address data when 6 digits are entered
+      await fetchAddressData();
     } else {
       error = "Invalid pincode. Please enter a valid 6-digit pincode.";
     }
@@ -105,17 +92,16 @@
           err.message ||
           "An error occurred while fetching data. Please try again.";
 
-        // Use Toastify to display the error message
         Toastify({
           text: error,
           duration: 3000,
-          gravity: 'top', // Display the toast at the top of the page
-          position: 'left', // Position the toast on the left side
-          backgroundColor: '#ff4d4d', // Set background color to red (or any other color you prefer)
+          gravity: 'top',
+          position: 'left',
+          backgroundColor: '#ff4d4d',
         }).showToast();
       }
     } else {
-      error = ""; // Reset the error if the pincode is not 6 digits
+      error = "";
     }
   }
 
@@ -124,7 +110,6 @@
   let showSuccessAlert = false;
 
   function checkPasswordStrength() {
-    // Define a regular expression for a strong password (e.g., at least 8 characters, including upper case, lower case, and numbers)
     const strongPasswordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
 
     if (strongPasswordRegex.test(password)) {
@@ -146,17 +131,15 @@
         {
           sitekey: '0x4AAAAAAACC60E1r0uX5QL4',
           action: 'registration',
-          // Additional parameters if needed
         },
         handleRegistration
       );
     } else {
-      setTimeout(initializeTurnstile, 500); // Retry after 500 milliseconds
+      setTimeout(initializeTurnstile, 500);
     }
   }
 
   async function handleRegistration() {
-
     if (!email || !password || !pincode || !phoneNumber || !dateOfBirth || !bloodGroup || !fullName || !gender) {
       toastr.error('Please fill in all required fields.');
       return;
@@ -168,17 +151,10 @@
     }
 
     try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      // Generate a unique UID for the user
       const uid = user.uid;
-
-      // Store user data in the Realtime Database
       const userRef = ref(db, "users/" + uid);
       const timestamp = new Date();
       const formattedTimestamp = `${timestamp.toLocaleTimeString("en-US", {
@@ -197,7 +173,7 @@
         email: email,
         fullName: fullName,
         gender: gender,
-        bloodGroup : bloodGroup,
+        bloodGroup: bloodGroup,
         dateOfBirth: dateOfBirth,
         phoneNumber: phoneNumber,
         pincode: pincode,
@@ -206,22 +182,18 @@
         age: age,
         country: country,
         division: division,
-
         created_at: formattedTimestamp,
         updated_at: formattedTimestamp,
       };
 
       await set(userRef, userData);
 
-      // Update the user's display name
       await updateProfile(user, {
         displayName: fullName,
       });
 
-      // Send email verification
       await sendEmailVerification(user);
 
-      // Show a success message with SweetAlert
       Swal.fire({
         icon: "success",
         title: "🎉 Registration Successful 🎉",
@@ -230,13 +202,12 @@
         <p>Your blood donation will save lives, and we can't thank you enough.</p>
         <p>Get ready to wear your cape (or bandage) with pride! 💪🩸</p>
       `,
-        showConfirmButton: false, // Remove the OK button
-        timer: 7000, // Show the message for 7 seconds (7000 milliseconds)
+        showConfirmButton: false,
+        timer: 7000,
       });
 
-      // Use setTimeout to redirect after 7 seconds
       setTimeout(() => {
-        goto("/login"); // Redirect to the login page
+        goto("/profile");
       }, 7000);
     } catch (error) {
       Swal.fire({
@@ -251,17 +222,21 @@
 
   import Banner from "../components/InnerBanner.svelte";
   import InformationOne from "../components/InformationOne.svelte";
-  // import Banner from "../Components/InnerBanner.svelte";
 
   let pageLinks = [{ text: "Home", url: "/" }, { text: "Registration" }];
+
+  let loading = false;
 
   onMount(() => {
     const inputFields = document.querySelectorAll('input[autocomplete="off"]');
     inputFields.forEach((input) => {
       input.setAttribute("autocomplete", "new-password");
     });
+
+    initializeTurnstile();
   });
 </script>
+
 
 <svelte:head>
   <link

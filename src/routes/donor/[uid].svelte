@@ -53,6 +53,7 @@
     });
 
     import Banner from "../../components/InnerBanner.svelte";
+  import Team from '../../components/Team.svelte';
   
   let pageLinks = [
     { text: 'Home', url: '/' },
@@ -168,5 +169,7 @@
             </div>
         </div>
     </section>
+
+    <Team />
 
 </div>
