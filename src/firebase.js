@@ -6,14 +6,13 @@ import { getDatabase, ref, set } from 'firebase/database';
 import { updateProfile, sendEmailVerification } from 'firebase/auth';
 import { getStorage } from 'firebase/storage';
 const firebaseConfig = {
-    apiKey: "AIzaSyAQSiYoYcm4-a2672XHJDvi2wYzXfgKxk8",
-    authDomain: "waggy-tails-8d2ab.firebaseapp.com",
-    databaseURL: "https://waggy-tails-8d2ab-default-rtdb.firebaseio.com",
-    projectId: "waggy-tails-8d2ab",
-    storageBucket: "waggy-tails-8d2ab.appspot.com",
-    messagingSenderId: "1035325280279",
-    appId: "1:1035325280279:web:9237427e574de9e4ae0c52",
-    measurementId: "G-XJGCMKWQHK"
+    apiKey: "AIzaSyBtbZTgxZ-0VYsdEfIvlkHwmk5Ak4d2XyM",
+  authDomain: "kurudhi-6135d.firebaseapp.com",
+  projectId: "kurudhi-6135d",
+  storageBucket: "kurudhi-6135d.appspot.com",
+  messagingSenderId: "78326000398",
+  appId: "1:78326000398:web:1953cb2b173b882d87455f",
+  measurementId: "G-3VRSYK6VLF"
 };
 
 // Initialize Firebase

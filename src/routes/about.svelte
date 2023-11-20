@@ -12,6 +12,7 @@
   import BloodCta from "../components/BloodCTA.svelte"
   import HowWorks from "../components/HowWorks.svelte";
   import Banner from "../components/InnerBanner.svelte";
+  import Team from "../components/Team.svelte";
   
   let pageLinks = [
     { text: 'Home', url: '/' },
@@ -120,5 +121,12 @@
   </section>
   
   <HowWorks />
+
+  <Team/>
+
+  
   <BloodCta />
+
+
+
 </div>
