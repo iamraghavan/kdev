@@ -1,37 +1,48 @@
 <script>
-  import Banner from "../../components/InnerBanner.svelte";
   import { getDatabase, ref, get } from "firebase/database";
   import { onMount, afterUpdate } from "svelte";
   import axios from "axios";
   import { firebaseApp } from "../../firebase";
+  import _ from "lodash";
+  import { readable } from "svelte/store";
   import { goto } from "@sapper/app";
+
+  // Import Banner if it's a component
+  import Banner from "../../components/InnerBanner.svelte";
 
   const db = getDatabase(firebaseApp);
 
-  let error = "";
-  let bloodGroup = "";
-  let filteredData = [];
-  let noofresults = 0;
+  let noimage = { img: "./images/no-data-pana.svg" };
 
+  let error = "";
+  let noofresults = 0;
+  let currentPage = 1;
+  let itemsPerPage = 20;
+  let pages = [];
+  let filteredDataArray = [];
+
+
+  // Define the filteredData store
   function viewUserProfile(uid) {
     goto(`donor/${uid}`, { state: { value: uid } });
   }
-
-  let pages = [1, 2, 3];
-  let currentPage = 1;
-  let noimage = { img: "./images/no-data-pana.svg" };
-
+  
   const applyFilter = async (event) => {
-    event.preventDefault();
+    
     try {
       const snapshot = await get(ref(db, "users"));
 
-      filteredData = [];
+      filteredDataArray = [];
+
       snapshot.forEach((childSnapshot) => {
         const data = childSnapshot.val();
 
-        if (data.city === selectedSuggestion && data.bloodGroup === bloodGroup) {
-          filteredData.push({
+        if (
+          ((data.city && data.city.includes(selectedSuggestion)) ||
+            (data.area && data.area.includes(selectedSuggestion))) &&
+          data.bloodGroup === bloodGroup
+        ) {
+          filteredDataArray.push({
             uid: data.uid,
             fullName: data.fullName,
             age: data.age,
@@ -43,41 +54,95 @@
         }
       });
 
-      noofresults = filteredData.length;
+      noofresults = filteredDataArray.length;
 
-      filteredData.forEach((item) => {
-        console.log(item.uid);
-      });
+      // Update the store
+      
     } catch (err) {
       error = err.message || "Error fetching data from Firebase";
     }
   };
 
-  $: noofresults = filteredData.length;
-
-  onMount(() => {
+  const filteredData = readable([], (set) => {
+    // Initial call to applyFilter
     applyFilter();
+
+    // Return cleanup function
+    return () => {};
   });
+
+
+
+  // const filteredData = readable([], (set) => {
+  //   const applyFilter = async (event) => {
+  //     event.preventDefault();
+  //     try {
+  //       const snapshot = await get(ref(db, "users"));
+
+  //       filteredDataArray = [];
+
+  //       snapshot.forEach((childSnapshot) => {
+  //         const data = childSnapshot.val();
+
+  //         if (
+  //           ((data.city && data.city.includes(selectedSuggestion)) ||
+  //             (data.area && data.area.includes(selectedSuggestion))) &&
+  //           data.bloodGroup === bloodGroup
+  //         ) {
+  //           filteredDataArray.push({
+  //             uid: data.uid,
+  //             fullName: data.fullName,
+  //             age: data.age,
+  //             gender: data.gender,
+  //             email: data.email,
+  //             phoneNumber: data.phoneNumber,
+  //             whatsapp: data.whatsapp,
+  //           });
+  //         }
+  //       });
+
+  //       noofresults = filteredDataArray.length;
+
+  //       // Update the store
+  //       set(filteredDataArray);
+  //     } catch (err) {
+  //       error = err.message || "Error fetching data from Firebase";
+  //     }
+  //   };
+
+  //   // Initial call to applyFilter
+  //   applyFilter();
+
+  //   // Return cleanup function
+  //   return () => {};
+  // });
+
+
+  $: noofresults = filteredData.length;
+  $: pages = Array.from(
+    { length: Math.ceil(noofresults / itemsPerPage) },
+    (_, index) => index + 1
+  );
+
+  // Update filteredDataArray whenever the Backbone Collection changes
+  $: {
+    filteredDataArray = filteredData && filteredData.models ? filteredData.models.map((model) => model.toJSON()) : [];
+  }
+
+
 
   let inputValue = "";
   let suggestions = [];
   let selectedSuggestion = null;
+  let bloodGroup = ""; // Assuming bloodGroup should be declared
+ // Declaring applyFilter function
 
-  const geonamesUsername = "iamraghavan";
-  const geonamesApiUrl = "https://secure.geonames.org/searchJSON";
-
-  function debounce(func, wait) {
-    let timeout;
-    return function (...args) {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => func.apply(this, args), wait);
-    };
-  }
-
-  const debouncedFetchLocationSuggestions = debounce(
+  const debouncedFetchLocationSuggestions = _.debounce(
     fetchLocationSuggestions,
     300
   );
+
+  const nominatimApiUrl = "https://nominatim.openstreetmap.org/search";
 
   async function fetchLocationSuggestions() {
     try {
@@ -86,21 +151,21 @@
         return;
       }
 
-      const response = await axios.get(geonamesApiUrl, {
+      const response = await axios.get(nominatimApiUrl, {
         params: {
           q: inputValue,
-          username: geonamesUsername,
-          maxRows: 5,
+          format: "json",
+          limit: 5,
         },
       });
 
-      if (response.data && response.data.geonames) {
-        suggestions = response.data.geonames.map((result, index) => ({
-          name: result.name,
-          key: `${result.name}-${index}`,
+      if (response.data && response.data.length > 0) {
+        suggestions = response.data.map((result, index) => ({
+          name: result.display_name.split(",").shift(),
+          key: `${result.display_name}-${index}`,
         }));
       } else {
-        suggestions = [];
+        suggestions = [{ name: inputValue, key: `custom-${inputValue}` }];
       }
     } catch (error) {
       console.error("Error fetching suggestions:", error);
@@ -119,10 +184,24 @@
     }
   }
 
+  function goToNextPage() {
+    if (currentPage < pages.length) {
+      currentPage += 1;
+      applyFilter();
+    }
+  }
+
+  function goToPage(page) {
+    currentPage = page;
+    applyFilter();
+  }
+
   afterUpdate(() => {
     debouncedFetchLocationSuggestions();
   });
 </script>
+
+
 
 
 <style>
@@ -331,13 +410,16 @@
                 </div>
               </div>
 
-              <a
-                href
-                on:click={applyFilter}
-                class="btn-ten fw-500 text-white w-100 text-center tran3s mt-30"
-              >
-                Apply Filter
-              </a>
+              <button
+
+  on:click={(event) => {
+    event.preventDefault();
+    applyFilter();
+  }}
+  class="btn-ten fw-500 text-white w-100 text-center tran3s mt-30"
+>
+  Apply Filter
+</button>
             </div>
           </div>
           <!-- /.filter-area-tab -->
@@ -345,57 +427,55 @@
 
         <div class="col-xl-9 col-lg-8">
           <div class="total-job-found">
-            All <span class="text-dark">{noofresults}</span> Results found
+            All <span class="text-dark">{noofresults || "0"}</span> Results found
           </div>
 
           <div class="ms-xxl-5 ms-xl-3">
             <div class="accordion-box grid-style show">
               <div class="row">
-                {#each filteredData as { uid, fullName, age, gender, email, phoneNumber, whatsapp }}
-                  <div class="col-xxl-4 col-sm-6 d-flex">
-                    <div
-                      class="candidate-profile-card text-center grid-layout border-0 mb-25"
-                    >
-                      <h4 class="candidate-name mt-15 mb-0">
-                        <a href class="tran3s">{fullName}</a>
-                      </h4>
-                      <div class="candidate-post">{age} | {gender}</div>
-                      <ul
-                        class="cadidate-skills style-none d-flex flex-wrap align-items-center justify-content-center justify-content-md-between pt-30 sm-pt-20 pb-10"
-                      >
-                        <li>{email}</li>
-                      </ul>
-                      <div class="row gx-1">
-                        <div class="col-md-6">
-                          <div class="candidate-info mt-10">
-                            <span>Phone</span>
-                            <div>{phoneNumber}</div>
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <div class="candidate-info mt-10">
-                            <span>Whatsapp</span>
-                            <div>{whatsapp}</div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row gx-2 pt-25 sm-pt-10">
-                        <div class="col-md-6">
-                          <a href class="profile-btn tran3s w-100 mt-5"
-                            ><i class="bi bi-share" /></a
-                          >
-                        </div>
-                        <div class="col-md-6">
-                          <a
-                            href
-                            on:click={() => viewUserProfile(uid)}
-                            class="msg-btn tran3s w-100 mt-5">View</a
-                          >
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                {/each}
+              
+                {#each filteredDataArray as { uid, fullName, age, gender, email, phoneNumber, whatsapp }}
+  <div class="col-xxl-4 col-sm-6 d-flex">
+    <div class="candidate-profile-card text-center grid-layout border-0 mb-25">
+      <h4 class="candidate-name mt-15 mb-0">
+        <a href="/" class="tran3s">{fullName}</a>
+      </h4>
+      <div class="candidate-post">{age} | {gender}</div>
+      <ul class="cadidate-skills style-none d-flex flex-wrap align-items-center justify-content-center justify-content-md-between pt-30 sm-pt-20 pb-10">
+        <li>{email}</li>
+      </ul>
+      <div class="row gx-1">
+        <div class="col-md-6">
+          <div class="candidate-info mt-10">
+            <span>Phone</span>
+            <div>{phoneNumber}</div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="candidate-info mt-10">
+            <span>Whatsapp</span>
+            <div>{whatsapp}</div>
+          </div>
+        </div>
+      </div>
+      <div class="row gx-2 pt-25 sm-pt-10">
+        <div class="col-md-6">
+          <a href="/" class="profile-btn tran3s w-100 mt-5">
+            <i class="bi bi-share" />
+          </a>
+        </div>
+        <div class="col-md-6">
+          <button on:click={(event) => {
+            event.preventDefault();
+            viewUserProfile(uid);
+          }} class="msg-btn tran3s w-100 mt-5">View</button>
+        </div>
+      </div>
+    </div>
+  </div>
+{/each}
+
+
 
                 {#if filteredData.length === 0}
                   <img
@@ -418,9 +498,9 @@
             >
               <p class="m0 order-sm-last text-center text-sm-start xs-pb-20">
                 Showing <span class="text-dark fw-500"
-                  >1 to {Math.min(20, filteredData.length)}</span
+                  >1 to {Math.min(20, filteredData.length) || "0"}</span
                 >
-                of <span class="text-dark fw-500">{filteredData.length}</span>
+                of <span class="text-dark fw-500">{filteredData.length || "0"}</span>
               </p>
               <div class="d-flex justify-content-center">
                 <ul class="pagination-two d-flex align-items-center style-none">
@@ -440,6 +520,8 @@
               </div>
             </div>
           </div>
+        
+        
         </div>
         <!-- /.col- -->
       </div>

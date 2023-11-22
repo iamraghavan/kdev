@@ -12,6 +12,7 @@
   import Toastify from "toastify-js";
   import toastr from "toastr";
   import { goto } from "@sapper/app";
+  import { writable } from 'svelte/store';
 
   import { firebaseApp } from "../firebase";
 
@@ -31,15 +32,36 @@
   let division = "";
   let city = "";
   let error = "";
+  let area = "";
   let isSubmitDisabled = true;
   let isBelow18 = false;
   let age;
   let remember = false;
+  let selectedOption = '';
+
+  function handleInput(event) {
+    // Filter out non-alphabetic characters
+    fullName = event.target.value.replace(/[^a-zA-Z]/g, '');
+  }
+
 
   toastr.options = {
     "closeButton": true,
-    "debug": false,
-    // ... (your toastr options)
+  "debug": true,
+  "newestOnTop": true,
+  "progressBar": true,  
+  "positionClass": "toast-bottom-right",
+  "preventDuplicates": true,
+  "onclick": null,
+  "showDuration": "300",
+  "hideDuration": "1000",
+  "timeOut": 0,
+  "extendedTimeOut": 0,
+  "showEasing": "swing",
+  "hideEasing": "linear",
+  "showMethod": "fadeIn",
+  "hideMethod": "fadeOut",
+  "tapToDismiss": false
   };
 
   function calculateAge(dateOfBirth) {
@@ -70,6 +92,8 @@
     }
   }
 
+  let dropdownOptions = [];
+
   async function fetchAddressData() {
     if (pincode.length === 6) {
       try {
@@ -79,9 +103,11 @@
         if (response.data.length > 0 && response.data[0].Status === "Success") {
           const postOffice = response.data[0].PostOffice[0];
           state = postOffice.State;
-          division = postOffice.Division;
-          city = postOffice.Name;
+          division = postOffice.Name;
+          city = postOffice.District;
           error = "";
+
+          dropdownOptions = response.data[0].PostOffice.map(po => po.Name);
         } else {
           throw new Error(
             "Invalid pincode. Please enter a valid 6-digit pincode."
@@ -105,25 +131,33 @@
     }
   }
 
+
   let showPassword = false;
-  let passwordStrength = "Weak";
+
   let showSuccessAlert = false;
 
-  function checkPasswordStrength() {
-    const strongPasswordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+  const passwordStrength = writable(null);
 
+function checkPasswordStrength() {
+  const strongPasswordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+
+  if (password.length >= 2 && password.length <= 3) {
+    passwordStrength.set("Weak");
+  } else if (password.length > 3) {
     if (strongPasswordRegex.test(password)) {
-      passwordStrength = "Strong";
-      showSuccessAlert = true;
+      passwordStrength.set("Strong");
     } else {
-      passwordStrength = "Weak";
-      showSuccessAlert = false;
+      passwordStrength.set("Weak");
     }
+  } else {
+    passwordStrength.set(null);
   }
+}
 
-  function togglePasswordVisibility() {
-    showPassword = !showPassword;
-  }
+function togglePasswordVisibility() {
+  showPassword = !showPassword;
+}
+ 
 
   function initializeTurnstile() {
     if (window.turnstileV2 && window.turnstileV2.callback) {
@@ -138,6 +172,19 @@
       setTimeout(initializeTurnstile, 500);
     }
   }
+
+  function getCurrentDate() {
+  const today = new Date();
+  const dd = String(today.getDate()).padStart(2, '0');
+  const mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
+  const yyyy = today.getFullYear();
+
+  return `${dd}/${mm}/${yyyy}`;
+}
+
+const currentDate = getCurrentDate();
+console.log(currentDate);
+let profile_created = currentDate;
 
   async function handleRegistration() {
     if (!email || !password || !pincode || !phoneNumber || !dateOfBirth || !bloodGroup || !fullName || !gender) {
@@ -168,6 +215,7 @@
         weekday: "long",
       })}`;
 
+      
       const userData = {
         uid: uid,
         email: email,
@@ -182,6 +230,8 @@
         age: age,
         country: country,
         division: division,
+        profile_created: profile_created,
+        area: selectedOption,
         created_at: formattedTimestamp,
         updated_at: formattedTimestamp,
       };
@@ -275,11 +325,13 @@
                     <div class="input-group-meta position-relative mb-25">
                       <label for="fullName">Name*</label>
                       <input
-                        type="text"
-                        placeholder="Enter your Name"
-                        bind:value={fullName}
-                        autocomplete="off"
-                      />
+  type="text"
+  placeholder="Enter your Name"
+  bind:value={fullName}
+  on:input={handleInput}
+  pattern="[A-Za-z]+"
+  autocomplete="off"
+/>
                     </div>
                   </div>
                   <div class="col-12">
@@ -438,19 +490,7 @@
                         </div>
                       </div>
 
-                      <div class="col-12">
-                        <div class="input-group-meta position-relative mb-25">
-                          <label for="state">Division</label>
-                          <input
-                            type="text"
-                            disabled
-                            placeholder="Division"
-                            bind:value={division}
-                            autocomplete="off"
-                          />
-                        </div>
-                      </div>
-
+                      {#if division}
                       <div class="col-12">
                         <div class="input-group-meta position-relative mb-25">
                           <label for="city">City</label>
@@ -463,6 +503,40 @@
                           />
                         </div>
                       </div>
+                  
+                      <!-- Dropdown options based on API results -->
+                      <div class="col-12">
+                        <div class="input-group-meta position-relative mb-25">
+                          <label for="dropdown">Area</label>
+                          <select bind:value={selectedOption}>
+                            <option disabled hidden style="display:none" value="">Select your Area !</option>
+                            {#each dropdownOptions as option (option)}
+                              <option value={option}>{option}</option>
+                            {/each}
+                          </select>
+                        </div>
+                      </div>
+                    {/if}
+                  
+                    {#if error}
+                      <div class="error-message">
+                        <p>{error}</p>
+                      </div>
+                    {/if}
+
+                      <!-- <div class="col-12">
+                        <div class="input-group-meta position-relative mb-25">
+                          <label for="state">Area</label>
+                          <input
+                            type="text"
+                            disabled
+                            placeholder="Division"
+                            bind:value={division}
+                            autocomplete="off"
+                          />
+                        </div>
+                      </div> -->
+
                     {/if}
                     <div class="col-12">
                       <div class="input-group-meta position-relative mb-25">
@@ -475,16 +549,18 @@
                         />
                       </div>
                     </div>
+                   
+
                     <div class="col-12">
                       <div class="input-group-meta position-relative mb-20">
-                        <label for="password"
-                          >Password* <span
-                            class="password-strength {passwordStrength ===
-                            'Strong'
-                              ? 'strong-password'
-                              : ''}">{passwordStrength}</span
-                          ></label
-                        >
+                        <label for="password">
+                          Password*
+                          {#if $passwordStrength !== null}
+                            <span class="password-strength {$passwordStrength === 'Strong' ? 'strong-password' : ''}">
+                              {$passwordStrength}
+                            </span>
+                          {/if}
+                        </label>
                         {#if showPassword}
                           <input
                             type="text"
@@ -498,6 +574,7 @@
                             type="password"
                             placeholder="Enter Password"
                             bind:value={password}
+                            on:input={checkPasswordStrength}
                             autocomplete="off"
                           />
                         {/if}
@@ -512,6 +589,11 @@
                         </div>
                       </div>
                     </div>
+
+
+
+
+
 
                     {#if showSuccessAlert}
                       <div
