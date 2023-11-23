@@ -4,6 +4,8 @@
   import Footer from '../components/Footer.svelte';
   import Nav from '../components/Nav.svelte';
 
+  export let segment;
+
   // Function to show SweetAlert for internet connection status
   function checkInternetConnection() {
     if (typeof window !== 'undefined' && !window.navigator.onLine) {
@@ -26,7 +28,7 @@
   /* Your styles go here */
 </style>
 
-<Nav/>
+<Nav {segment}/>
 
 <main>
   <slot></slot>
