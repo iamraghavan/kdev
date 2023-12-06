@@ -23,6 +23,9 @@
   let showPassword = false;
   let fingerprint;
 
+  let otp = '';
+let otpInput = '';
+
   onMount(async () => {
     const inputFields = document.querySelectorAll('input[autocomplete="off"]');
     inputFields.forEach((input) => {
@@ -92,12 +95,93 @@
     }
   };
 
+  // const handleLogin = async () => {
+  //   try {
+  //     // Log in the user
+  //     const userCredential = await signInWithEmailAndPassword(auth, email, password);
+
+  //     // Store the user's session in the database
+  //     const userSessionRef = ref(db, `users/${userCredential.user.uid}/userSessions`);
+  //     await set(userSessionRef, {
+  //       fingerprint,
+  //       userAgent: window.navigator.userAgent,
+  //       platform: window.navigator.platform,
+  //     });
+
+  //     // Check if "Keep me logged in" is selected
+  //     if (rememberMe) {
+  //       localStorage.setItem('userLoggedIn', true);
+  //     }
+
+  //     localStorage.setItem('loggedIn', true);
+
+  //     // Show a success message with SweetAlert
+  //     Swal.fire({
+  //       icon: 'success',
+  //       title: '🎉 Login Successful 🎉',
+  //       text: `You are logged in at ${window.navigator.userAgent}.`,
+  //       showConfirmButton: false,
+  //       timer: 5000,
+  //     });
+
+  //     // Redirect to the dashboard or profile page after a delay
+  //     setTimeout(() => {
+  //       goto('/profile');
+  //     }, 5000);
+  //   } catch (error) {
+  //     // Login failed, show an error message
+  //     Swal.fire({
+  //       icon: 'error',
+  //       title: 'Login Failed',
+  //       text: error.message,
+  //     });
+  //   }
+  // };
+
+
   const handleLogin = async () => {
-    try {
-      // Log in the user
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+  try {
+    // Send OTP via email
+    const response = await fetch('http://localhost:3001/send-otp', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Error sending OTP');
+    }
+
+    // Extract the OTP value from the response
+    const { otp, error } = await response.json();
+
+    // OTP sent successfully, prompt the user to enter the OTP
+    const { value: enteredOTP, isConfirmed } = await Swal.fire({
+      title: 'Enter OTP',
+      input: 'text',
+      inputPlaceholder: 'Enter OTP',
+      showCancelButton: true,
+      confirmButtonText: 'Verify',
+    });
+
+    // Ensure enteredOTP is a string and trim any whitespace
+    const trimmedEnteredOTP = String(enteredOTP).trim();
+
+    if (isConfirmed && trimmedEnteredOTP === otp) {
+      // OTP is correct, allow profile access
+      Swal.fire({
+        icon: 'success',
+        title: 'OTP Verified',
+        text: 'You are now logged in.',
+        showConfirmButton: false,
+        timer: 3000,
+      });
 
       // Store the user's session in the database
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+
       const userSessionRef = ref(db, `users/${userCredential.user.uid}/userSessions`);
       await set(userSessionRef, {
         fingerprint,
@@ -112,28 +196,32 @@
 
       localStorage.setItem('loggedIn', true);
 
-      // Show a success message with SweetAlert
-      Swal.fire({
-        icon: 'success',
-        title: '🎉 Login Successful 🎉',
-        text: `You are logged in at ${window.navigator.userAgent}.`,
-        showConfirmButton: false,
-        timer: 5000,
-      });
-
       // Redirect to the dashboard or profile page after a delay
       setTimeout(() => {
         goto('/profile');
-      }, 5000);
-    } catch (error) {
-      // Login failed, show an error message
+      }, 3000);
+    } else {
+      // Incorrect OTP or user canceled, show an error message
       Swal.fire({
         icon: 'error',
-        title: 'Login Failed',
-        text: error.message,
+        title: 'OTP Verification Failed',
+        text: 'Please enter the correct OTP.',
       });
     }
-  };
+  } catch (error) {
+    // Error sending OTP or login failed, show an error message
+    Swal.fire({
+      icon: 'error',
+      title: 'Login Failed',
+      text: error.message,
+    });
+  }
+};
+
+
+
+
+
 
   const showForgotPassword = async () => {
     const { value: email } = await Swal.fire({

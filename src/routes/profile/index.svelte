@@ -10,6 +10,22 @@
   import html2canvas from 'html2canvas';
   import Team from '../../components/Team.svelte';
 
+  import axios from 'axios';
+  let ip = 'Loading...';
+  let isp = 'Loading...';
+
+  async function fetchIP() {
+    try {
+      const response = await axios.get('/api/ip');
+      ip = response.data.ip;
+      isp = response.data.isp;
+    } catch (error) {
+      console.error('Error fetching IP address:', error);
+    }
+  }
+
+  fetchIP();
+
   let userData = {};
 
   onMount(async () => {
@@ -255,6 +271,7 @@
             </div>
           <!-- /.cadidate-bio -->
        
+          <h3>{ip}</h3>
       
       </div> 
       <!-- /.cadidate-profile-sidebar -->
