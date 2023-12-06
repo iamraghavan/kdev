@@ -142,7 +142,7 @@ let otpInput = '';
   const handleLogin = async () => {
   try {
     // Send OTP via email
-    const response = await fetch('http://localhost:3001/send-otp', {
+    const response = await fetch('https://node-api-7kbn.onrender.com/send-otp', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
