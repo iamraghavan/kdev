@@ -1,9 +1,11 @@
 
 
+
+
 <script>
-  import { onMount } from 'svelte';
+  import { onMount, onDestroy, afterUpdate } from 'svelte';
   import { auth, db } from '../../firebase';
-  import { signInWithEmailAndPassword } from 'firebase/auth';
+
   import { ref, get } from 'firebase/database';
   import { goto } from '@sapper/app';
   import BloodCta from '../../components/BloodCTA.svelte';
@@ -11,24 +13,28 @@
   import Team from '../../components/Team.svelte';
 
   import axios from 'axios';
-  let ip = 'Loading...';
-  let isp = 'Loading...';
+  
+  let ipAddress;
 
-  async function fetchIP() {
+  onMount(async () => {
     try {
-      const response = await axios.get('/api/ip');
-      ip = response.data.ip;
-      isp = response.data.isp;
+      const response = await axios.get('https://api64.ipify.org?format=json');
+      ipAddress = response.data.ip;
     } catch (error) {
       console.error('Error fetching IP address:', error);
+      ipAddress = 'Error fetching IP address. See console for details.';
     }
-  }
+  });
 
-  fetchIP();
 
+
+
+
+  
   let userData = {};
 
   onMount(async () => {
+
     // Check if the user is signed in using Firebase Authentication
     const user = auth.currentUser;
 
@@ -108,12 +114,24 @@
     padding-top: 1rem !important;
   }
 }
+
+p {
+    color: #333;
+    font-size: 1em;
+    margin: 1rem;
+  }
 </style>
 
 <!-- Your modified HTML code with a single root element -->
 <div class="main-page-wrapper">
   <div class="inner-banner-one position-relative ">
     <div class="container">
+
+      {#if ipAddress !== undefined}
+      <p>{ipAddress}</p>
+    {:else}
+      <p>Loading...</p>
+    {/if}
       <div class="candidate-profile-card list-layout bg-dark candidate-profile-card list-layout bg-dark" id="profile-card">
                   <div class="d-flex align-items-start align-items-xl-center">
                       
@@ -271,7 +289,7 @@
             </div>
           <!-- /.cadidate-bio -->
        
-          <h3>{ip}</h3>
+
       
       </div> 
       <!-- /.cadidate-profile-sidebar -->
