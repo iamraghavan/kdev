@@ -1,215 +1,63 @@
 <script>
   import { onMount } from 'svelte';
-  import {
-    getAuth,
-    signInWithEmailAndPassword,
-    onAuthStateChanged,
-    signOut,
-    sendPasswordResetEmail,
-  } from 'firebase/auth';
-  import { getDatabase, ref, get, set } from 'firebase/database';
+  import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+  // import { navigate } from 'svelte-routing';
   import Swal from 'sweetalert2';
   import { goto } from '@sapper/app';
-  import { v4 as uuidv4 } from 'uuid';
-  import { firebaseApp } from '../firebase';
   import Banner from "../components/InnerBanner.svelte";
 
-  const auth = getAuth(firebaseApp);
-  const db = getDatabase(firebaseApp);
+  import { get, ref } from 'firebase/database';
+import { db } from '../firebase';
 
-  let rememberMe;
+  import { firebaseApp } from '../firebase';
+const auth = getAuth(firebaseApp);
+// const db = getDatabase(firebaseApp);
+
+
+let rememberMe;
+
   let email = '';
   let password = '';
-  let showPassword = false;
-  let fingerprint;
 
-  let otp = '';
-let otpInput = '';
-
-  onMount(async () => {
+  onMount(() => {
     const inputFields = document.querySelectorAll('input[autocomplete="off"]');
     inputFields.forEach((input) => {
       input.setAttribute('autocomplete', 'new-password');
     });
 
-    // Check if the user is already logged in from another device
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        checkExistingSession(user.uid);
-      }
-    });
-
-    // Generate fingerprint
-    fingerprint = generateFingerprint();
   });
 
-  const generateFingerprint = () => {
-    // Check if a fingerprint is already stored in local storage
-    const storedFingerprint = localStorage.getItem('userFingerprint');
-
-    if (storedFingerprint) {
-      return storedFingerprint;
-    }
-
-    const userAgent = window.navigator.userAgent;
-    const screenResolution = window.screen.width + 'x' + window.screen.height;
-    const language = window.navigator.language;
-    const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    const platform = window.navigator.platform;
-    const plugins = Array.from(navigator.plugins).map((plugin) => plugin.name);
-
-    const combinedInfo = userAgent + screenResolution + language + timeZone + platform + plugins;
-
-    // Use uuid to generate a unique ID
-    const visitorId = uuidv4();
-
-    // Store the fingerprint in local storage
-    localStorage.setItem('userFingerprint', visitorId);
-    console.log(visitorId);
-
-    return visitorId;
-  };
-
-  const checkExistingSession = async (userId) => {
-    try {
-      // Check if the user has an existing session
-      const userSessionRef = ref(db, `users/${userId}/userSessions`);
-      const existingSession = await get(userSessionRef);
-
-      if (existingSession && existingSession.val().fingerprint !== fingerprint) {
-        // User is already logged in from another device
-        Swal.fire({
-          icon: 'error',
-          title: 'Login Error',
-          text: 'You are already logged in from another device.',
-        });
-
-        // Sign out the current user
-        await signOut(auth);
-
-        // Redirect to a login page or perform any other action
-        goto('/login');
-      }
-    } catch (error) {
-      console.error('Error checking existing session:', error);
-    }
-  };
-
-  // const handleLogin = async () => {
-  //   try {
-  //     // Log in the user
-  //     const userCredential = await signInWithEmailAndPassword(auth, email, password);
-
-  //     // Store the user's session in the database
-  //     const userSessionRef = ref(db, `users/${userCredential.user.uid}/userSessions`);
-  //     await set(userSessionRef, {
-  //       fingerprint,
-  //       userAgent: window.navigator.userAgent,
-  //       platform: window.navigator.platform,
-  //     });
-
-  //     // Check if "Keep me logged in" is selected
-  //     if (rememberMe) {
-  //       localStorage.setItem('userLoggedIn', true);
-  //     }
-
-  //     localStorage.setItem('loggedIn', true);
-
-  //     // Show a success message with SweetAlert
-  //     Swal.fire({
-  //       icon: 'success',
-  //       title: '🎉 Login Successful 🎉',
-  //       text: `You are logged in at ${window.navigator.userAgent}.`,
-  //       showConfirmButton: false,
-  //       timer: 5000,
-  //     });
-
-  //     // Redirect to the dashboard or profile page after a delay
-  //     setTimeout(() => {
-  //       goto('/profile');
-  //     }, 5000);
-  //   } catch (error) {
-  //     // Login failed, show an error message
-  //     Swal.fire({
-  //       icon: 'error',
-  //       title: 'Login Failed',
-  //       text: error.message,
-  //     });
-  //   }
-  // };
 
 
-  const handleLogin = async () => {
+
+   const handleLogin = async () => {
   try {
-    // Send OTP via email
-    const response = await fetch('https://node-api-7kbn.onrender.com/send-otp', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email }),
-    });
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
 
-    if (!response.ok) {
-      throw new Error('Error sending OTP');
+    // Check if "Keep me logged in" is selected
+    if (rememberMe) {
+      
+      localStorage.setItem('userLoggedIn', true);
     }
 
-    // Extract the OTP value from the response
-    const { otp, error } = await response.json();
+    localStorage.setItem('loggedIn', true);
+    
 
-    // OTP sent successfully, prompt the user to enter the OTP
-    const { value: enteredOTP, isConfirmed } = await Swal.fire({
-      title: 'Enter OTP',
-      input: 'text',
-      inputPlaceholder: 'Enter OTP',
-      showCancelButton: true,
-      confirmButtonText: 'Verify',
+    // Show a success message with SweetAlert
+    Swal.fire({
+      icon: 'success',
+      title: '🎉 Login Successful 🎉',
+      text: `You are logged in at ${window.navigator.userAgent}.`,
+      showConfirmButton: false, // Remove the OK button
+      timer: 5000, // Show the message for 5 seconds (5000 milliseconds),
     });
 
-    // Ensure enteredOTP is a string and trim any whitespace
-    const trimmedEnteredOTP = String(enteredOTP).trim();
-
-    if (isConfirmed && trimmedEnteredOTP === otp) {
-      // OTP is correct, allow profile access
-      Swal.fire({
-        icon: 'success',
-        title: 'OTP Verified',
-        text: 'You are now logged in.',
-        showConfirmButton: false,
-        timer: 3000,
-      });
-
-      // Store the user's session in the database
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-
-      const userSessionRef = ref(db, `users/${userCredential.user.uid}/userSessions`);
-      await set(userSessionRef, {
-        fingerprint,
-        userAgent: window.navigator.userAgent,
-        platform: window.navigator.platform,
-      });
-
-      // Check if "Keep me logged in" is selected
-      if (rememberMe) {
-        localStorage.setItem('userLoggedIn', true);
-      }
-
-      localStorage.setItem('loggedIn', true);
-
-      // Redirect to the dashboard or profile page after a delay
-      setTimeout(() => {
-        goto('/profile');
-      }, 3000);
-    } else {
-      // Incorrect OTP or user canceled, show an error message
-      Swal.fire({
-        icon: 'error',
-        title: 'OTP Verification Failed',
-        text: 'Please enter the correct OTP.',
-      });
-    }
+    // Redirect to the dashboard or profile page after a delay
+    setTimeout(() => {
+      goto('/profile');
+    }, 5000);
   } catch (error) {
-    // Error sending OTP or login failed, show an error message
+    // Login failed, show an error message
     Swal.fire({
       icon: 'error',
       title: 'Login Failed',
@@ -219,46 +67,53 @@ let otpInput = '';
 };
 
 
+const showForgotPassword = async () => {
+  const { value: email } = await Swal.fire({
+    title: 'Forgot Password',
+    html: '<input id="swal-input1" class="swal2-input" placeholder="Enter your email">',
+    focusConfirm: false,
+    preConfirm: () => {
+      return document.getElementById('swal-input1').value;
+    },
+  });
 
+  if (email) {
+    try {
+      await sendPasswordResetEmail(auth, email);
 
-
-
-  const showForgotPassword = async () => {
-    const { value: email } = await Swal.fire({
-      title: 'Forgot Password',
-      html: '<input id="swal-input1" class="swal2-input" placeholder="Enter your email">',
-      focusConfirm: false,
-      preConfirm: () => {
-        return document.getElementById('swal-input1').value;
-      },
-    });
-
-    if (email) {
-      try {
-        await sendPasswordResetEmail(auth, email);
-
-        // Password reset email sent successfully
-        Swal.fire({
-          icon: 'success',
-          title: 'Password Reset Email Sent',
-          text: 'Please check your email for instructions on resetting your password.',
-        });
-      } catch (error) {
-        // Password reset email failed
-        Swal.fire({
-          icon: 'error',
-          title: 'Password Reset Failed',
-          text: error.message,
-        });
-      }
+      // Password reset email sent successfully
+      Swal.fire({
+        icon: 'success',
+        title: 'Password Reset Email Sent',
+        text: 'Please check your email for instructions on resetting your password.',
+      });
+    } catch (error) {
+      // Password reset email failed
+      Swal.fire({
+        icon: 'error',
+        title: 'Password Reset Failed',
+        text: error.message,
+      });
     }
-  };
+  }
+};
 
-  const togglePasswordVisibility = () => {
-    showPassword = !showPassword;
-  };
+// Check for stored authentication state on component mount
+onMount(() => {
+  const userLoggedIn = localStorage.getItem('userLoggedIn');
+
+  if (userLoggedIn) {
+    goto('/profile');
+    console.log('User already logged in.');
+  }
+});
+
+  let showPassword = false;
+
+  function togglePasswordVisibility() {
+  showPassword = !showPassword;
+}
 </script>
-
 
 <!-- Your login form HTML here -->
 

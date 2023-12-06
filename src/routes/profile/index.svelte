@@ -1,20 +1,46 @@
-
-
-
-
 <script>
-  import { onMount, onDestroy, afterUpdate } from 'svelte';
+  import { onMount, onDestroy } from 'svelte';
   import { auth, db } from '../../firebase';
-
   import { ref, get } from 'firebase/database';
   import { goto } from '@sapper/app';
-  import BloodCta from '../../components/BloodCTA.svelte';
   import html2canvas from 'html2canvas';
-  import Team from '../../components/Team.svelte';
-
   import axios from 'axios';
-  
+  import Swal from 'sweetalert2';
+
   let ipAddress;
+  let userData = {};
+
+  let sessionTimeout;
+  let remainingTime = 10 * 60; 
+  
+  const startSessionTimer = () => {
+    sessionTimeout = setInterval(() => {
+      remainingTime -= 1;
+
+      // Check if the session has timed out
+      if (remainingTime <= 0) {
+        clearInterval(sessionTimeout);
+        showSessionEndAlert();
+      }
+    }, 1000); // Update every 1 second
+  };
+
+  const showSessionEndAlert = () => {
+    Swal.fire({
+      title: 'Session Ending Soon',
+      text: `Sorry ${userData.fullName}, your session will end. If you want to continue, please log in again.`,
+      icon: 'warning',
+      timer: 2000,
+      timerProgressBar: true,
+      showCancelButton: false,
+      showConfirmButton: false,
+    }).then(() => {
+      auth.signOut().then(() => {
+        localStorage.clear();
+        goto('/');
+      });
+    });
+  };
 
   onMount(async () => {
     try {
@@ -24,16 +50,9 @@
       console.error('Error fetching IP address:', error);
       ipAddress = 'Error fetching IP address. See console for details.';
     }
-  });
 
-
-
-
-
-  
-  let userData = {};
-
-  onMount(async () => {
+    // Start the session timer when the profile page is mounted
+    startSessionTimer();
 
     // Check if the user is signed in using Firebase Authentication
     const user = auth.currentUser;
@@ -53,6 +72,10 @@
     if (!userData) {
       goto('/');
     }
+  });
+
+  onDestroy(() => {
+    clearInterval(sessionTimeout);
   });
 
   const navigateToEditPage = () => {
@@ -90,6 +113,9 @@
 </script>
 
 
+
+
+
 <!-- 
 <svelte:head>
 
@@ -120,6 +146,8 @@ p {
     font-size: 1em;
     margin: 1rem;
   }
+
+  
 </style>
 
 <!-- Your modified HTML code with a single root element -->
@@ -127,11 +155,19 @@ p {
   <div class="inner-banner-one position-relative ">
     <div class="container">
 
-      {#if ipAddress !== undefined}
-      <p>{ipAddress}</p>
-    {:else}
-      <p>Loading...</p>
-    {/if}
+      <div class="d-flex align-items-start align-items-xl-center">
+        {#if ipAddress !== undefined}
+        <p>{ipAddress}</p>
+      {:else}
+        <p>Loading...</p>
+      {/if}
+  
+      <p style="color: red;">Session End : {`${Math.max(0, Math.floor(remainingTime / 60))
+        .toString()
+        .padStart(2, '0')}:${Math.max(0, remainingTime % 60).toString().padStart(2, '0')}`}</p>
+      </div>
+
+
       <div class="candidate-profile-card list-layout bg-dark candidate-profile-card list-layout bg-dark" id="profile-card">
                   <div class="d-flex align-items-start align-items-xl-center">
                       
@@ -297,6 +333,3 @@ p {
   </div>
 </div>
 
-<Team />
-
-<BloodCta />

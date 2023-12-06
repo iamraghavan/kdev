@@ -21,24 +21,21 @@ const transporter = nodemailer.createTransport({
 });
 
 // Generate and send OTP via email
-app.post('/send-otp', (req, res) => {
-  console.log('Received OTP request');
-  const { email } = req.body;
+app.post('/send-otp', async (req, res) => {
+  try {
+    console.log('Received OTP request');
+    const { email } = req.body;
 
-  // Generate a 6-digit OTP
-  const otp = otpGenerator.generate(6, { digits: true, alphabets: false, upperCase: true, specialChars: false });
+    // Generate a 6-digit OTP
+    const otp = otpGenerator.generate(6, { digits: true, alphabets: false, upperCase: true, specialChars: false });
 
-  // Email configuration
-  // Assuming you have a logo stored locally, replace 'path/to/logo.png' with the actual path
-const logoPath = 'https://kurudhi.com/images/logo/logo_04.png';
-let dateof = new Date();
-
-const mailOptions = {
-  from: 'kurudhiofficial@gmail.com',
-  to: email,
-  subject: 'Login Verification - Your OTP',
-  text: "Plaintext version of the message",
-  html: `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+    // Email configuration
+    const mailOptions = {
+      from: 'kurudhiofficial@gmail.com',
+      to: email,
+      subject: 'Login Verification - Your OTP',
+      text: "Plaintext version of the message",
+      html: `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
   <html xmlns="http://www.w3.org/1999/xhtml">
   
   <head>
@@ -66,7 +63,7 @@ const mailOptions = {
                       <div style="color: rgb(0, 0, 0); text-align: left;">
                         <h1 style="margin: 1rem 0">Verification code</h1>
                         <p style="padding-bottom: 16px">Please use the verification code below to sign in. our Kurudhi login OTP is: </p>
-                        <p style="padding-bottom: 16px">${dateof} </p>
+              
                         
                         <p style="padding-bottom: 16px"><strong style="font-size: 130%"> ${otp}</strong></p>
                         <p style="padding-bottom: 16px">Please use this code to sign in securely. If you didn’t request this, you can ignore this email.</p>
@@ -87,18 +84,18 @@ const mailOptions = {
   </body>
   
   </html>
-  `
+  `,
+    };
 
-};
+    // Send email
+    const info = await transporter.sendMail(mailOptions);
 
-
-  // Send email
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      return res.status(500).json({ error: error.message });
-    }
-    res.status(200).json({ message: 'OTP sent successfully', otp });
-  });
+    // Assuming the email was sent successfully
+    res.status(200).json({ status: 'success', message: 'OTP sent successfully', otp, info });
+  } catch (error) {
+    console.error('Error sending OTP:', error.message);
+    res.status(500).json({ status: 'error', message: 'Failed to send OTP', error: error.message });
+  }
 });
 
 app.listen(PORT, () => {
