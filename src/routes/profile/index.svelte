@@ -7,12 +7,77 @@
   import axios from 'axios';
   import Swal from 'sweetalert2';
 
+
+  import jsPDF from 'jspdf';
+
+
+  async function generateCertificate() {
+    const url = '/crt.pdf'; // Replace with the actual path to your certificate PDF
+    const existingPdfBytes = await fetch(url).then((res) => res.arrayBuffer());
+
+    const pdfDoc = new jsPDF();
+
+    // Convert the existing PDF to an image using html2canvas
+    const pdfImage = await convertPdfToImage(existingPdfBytes);
+
+    // Add the image to the PDF
+    pdfDoc.addImage(pdfImage, 'JPEG', 0, 0, pdfDoc.internal.pageSize.getWidth(), pdfDoc.internal.pageSize.getHeight());
+
+    // Add the name in the center
+    const userName = 'John Doe'; // Replace with the actual user's name
+    pdfDoc.text(userName, pdfDoc.internal.pageSize.getWidth() / 2, pdfDoc.internal.pageSize.getHeight() / 2, { align: 'center' });
+
+    // Add the ID in the left bottom corner
+    const userId = '123456'; // Replace with the actual user's ID
+    pdfDoc.text(`ID: ${userId}`, 10, pdfDoc.internal.pageSize.getHeight() - 10);
+
+    // Save the modified PDF
+    const modifiedPdfBytes = pdfDoc.output('arraybuffer');
+    download(modifiedPdfBytes, 'modified_certificate.pdf', 'application/pdf');
+  }
+
+  function convertPdfToImage(pdfBytes) {
+    return new Promise((resolve) => {
+      const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+      const pdfUrl = URL.createObjectURL(blob);
+
+      const tempCanvas = document.createElement('canvas');
+      const tempContext = tempCanvas.getContext('2d');
+
+      const img = new Image();
+      img.src = pdfUrl;
+
+      img.onload = function () {
+        tempCanvas.width = img.width;
+        tempCanvas.height = img.height;
+
+        tempContext.drawImage(img, 0, 0);
+        const imageData = tempCanvas.toDataURL('image/jpeg');
+
+        resolve(imageData);
+      };
+    });
+  }
+
+  function download(data, filename, type) {
+    const file = new Blob([data], { type });
+    const a = document.createElement('a');
+    const url = URL.createObjectURL(file);
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+
   let ipAddress;
   let userData = {};
 
   let sessionTimeout;
   let remainingTime = 10 * 60; 
-  
+
   const startSessionTimer = () => {
     sessionTimeout = setInterval(() => {
       remainingTime -= 1;
@@ -325,7 +390,13 @@ p {
             </div>
           <!-- /.cadidate-bio -->
        
+          <div id="certificate-content">
+            <!-- Certificate content goes here -->
+            <!-- You can customize the layout and content as needed -->
+          </div>
 
+
+<button on:click={generateCertificate}> download certificate</button>
       
       </div> 
       <!-- /.cadidate-profile-sidebar -->
