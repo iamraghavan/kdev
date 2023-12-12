@@ -6,7 +6,7 @@
     updateProfile,
     sendEmailVerification,
   } from "firebase/auth";
-  import { getDatabase, ref, set } from "firebase/database";
+  import { getDatabase, ref, set, get } from "firebase/database";
   import Swal from "sweetalert2";
   import axios from "axios";
   import Toastify from "toastify-js";
@@ -31,6 +31,7 @@
   let state = "";
   let division = "";
   let city = "";
+  let whatsappNum = "";
   let error = "";
   let area = "";
   let isSubmitDisabled = true;
@@ -38,6 +39,7 @@
   let age;
   let remember = false;
   let selectedOption = '';
+
 
   function handleInput(event) {
     // Filter out non-alphabetic characters
@@ -439,9 +441,14 @@ let profile_created = currentDate;
                           placeholder="Enter your Phone Number"
                           bind:value={phoneNumber}
                           autocomplete="off"
+                          
                         />
                       </div>
                     </div>
+
+  
+
+
                     <div class="col-12">
                       <div class="input-group-meta position-relative mb-25">
                         <label for="cpassword">Pincode</label>
@@ -669,6 +676,19 @@ let profile_created = currentDate;
 
 <style>
 
+.input-group-meta {
+  position: relative;
+  margin-bottom: 25px;
+}
+
+/* Style the label for the checkbox */
+.input-group-meta label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+/* Hide the default checkbox visually */
 .btn-eleven.disabled {
         background-color: #9fa5aa;
         color: black;

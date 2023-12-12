@@ -3,7 +3,7 @@
     import { getDatabase, ref, get } from "firebase/database";
     import { firebaseApp } from "../../firebase";
   
-    let callnow = "Dial the digits, let's chat now!";
+    let callnow = "Make a Call to the Donor";
     export async function preload({ params }) {
       const uid = params.uid;
       const db = getDatabase(firebaseApp);

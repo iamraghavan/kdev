@@ -24,7 +24,7 @@
     ];
   </script>
   
-  <section class="expert-section-one position-relative mb-50 mt-30 xl-mt-10 lg-mt-1000">
+  <section class="expert-section-one position-relative pb-50 lg-pb-10 mb-50 mt-30 xl-mt-10 lg-mt-1000">
     <div class="container position-relative">
       <div class="row">
         <div class="col-md-7">

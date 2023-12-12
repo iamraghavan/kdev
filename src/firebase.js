@@ -2,7 +2,7 @@
 
 import { initializeApp } from 'firebase/app';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
-import { getDatabase, ref, set } from 'firebase/database';
+import { getDatabase, ref, set , get } from 'firebase/database';
 import { updateProfile, sendEmailVerification } from 'firebase/auth';
 import { getStorage } from 'firebase/storage';
 const firebaseConfig = {
@@ -24,6 +24,8 @@ const db = getDatabase(firebaseApp);
 
 const storage = getStorage(firebaseApp);
 
-export { firebaseApp, storage };
+export { firebaseApp, storage, };
 
-export { auth, createUserWithEmailAndPassword, updateProfile, sendEmailVerification, db };
+export { auth, createUserWithEmailAndPassword, updateProfile, sendEmailVerification };
+
+export { db, ref, get };

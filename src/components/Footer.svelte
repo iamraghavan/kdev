@@ -14,7 +14,7 @@
   let services = [
     { text: "Become a Donor", link: "/register" },
     { text: "Covid-19", link: "/CovidChart" },
-    { text: "Refer Your Friends", link: "/program/refer" },
+    { text: "Refer Your Friends", link: "/refer" },
     { text: "Donate", link: "/program/donate" },
   ];
 

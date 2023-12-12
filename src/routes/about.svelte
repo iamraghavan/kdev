@@ -105,14 +105,14 @@
           </div>
           <div class="border-bottom pb-50 lg-pb-10">
             <div class="row">
-              {#each counters as counter (counter.count)}
+              <!-- {#each counters as counter (counter.count)}
                 <div class="col-sm-4">
                   <div class="counter-block-one mt-25 text-center wow fadeInUp">
                     <h2 class="main-count fw-500"><span class="counter">{counter.count}</span>{counter.label}</h2>
                     <p>{counter.description}</p>
                   </div>
                 </div>
-              {/each}
+              {/each}  -->
             </div>
           </div>
         </div>
