@@ -4,6 +4,8 @@
     getAuth,
     createUserWithEmailAndPassword,
     updateProfile,
+    signInWithEmailAndPassword,
+    fetchSignInMethodsForEmail,
     sendEmailVerification,
   } from "firebase/auth";
   import { getDatabase, ref, set, get } from "firebase/database";
@@ -44,7 +46,23 @@
   function handleInput(event) {
     // Filter out non-alphabetic characters
     fullName = event.target.value.replace(/[^a-zA-Z]/g, '');
+    
   }
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+  
 
 
   toastr.options = {
@@ -188,87 +206,189 @@ const currentDate = getCurrentDate();
 console.log(currentDate);
 let profile_created = currentDate;
 
-  async function handleRegistration() {
-    if (!email || !password || !pincode || !phoneNumber || !dateOfBirth || !bloodGroup || !fullName || !gender) {
-      toastr.error('Please fill in all required fields.');
-      return;
-    }
+  // async function handleRegistration() {
+  //   if (!email || !password || !pincode || !phoneNumber || !dateOfBirth || !bloodGroup || !fullName || !gender) {
+  //     toastr.error('Please fill in all required fields.');
+  //     return;
+  //   }
 
-    if (!remember) {
-      toastr.error('Please accept the terms and conditions.');
-      return;
-    }
+  //   if (!remember) {
+  //     toastr.error('Please accept the terms and conditions.');
+  //     return;
+  //   }
 
-    try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
+  //   try {
+  //     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+  //     const user = userCredential.user;
 
-      const uid = user.uid;
-      const userRef = ref(db, "users/" + uid);
-      const timestamp = new Date();
-      const formattedTimestamp = `${timestamp.toLocaleTimeString("en-US", {
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: true,
-      })} ${timestamp.toLocaleDateString("en-US", {
-        day: "numeric",
-        month: "numeric",
-        year: "numeric",
-        weekday: "long",
-      })}`;
+  //     const uid = user.uid;
+  //     const userRef = ref(db, "users/" + uid);
+  //     const timestamp = new Date();
+  //     const formattedTimestamp = `${timestamp.toLocaleTimeString("en-US", {
+  //       hour: "2-digit",
+  //       minute: "2-digit",
+  //       hour12: true,
+  //     })} ${timestamp.toLocaleDateString("en-US", {
+  //       day: "numeric",
+  //       month: "numeric",
+  //       year: "numeric",
+  //       weekday: "long",
+  //     })}`;
 
       
-      const userData = {
-        uid: uid,
-        email: email,
-        fullName: fullName,
-        gender: gender,
-        bloodGroup: bloodGroup,
-        dateOfBirth: dateOfBirth,
-        phoneNumber: phoneNumber,
-        pincode: pincode,
-        city: city,
-        state: state,
-        age: age,
-        country: country,
-        division: division,
-        profile_created: profile_created,
-        area: selectedOption,
-        created_at: formattedTimestamp,
-        updated_at: formattedTimestamp,
-      };
+  //     const userData = {
+  //       uid: uid,
+  //       email: email,
+  //       fullName: fullName,
+  //       gender: gender,
+  //       bloodGroup: bloodGroup,
+  //       dateOfBirth: dateOfBirth,
+  //       phoneNumber: phoneNumber,
+  //       pincode: pincode,
+  //       city: city,
+  //       state: state,
+  //       age: age,
+  //       country: country,
+  //       division: division,
+  //       profile_created: profile_created,
+  //       area: selectedOption,
+  //       created_at: formattedTimestamp,
+  //       updated_at: formattedTimestamp,
+  //     };
 
-      await set(userRef, userData);
+  //     await set(userRef, userData);
 
-      await updateProfile(user, {
-        displayName: fullName,
-      });
+  //     await updateProfile(user, {
+  //       displayName: fullName,
+  //     });
 
-      await sendEmailVerification(user);
+  //     await sendEmailVerification(user);
 
-      Swal.fire({
-        icon: "success",
-        title: "🎉 Registration Successful 🎉",
-        html: `
+  //     Swal.fire({
+  //       icon: "success",
+  //       title: "🎉 Registration Successful 🎉",
+  //       html: `
+  //       <p>Thank you for being a superhero!</p>
+  //       <p>Your blood donation will save lives, and we can't thank you enough.</p>
+  //       <p>Get ready to wear your cape (or bandage) with pride! 💪🩸</p>
+  //     `,
+  //       showConfirmButton: false,
+  //       timer: 7000,
+  //     });
+
+  //     setTimeout(() => {
+  //       goto("/profile");
+  //     }, 7000);
+  //   } catch (error) {
+  //     Swal.fire({
+  //       icon: "error",
+  //       title: "Registration Failed",
+  //       text: error.message,
+  //     });
+  //   }
+  // }
+
+
+  async function handleRegistration() {
+  if (
+    !email ||
+    !password ||
+    !pincode ||
+    !phoneNumber ||
+    !dateOfBirth ||
+    !bloodGroup ||
+    !fullName ||
+    !gender
+  ) {
+    toastr.error("Please fill in all required fields.");
+    return;
+  }
+
+  if (!remember) {
+    toastr.error("Please accept the terms and conditions.");
+    return;
+  }
+
+  try {
+    // Check if email exists in Firebase Authentication
+    const providers = await fetchSignInMethodsForEmail(auth, email);
+
+    if (providers.length > 0) {
+      // If email exists, show an error
+      toastr.error("Email already exists. Please contact the admin.");
+      return;
+    }
+
+    // Proceed with user registration
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+
+    const uid = user.uid;
+    const userRef = ref(db, "users/" + uid);
+    const timestamp = new Date();
+    const formattedTimestamp = `${timestamp.toLocaleTimeString("en-US", {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
+    })} ${timestamp.toLocaleDateString("en-US", {
+      day: "numeric",
+      month: "numeric",
+      year: "numeric",
+      weekday: "long",
+    })}`;
+
+    const userData = {
+      uid: uid,
+      email: email,
+      fullName: fullName,
+      gender: gender,
+      bloodGroup: bloodGroup,
+      dateOfBirth: dateOfBirth,
+      phoneNumber: phoneNumber,
+      pincode: pincode,
+      city: city,
+      state: state,
+      age: age,
+      country: country,
+      division: division,
+      profile_created: profile_created,
+      area: selectedOption,
+      created_at: formattedTimestamp,
+      updated_at: formattedTimestamp,
+    };
+
+    await set(userRef, userData);
+
+    await updateProfile(user, {
+      displayName: fullName,
+    });
+
+    await sendEmailVerification(user);
+
+    Swal.fire({
+      icon: "success",
+      title: "🎉 Registration Successful 🎉",
+      html: `
         <p>Thank you for being a superhero!</p>
         <p>Your blood donation will save lives, and we can't thank you enough.</p>
         <p>Get ready to wear your cape (or bandage) with pride! 💪🩸</p>
       `,
-        showConfirmButton: false,
-        timer: 7000,
-      });
+      showConfirmButton: false,
+      timer: 7000,
+    });
 
-      setTimeout(() => {
-        goto("/profile");
-      }, 7000);
-    } catch (error) {
-      Swal.fire({
-        icon: "error",
-        title: "Registration Failed",
-        text: error.message,
-      });
+    setTimeout(() => {
+      goto("/profile");
+    }, 7000);
+
+  } catch (error) {
+    if (error.code === 'auth/email-already-in-use') {
+      toastr.error("Email already exists. Please contact the admin.");
+    } else {
+      toastr.error("Registration failed. Please try again later.");
     }
   }
+}
 
   let alertColor = "black";
 
@@ -553,9 +673,12 @@ let profile_created = currentDate;
                           placeholder="Enter your Email"
                           bind:value={email}
                           autocomplete="off"
+                       
                         />
                       </div>
                     </div>
+
+                 
                    
 
                     <div class="col-12">
