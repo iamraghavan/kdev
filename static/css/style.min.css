@@ -3650,7 +3650,7 @@ iframe {
 }
 
 .fancy-banner-five.bg-image {
-    background: url(../images/assets/img_40.jpg) no-repeat center;
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(../images/assets/img_40.jpg) no-repeat center;
     background-size: cover;
     z-index: 1
 }

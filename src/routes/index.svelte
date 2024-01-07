@@ -29,7 +29,9 @@ import HomeComponentOne from "../components/HomeComponentOne.svelte";
 				<div class="col-lg-6 col-md-8">
 				  <h1>Join our cause and help us save <br>  more lives.</h1>
 				  <p class="text-md mt-40 lg-mt-20 mb-65 lg-mb-30 pe-xxl-5">Find blood donors near your location and make a blood request in less than a minutes.</p>
+				  <a href="/register" class="btn-five">Register</a>
 				</div>
+				
 			  </div>
 			
 			  <div class="d-sm-flex align-items-center mt-85 lg-mt-50">
