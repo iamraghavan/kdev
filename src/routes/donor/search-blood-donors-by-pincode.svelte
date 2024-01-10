@@ -1,16 +1,15 @@
 <script>
-
-
   import Banner from "../../components/InnerBanner.svelte";
-  import { getDatabase, ref, get, set } from "firebase/database";
-import { onMount } from 'svelte';
-import { initializeApp } from 'firebase/app';
+  import { getDatabase, ref, get } from "firebase/database";
+  import { onMount } from 'svelte';
+  import { goto } from '@sapper/app';
+  import toastr from "toastr";
 
-import { firebaseApp } from "../../firebase";
-import toastr from "toastr";
+  // Firebase initialization
+  import { firebaseApp } from "../../firebase";
 
-toastr.options = {
-  "closeButton": true,
+  toastr.options = {
+    "closeButton": true,
   "debug": false,
   "newestOnTop": true,
   "progressBar": true,
@@ -27,13 +26,12 @@ toastr.options = {
   "hideMethod": "fadeOut"
   };
 
-const noimage = {
-    img : "./images/no-data-pana.svg"
-}
+  const noimage = {
+    img: "./images/no-data-pana.svg"
+  };
 
-const db = getDatabase(firebaseApp);
-let pincode;
-let country = "India";
+  const db = getDatabase(firebaseApp);
+  let pincode = "";
   let state = "";
   let division = "";
   let city = "";
@@ -41,45 +39,31 @@ let country = "India";
   let bloodGroup = "";
   let filteredData = [];
 
-  import { goto } from '@sapper/app';
+  let selectedOption = '';
+  let dropdownOptions = [];
 
+  // Navigation function
   function viewUserProfile(uid) {
     event.preventDefault();
-let a = uid
-    console.log('UID before goto:', uid); // Log to check the value
-
-    // Use goto to navigate to the user's profile page and include uid in the state
     goto(`donor/${uid}`, { state: { value: uid } });
   }
 
-
-
-
+  // Apply filter function
   const applyFilter = async (event) => {
+    event.preventDefault();
 
-    
+    if (!pincode || !bloodGroup) {
+      toastr.error("Please fill in all required fields.");
+      return;
+    }
 
-
-    event.preventDefault(); // Prevent the default behavior of the anchor tag
-
-    if (
-    
-    !pincode ||
-   
-    !bloodGroup 
-    
-  ) {
-    toastr.error("Please fill in all required fields.");
-    return;
-  }
     try {
       const snapshot = await get(ref(db, 'users'));
-
       filteredData = [];
+
       snapshot.forEach((childSnapshot) => {
         const data = childSnapshot.val();
 
-        // Apply your filtering logic here
         if (data.pincode === pincode && data.bloodGroup === bloodGroup) {
           filteredData.push({
             uid: data.uid,
@@ -93,39 +77,33 @@ let a = uid
         }
       });
 
-      // Update the count of filtered results
-      noofresults = filteredData.length;
-
-      // Log the filtered data
-      console.log(filteredData.uid);
+      console.log(filteredData); // Log the filtered data
     } catch (err) {
       error = err.message || 'Error fetching data from Firebase';
     }
   };
 
-  // Reactively update the count when filteredData changes
+  // Reactive update of results count
   $: noofresults = filteredData.length;
 
+  // Fetch initial data on component mount
   onMount(() => {
-    // Optionally, you can fetch initial data on component mount
     applyFilter();
   });
 
+  // Handle pincode input
   async function handlePincodeInput(event) {
     const input = event.target;
-    pincode = input.value; // Update the pincode
+    pincode = input.value;
 
     if (pincode.length === 6) {
-      await fetchAddressData(); // Fetch address data when 6 digits are entered
+      await fetchAddressData();
     } else {
-      resetAddressData(); // Reset address data when pincode is invalid
+      resetAddressData();
     }
   }
 
-  let selectedOption = '';
-  let dropdownOptions = [];
-  
-
+  // Fetch address data based on pincode
   async function fetchAddressData() {
     try {
       const apiUrl = `https://api.postalpincode.in/pincode/${pincode}`;
@@ -153,6 +131,7 @@ let a = uid
     }
   }
 
+  // Reset address data function
   function resetAddressData() {
     state = "";
     division = "";
@@ -160,6 +139,8 @@ let a = uid
     dropdownOptions = [];
     error = "";
   }
+
+  let isLoading = false;
 </script>
 
 
@@ -311,13 +292,20 @@ let a = uid
                       </div>
                       <!-- /.filter-area-tab -->
                   </div>
+                  {#if isLoading}
+                  <div>Loading...</div>
+                {/if}
   
-  
-       
+                {#if error}
+                <p class="error-message">{error}</p>
+              {/if}
         <!-- /.col- -->
               </div>
           </div>
   </section>
+  
+
+<!-- Error message -->
 
 
   <section class="candidates-profile bg-color pt-90 lg-pt-70 pb-160 xl-pb-150 lg-pb-80">
@@ -330,7 +318,7 @@ let a = uid
 
         <div class="col-xl-12 col-lg-8">
             <!-- <div class="total-job-found">All <span class="text-dark">{noofresults}</span> Results found</div> -->
-
+            {#if noofresults > 0}
             <div style="
             padding: 1.4rem 0rem;" class="total-job-found md-mt-10">All <span class="text-dark fw-500">{noofresults}</span> Donors found</div>
                                 
@@ -372,7 +360,7 @@ let a = uid
                              </div>
                              <div class="row gx-2 pt-25 sm-pt-10">
                                   <div class="col-md-12">
-                                      <a href on:click={() => viewUserProfile(uid)} class="profile-btn tran3s w-100 mt-5">View Profile</a>
+                                      <a href on:click={(event) => { event.preventDefault(); viewUserProfile(uid); }} class="profile-btn tran3s w-100 mt-5">View Profile</a>
                                   </div>
                                   
                                  </div>
@@ -404,7 +392,9 @@ let a = uid
                
             </div>
            
-       
+            {:else if noofresults === 0 && !isLoading}
+            <p>No donors found. Try adjusting your search criteria.</p>
+          {/if}
         </div>
         <!-- /.col- -->
       </div>

@@ -1,23 +1,19 @@
 <script>
   import { onMount } from 'svelte';
-  import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
-  // import { navigate } from 'svelte-routing';
+  import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth';
   import Swal from 'sweetalert2';
   import { goto } from '@sapper/app';
-  import Banner from "../components/InnerBanner.svelte";
+  import { writable } from 'svelte/store';
 
-  import { get, ref } from 'firebase/database';
-import { db } from '../firebase';
-
+  import Banner from '../components/InnerBanner.svelte';
   import { firebaseApp } from '../firebase';
-const auth = getAuth(firebaseApp);
-// const db = getDatabase(firebaseApp);
 
-
-let rememberMe;
+  const auth = getAuth(firebaseApp);
 
   let email = '';
   let password = '';
+  let rememberMe = writable(false);
+  let showPassword = false;
 
   onMount(() => {
     const inputFields = document.querySelectorAll('input[autocomplete="off"]');
@@ -25,95 +21,84 @@ let rememberMe;
       input.setAttribute('autocomplete', 'new-password');
     });
 
-  });
-
-
-
-
-   const handleLogin = async () => {
-  try {
-    const userCredential = await signInWithEmailAndPassword(auth, email, password);
-
-    // Check if "Keep me logged in" is selected
-    if (rememberMe) {
-      
-      localStorage.setItem('userLoggedIn', true);
-    }
-
-    localStorage.setItem('loggedIn', true);
-    
-
-    // Show a success message with SweetAlert
-    Swal.fire({
-      icon: 'success',
-      title: '🎉 Login Successful 🎉',
-      text: `You are logged in at ${window.navigator.userAgent}.`,
-      showConfirmButton: false, // Remove the OK button
-      timer: 5000, // Show the message for 5 seconds (5000 milliseconds),
-    });
-
-    // Redirect to the dashboard or profile page after a delay
-    setTimeout(() => {
+    // Check for stored authentication state on component mount
+    const userLoggedIn = localStorage.getItem('userLoggedIn');
+    if (userLoggedIn) {
       goto('/profile');
-    }, 5000);
-  } catch (error) {
-    // Login failed, show an error message
-    Swal.fire({
-      icon: 'error',
-      title: 'Login Failed',
-      text: error.message,
-    });
-  }
-};
-
-
-const showForgotPassword = async () => {
-  const { value: email } = await Swal.fire({
-    title: 'Forgot Password',
-    html: '<input id="swal-input1" class="swal2-input" placeholder="Enter your email">',
-    focusConfirm: false,
-    preConfirm: () => {
-      return document.getElementById('swal-input1').value;
-    },
+      console.log('User already logged in.');
+    }
   });
 
-  if (email) {
+  const handleLogin = async () => {
     try {
-      await sendPasswordResetEmail(auth, email);
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
 
-      // Password reset email sent successfully
+      // Check if "Keep me logged in" is selected
+      if ($rememberMe) {
+        localStorage.setItem('userLoggedIn', true);
+      }
+
+      localStorage.setItem('loggedIn', true);
+
+      // Show a success message with SweetAlert
       Swal.fire({
         icon: 'success',
-        title: 'Password Reset Email Sent',
-        text: 'Please check your email for instructions on resetting your password.',
+        title: '🎉 Login Successful 🎉',
+        text: `You are logged in at ${window.navigator.userAgent}.`,
+        showConfirmButton: false, // Remove the OK button
+        timer: 5000, // Show the message for 5 seconds (5000 milliseconds),
       });
+
+      // Redirect to the dashboard or profile page after a delay
+      setTimeout(() => {
+        goto('/profile');
+      }, 5000);
     } catch (error) {
-      // Password reset email failed
+      // Login failed, show an error message
       Swal.fire({
         icon: 'error',
-        title: 'Password Reset Failed',
+        title: 'Login Failed',
         text: error.message,
       });
     }
-  }
-};
+  };
 
-// Check for stored authentication state on component mount
-onMount(() => {
-  const userLoggedIn = localStorage.getItem('userLoggedIn');
+  const showForgotPassword = async () => {
+    const { value: email } = await Swal.fire({
+      title: 'Forgot Password',
+      html: '<input id="swal-input1" class="swal2-input" placeholder="Enter your email">',
+      focusConfirm: false,
+      preConfirm: () => {
+        return document.getElementById('swal-input1').value;
+      },
+    });
 
-  if (userLoggedIn) {
-    goto('/profile');
-    console.log('User already logged in.');
-  }
-});
+    if (email) {
+      try {
+        await sendPasswordResetEmail(auth, email);
 
-  let showPassword = false;
+        // Password reset email sent successfully
+        Swal.fire({
+          icon: 'success',
+          title: 'Password Reset Email Sent',
+          text: 'Please check your email for instructions on resetting your password.',
+        });
+      } catch (error) {
+        // Password reset email failed
+        Swal.fire({
+          icon: 'error',
+          title: 'Password Reset Failed',
+          text: error.message,
+        });
+      }
+    }
+  };
 
   function togglePasswordVisibility() {
-  showPassword = !showPassword;
-}
+    showPassword = !showPassword;
+  }
 </script>
+
 
 <!-- Your login form HTML here -->
 

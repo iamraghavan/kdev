@@ -1,3 +1,6 @@
+<!-- __layout.svelte -->
+
+
 <script>
   import Swal from 'sweetalert2';
   import { onMount } from 'svelte';

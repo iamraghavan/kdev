@@ -9,7 +9,7 @@
     "start": "node __sapper__/build"
   },
   "dependencies": {
-    "axios": "^1.6.1",
+    "axios": "^1.6.5",
     "backbone": "^1.5.0",
     "body-parser": "^1.20.2",
     "chart.js": "^4.4.0",
@@ -18,6 +18,7 @@
     "d3": "^7.8.5",
     "emailjs": "^4.0.3",
     "emailjs-com": "^3.2.0",
+    "events": "^3.3.0",
     "express": "^4.18.2",
     "firebase": "^10.6.0",
     "html2canvas": "^1.4.1",
@@ -26,6 +27,7 @@
     "lodash": "^4.17.21",
     "node-fetch": "^3.3.2",
     "nodemailer": "^6.9.7",
+    "osm": "^1.0.0",
     "otp-generator": "^4.0.1",
     "pdf-lib": "^1.17.1",
     "places.js": "^1.19.0",
@@ -34,6 +36,8 @@
     "slick-slider": "^1.8.2",
     "socket.io": "^4.7.2",
     "socket.io-client": "^4.7.2",
+    "svelte-kit": "^1.2.0",
+    "svelte-leaflet": "^0.2.0",
     "svelte-local-storage-store": "^0.6.4",
     "svelte-routing": "^2.6.0",
     "sweetalert": "^2.1.2",
@@ -60,7 +64,7 @@
     "rollup-plugin-svelte": "^7.0.0",
     "rollup-plugin-terser": "^7.0.0",
     "sapper": "^0.28.10",
-    "svelte": "^3.17.3",
+    "svelte": "^3.59.2",
     "svelte-toast": "^1.0.0"
   },
   "main": "rollup.config.js",

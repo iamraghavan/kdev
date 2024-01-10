@@ -4,11 +4,10 @@
     getAuth,
     createUserWithEmailAndPassword,
     updateProfile,
-    signInWithEmailAndPassword,
     fetchSignInMethodsForEmail,
     sendEmailVerification,
   } from "firebase/auth";
-  import { getDatabase, ref, set, get } from "firebase/database";
+  import { getDatabase, ref, set } from "firebase/database";
   import Swal from "sweetalert2";
   import axios from "axios";
   import Toastify from "toastify-js";
@@ -33,7 +32,6 @@
   let state = "";
   let division = "";
   let city = "";
-  let whatsappNum = "";
   let error = "";
   let area = "";
   let isSubmitDisabled = true;
@@ -42,39 +40,35 @@
   let remember = false;
   let selectedOption = '';
 
-
-  function handleInput(event) {
-    // Filter out non-alphabetic characters
-    fullName = event.target.value.replace(/[^a-zA-Z]/g, '');
-    
-  }
-
-
-
   toastr.options = {
-    "closeButton": true,
-  "debug": true,
-  "newestOnTop": true,
-  "progressBar": true,  
-  "positionClass": "toast-bottom-right",
-  "preventDuplicates": true,
-  "onclick": null,
-  "showDuration": "300",
-  "hideDuration": "1000",
-  "timeOut": 0,
-  "extendedTimeOut": 0,
-  "showEasing": "swing",
-  "hideEasing": "linear",
-  "showMethod": "fadeIn",
-  "hideMethod": "fadeOut",
-  "tapToDismiss": false
+    closeButton: true,
+    debug: true,
+    newestOnTop: true,
+    progressBar: true,
+    positionClass: "toast-bottom-right",
+    preventDuplicates: true,
+    onclick: null,
+    showDuration: "300",
+    hideDuration: "1000",
+    timeOut: 0,
+    extendedTimeOut: 0,
+    showEasing: "swing",
+    hideEasing: "linear",
+    showMethod: "fadeIn",
+    hideMethod: "fadeOut",
+    tapToDismiss: false
   };
+  
+  function handleInput(event) {
+ 
+    fullName = event.target.value.replace(/[^a-zA-Z\s]/g, '');
+
+  }
 
   function calculateAge(dateOfBirth) {
     const dob = new Date(dateOfBirth);
     const today = new Date();
     age = today.getFullYear() - dob.getFullYear();
-
     if (today < new Date(today.getFullYear(), dob.getMonth(), dob.getDate())) {
       age--;
     }
@@ -90,7 +84,6 @@
   async function handlePincodeInput(event) {
     const input = event.target;
     pincode = input.value;
-
     if (pincode.length === 6) {
       await fetchAddressData();
     } else {
@@ -101,280 +94,152 @@
   let dropdownOptions = [];
 
   async function fetchAddressData() {
-    if (pincode.length === 6) {
-      try {
-        const apiUrl = `https://api.postalpincode.in/pincode/${pincode}`;
-        const response = await axios.get(apiUrl);
+    try {
+      const apiUrl = `https://api.postalpincode.in/pincode/${pincode}`;
+      const response = await axios.get(apiUrl);
 
-        if (response.data.length > 0 && response.data[0].Status === "Success") {
-          const postOffice = response.data[0].PostOffice[0];
-          state = postOffice.State;
-          division = postOffice.Name;
-          city = postOffice.District;
-          error = "";
-
-          dropdownOptions = response.data[0].PostOffice.map(po => po.Name);
-        } else {
-          throw new Error(
-            "Invalid pincode. Please enter a valid 6-digit pincode."
-          );
-        }
-      } catch (err) {
-        error =
-          err.message ||
-          "An error occurred while fetching data. Please try again.";
-
-        Toastify({
-          text: error,
-          duration: 3000,
-          gravity: 'top',
-          position: 'left',
-          backgroundColor: '#ff4d4d',
-        }).showToast();
+      if (response.data.length > 0 && response.data[0].Status === "Success") {
+        const postOffice = response.data[0].PostOffice[0];
+        state = postOffice.State;
+        division = postOffice.Name;
+        city = postOffice.District;
+        error = "";
+        dropdownOptions = response.data[0].PostOffice.map(po => po.Name);
+      } else {
+        throw new Error("Invalid pincode. Please enter a valid 6-digit pincode.");
       }
-    } else {
-      error = "";
+    } catch (err) {
+      error = err.message || "An error occurred while fetching data. Please try again.";
+      Toastify({
+        text: error,
+        duration: 3000,
+        gravity: 'top',
+        position: 'left',
+        backgroundColor: '#ff4d4d',
+      }).showToast();
     }
   }
 
-
   let showPassword = false;
-
   let showSuccessAlert = false;
 
   const passwordStrength = writable(null);
 
-function checkPasswordStrength() {
-  const strongPasswordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+  function checkPasswordStrength() {
+    const strongPasswordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
 
-  if (password.length >= 2 && password.length <= 3) {
-    passwordStrength.set("Weak");
-  } else if (password.length > 3) {
-    if (strongPasswordRegex.test(password)) {
-      passwordStrength.set("Strong");
-    } else {
+    if (password.length >= 2 && password.length <= 3) {
       passwordStrength.set("Weak");
-    }
-  } else {
-    passwordStrength.set(null);
-  }
-}
-
-function togglePasswordVisibility() {
-  showPassword = !showPassword;
-}
- 
-
-  function initializeTurnstile() {
-    if (window.turnstileV2 && window.turnstileV2.callback) {
-      window.turnstileV2.callback(
-        {
-          sitekey: '0x4AAAAAAACC60E1r0uX5QL4',
-          action: 'registration',
-        },
-        handleRegistration
-      );
+    } else if (password.length > 3) {
+      passwordStrength.set(strongPasswordRegex.test(password) ? "Strong" : "Weak");
     } else {
-      setTimeout(initializeTurnstile, 500);
+      passwordStrength.set(null);
     }
+  }
+
+  function togglePasswordVisibility() {
+    showPassword = !showPassword;
   }
 
   function getCurrentDate() {
-  const today = new Date();
-  const dd = String(today.getDate()).padStart(2, '0');
-  const mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
-  const yyyy = today.getFullYear();
+    const today = new Date();
+    const dd = String(today.getDate()).padStart(2, '0');
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const yyyy = today.getFullYear();
+    return `${dd}/${mm}/${yyyy}`;
+  }
 
-  return `${dd}/${mm}/${yyyy}`;
-}
-
-const currentDate = getCurrentDate();
-console.log(currentDate);
-let profile_created = currentDate;
-
-  // async function handleRegistration() {
-  //   if (!email || !password || !pincode || !phoneNumber || !dateOfBirth || !bloodGroup || !fullName || !gender) {
-  //     toastr.error('Please fill in all required fields.');
-  //     return;
-  //   }
-
-  //   if (!remember) {
-  //     toastr.error('Please accept the terms and conditions.');
-  //     return;
-  //   }
-
-  //   try {
-  //     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-  //     const user = userCredential.user;
-
-  //     const uid = user.uid;
-  //     const userRef = ref(db, "users/" + uid);
-  //     const timestamp = new Date();
-  //     const formattedTimestamp = `${timestamp.toLocaleTimeString("en-US", {
-  //       hour: "2-digit",
-  //       minute: "2-digit",
-  //       hour12: true,
-  //     })} ${timestamp.toLocaleDateString("en-US", {
-  //       day: "numeric",
-  //       month: "numeric",
-  //       year: "numeric",
-  //       weekday: "long",
-  //     })}`;
-
-      
-  //     const userData = {
-  //       uid: uid,
-  //       email: email,
-  //       fullName: fullName,
-  //       gender: gender,
-  //       bloodGroup: bloodGroup,
-  //       dateOfBirth: dateOfBirth,
-  //       phoneNumber: phoneNumber,
-  //       pincode: pincode,
-  //       city: city,
-  //       state: state,
-  //       age: age,
-  //       country: country,
-  //       division: division,
-  //       profile_created: profile_created,
-  //       area: selectedOption,
-  //       created_at: formattedTimestamp,
-  //       updated_at: formattedTimestamp,
-  //     };
-
-  //     await set(userRef, userData);
-
-  //     await updateProfile(user, {
-  //       displayName: fullName,
-  //     });
-
-  //     await sendEmailVerification(user);
-
-  //     Swal.fire({
-  //       icon: "success",
-  //       title: "🎉 Registration Successful 🎉",
-  //       html: `
-  //       <p>Thank you for being a superhero!</p>
-  //       <p>Your blood donation will save lives, and we can't thank you enough.</p>
-  //       <p>Get ready to wear your cape (or bandage) with pride! 💪🩸</p>
-  //     `,
-  //       showConfirmButton: false,
-  //       timer: 7000,
-  //     });
-
-  //     setTimeout(() => {
-  //       goto("/profile");
-  //     }, 7000);
-  //   } catch (error) {
-  //     Swal.fire({
-  //       icon: "error",
-  //       title: "Registration Failed",
-  //       text: error.message,
-  //     });
-  //   }
-  // }
-
+  const currentDate = getCurrentDate();
+  let profile_created = currentDate;
 
   async function handleRegistration() {
-  if (
-    !email ||
-    !password ||
-    !pincode ||
-    !phoneNumber ||
-    !dateOfBirth ||
-    !bloodGroup ||
-    !fullName ||
-    !gender
-  ) {
-    toastr.error("Please fill in all required fields.");
-    return;
-  }
-
-  if (!remember) {
-    toastr.error("Please accept the terms and conditions.");
-    return;
-  }
-
-  try {
-    // Check if email exists in Firebase Authentication
-    const providers = await fetchSignInMethodsForEmail(auth, email);
-
-    if (providers.length > 0) {
-      // If email exists, show an error
-      toastr.error("Email already exists. Please contact the admin.");
+    if (!email || !password || !pincode || !phoneNumber || !dateOfBirth || !bloodGroup || !fullName || !gender) {
+      toastr.error("Please fill in all required fields.");
       return;
     }
 
-    // Proceed with user registration
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    const user = userCredential.user;
+    if (!remember) {
+      toastr.error("Please accept the terms and conditions.");
+      return;
+    }
 
-    const uid = user.uid;
-    const userRef = ref(db, "users/" + uid);
-    const timestamp = new Date();
-    const formattedTimestamp = `${timestamp.toLocaleTimeString("en-US", {
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: true,
-    })} ${timestamp.toLocaleDateString("en-US", {
-      day: "numeric",
-      month: "numeric",
-      year: "numeric",
-      weekday: "long",
-    })}`;
+    try {
+      const providers = await fetchSignInMethodsForEmail(auth, email);
 
-    const userData = {
-      uid: uid,
-      email: email,
-      fullName: fullName,
-      gender: gender,
-      bloodGroup: bloodGroup,
-      dateOfBirth: dateOfBirth,
-      phoneNumber: phoneNumber,
-      pincode: pincode,
-      city: city,
-      state: state,
-      age: age,
-      country: country,
-      division: division,
-      profile_created: profile_created,
-      area: selectedOption,
-      created_at: formattedTimestamp,
-      updated_at: formattedTimestamp,
-    };
+      if (providers.length > 0) {
+        toastr.error("Email already exists. Please contact the admin.");
+        return;
+      }
 
-    await set(userRef, userData);
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
 
-    await updateProfile(user, {
-      displayName: fullName,
-    });
+      const uid = user.uid;
+      const userRef = ref(db, "users/" + uid);
+      const timestamp = new Date();
+      const formattedTimestamp = `${timestamp.toLocaleTimeString("en-US", {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true,
+      })} ${timestamp.toLocaleDateString("en-US", {
+        day: "numeric",
+        month: "numeric",
+        year: "numeric",
+        weekday: "long",
+      })}`;
 
-    await sendEmailVerification(user);
+      const userData = {
+        uid: uid,
+        email: email,
+        fullName: fullName,
+        gender: gender,
+        bloodGroup: bloodGroup,
+        dateOfBirth: dateOfBirth,
+        phoneNumber: phoneNumber,
+        pincode: pincode,
+        city: city,
+        state: state,
+        age: age,
+        country: country,
+        division: division,
+        profile_created: profile_created,
+        area: selectedOption,
+        created_at: formattedTimestamp,
+        updated_at: formattedTimestamp,
+      };
 
-    Swal.fire({
-      icon: "success",
-      title: "🎉 Registration Successful 🎉",
-      html: `
-        <p>Thank you for being a superhero!</p>
-        <p>Your blood donation will save lives, and we can't thank you enough.</p>
-        <p>Get ready to wear your cape (or bandage) with pride! 💪🩸</p>
-      `,
-      showConfirmButton: false,
-      timer: 7000,
-    });
+      await set(userRef, userData);
 
-    setTimeout(() => {
-      goto("/profile");
-    }, 7000);
+      await updateProfile(user, {
+        displayName: fullName,
+      });
 
-  } catch (error) {
-    if (error.code === 'auth/email-already-in-use') {
-      toastr.error("Email already exists. Please contact the admin.");
-    } else {
-      toastr.error("Registration failed. Please try again later.");
+      await sendEmailVerification(user);
+
+      Swal.fire({
+        icon: "success",
+        title: "🎉 Registration Successful 🎉",
+        html: `
+          <p>Thank you for being a superhero!</p>
+          <p>Your blood donation will save lives, and we can't thank you enough.</p>
+          <p>Get ready to wear your cape (or bandage) with pride! 💪🩸</p>
+        `,
+        showConfirmButton: false,
+        timer: 7000,
+      });
+
+      setTimeout(() => {
+        goto("/profile");
+      }, 7000);
+
+    } catch (error) {
+      if (error.code === 'auth/email-already-in-use') {
+        toastr.error("Email already exists. Please contact the admin.");
+      } else {
+        toastr.error("Registration failed. Please try again later.");
+      }
     }
   }
-}
 
   let alertColor = "black";
 
@@ -390,10 +255,9 @@ let profile_created = currentDate;
     inputFields.forEach((input) => {
       input.setAttribute("autocomplete", "new-password");
     });
-
-    initializeTurnstile();
   });
 </script>
+
 
 
 <svelte:head>

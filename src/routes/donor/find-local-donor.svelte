@@ -7,6 +7,27 @@
   import { readable } from "svelte/store";
   import { goto } from "@sapper/app";
 
+  import toastr from "toastr";
+
+toastr.options = {
+  "closeButton": true,
+  "debug": false,
+  "newestOnTop": true,
+  "progressBar": true,
+  "positionClass": "toast-bottom-center",
+  "preventDuplicates": true,
+  "onclick": null,
+  "showDuration": "300",
+  "hideDuration": "1000",
+  "timeOut": "5000",
+  "extendedTimeOut": "1000",
+  "showEasing": "swing",
+  "hideEasing": "linear",
+  "showMethod": "fadeIn",
+  "hideMethod": "fadeOut"
+  };
+
+
   // Import Banner if it's a component
   import Banner from "../../components/InnerBanner.svelte";
 
@@ -14,6 +35,7 @@
 
   let noimage = { img: "./images/no-data-pana.svg" };
 
+  let isLoading = false;
   let error = "";
   let noofresults = 0;
   let currentPage = 1;
@@ -22,12 +44,37 @@
   let filteredDataArray = [];
 
 
+
+  // Function to show success notification
+  const showSuccessNotification = (message) => {
+    toastr.success(message);
+  };
+
+  // Function to show error notification
+  const showErrorNotification = (message) => {
+    toastr.error(message);
+  };
+
+
+
   // Define the filteredData store
   function viewUserProfile(uid) {
+    event.preventDefault();
     goto(`donor/${uid}`, { state: { value: uid } });
   }
   
   const applyFilter = async (event) => {
+
+    if (
+    
+    !selectedSuggestion ||
+   
+    !bloodGroup 
+    
+  ) {
+    toastr.error("Please fill in all required fields.");
+    return;
+  }
     
     try {
       const snapshot = await get(ref(db, "users"));
@@ -154,12 +201,38 @@
   afterUpdate(() => {
     debouncedFetchLocationSuggestions();
   });
+
+  let visiblePages;
+
+  $: visiblePages = pages.slice(currentPage - 1, currentPage + 4);
 </script>
 
 
 
 
 <style>
+
+.spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-top: 4px solid #333;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 0.8s linear infinite;
+  }
+
+  /* Add styling for error messages */
+  .error-message {
+    color: red;
+    font-size: 16px;
+  }
+
+  /* Add styling for pagination */
+  .pagination-two li {
+    margin: 0 5px;
+  }
+
+
   .collapse-container {
     position: relative;
   }
@@ -200,7 +273,14 @@
   </div>
 
 
+ {#if isLoading}
+    <div class="spinner"></div>
+  {/if}
 
+  <!-- Display error message -->
+  {#if error}
+    <p class="error-message">{error}</p>
+  {/if}
 
   <section class="job-listing-three pt-110 lg-pt-80 pb-160 xl-pb-150 lg-pb-80">
     <div class="container">
@@ -214,7 +294,7 @@
                                   <div class="pt-25 pb-30">
                                       <div class="row">
                                           
-                                        <div class="col-lg-4 col-sm-6">
+                                        <div class="col-lg-6 col-sm-6">
                                           <div class="filter-block pb-50 lg-pb-20">
                                               <div class="filter-title fw-500 text-dark">Searching Location <i class="bi bi-radar"></i></div>
                                               <input
@@ -258,7 +338,7 @@
                                       </div>
                                       
                                         
-                                          <div class="col-lg-4 col-sm-6">
+                                          <div class="col-lg-6 col-sm-6">
                                               <div class="filter-block pb-50 lg-pb-20">
                                                   <div class="filter-title fw-500 text-dark">Blood Group <i class="bi bi-droplet"></i></div>
                                                   <select
@@ -311,13 +391,12 @@
 
                                           <div class="col-lg-4 col-sm-6">
                                             <div class="filter-block pb-50 lg-pb-20">
-                                                <div class="filter-title fw-500 text-dark">Map View <i class="bi bi-map"></i></div>
+                                                
                                                
-                                                
-                                                
+                                                <h6><i class="bi bi-location"></i>Your chosen city is: {inputValue}</h6>
                                             
                                               </div>
-                                            <!-- /.filter-block -->
+                                            
                                         </div>
                                       </div>
   
@@ -395,7 +474,7 @@
                    </div>
                    <div class="row gx-2 pt-25 sm-pt-10">
                         <div class="col-md-12">
-                            <a href on:click={() => viewUserProfile(uid)} class="profile-btn tran3s w-100 mt-5">View Profile</a>
+                            <a href on:click={(event) => { event.preventDefault(); viewUserProfile(uid); }} class="profile-btn tran3s w-100 mt-5">View Profile</a>
                         </div>
                         
                        </div>
@@ -432,19 +511,21 @@
               of <span class="text-dark fw-500">{filteredData.length || "0"}</span>
             </p>
             <div class="d-flex justify-content-center">
+              
+
+              <!-- Improved pagination UI -->
               <ul class="pagination-two d-flex align-items-center style-none">
-              <!-- You can generate these dynamically based on the number of pages -->
-              {#each pages as page}
-                <li class:selected={page === currentPage}>
-                <a href>{page}</a>
-                </li>
-              {/each}
-              <!-- Example of the next page button -->
-              <li>
-                <a href onclick="goToNextPage()"
-                ><i class="bi bi-chevron-right" /></a
-                >
-              </li>
+                {#if currentPage > 1}
+                  <li><a href onclick={() => goToPage(currentPage - 1)}>&lt;</a></li>
+                {/if}
+                {#each visiblePages as page}
+                  <li class:selected={page === currentPage}>
+                    <a href onclick={() => goToPage(page)}>{page}</a>
+                  </li>
+                {/each}
+                {#if currentPage < pages.length}
+                  <li><a href onclick={() => goToPage(currentPage + 1)}>&gt;</a></li>
+                {/if}
               </ul>
             </div>
             </div>
