@@ -8,6 +8,20 @@
   import Swal from "sweetalert2";
   import _ from "lodash";
   import Session from "./Session.svelte";
+   // Update this line
+
+
+  let isProfileVisible = false;
+
+  const downloadProfile = async (event) => {
+    event.preventDefault();
+
+    alert(2 + 2 * 30 / 4 )
+  };
+
+  onMount(() => {
+    isProfileVisible = true;
+  });
 
   let ipAddress;
   let userData = {};
@@ -69,9 +83,17 @@
       goto("/");
     }
 
-    // Show Swal alert if any userData value is empty, none, or undefined
-    if (_.some(_.values(userData), _.isEmpty)) {
-      showUpdateProfileAlert();
+    // Check if the alert was shown today
+    const lastAlertDate = localStorage.getItem('lastAlertDate');
+    const today = new Date().toLocaleDateString();
+
+    if (!lastAlertDate || lastAlertDate !== today) {
+      // Show Swal alert if any userData value is empty, none, or undefined
+      if (_.some(_.values(userData), _.isEmpty)) {
+        showUpdateProfileAlert();
+        // Save today's date to localStorage to track that the alert was shown today
+        localStorage.setItem('lastAlertDate', today);
+      }
     }
   });
 
@@ -118,29 +140,28 @@
   };
 
   const showUpdateProfileAlert = () => {
-  Swal.fire({
-    title: "Update Your Profile",
-    text: "Please update your profile information to ensure accurate details.",
-    icon: "info",
-    showCancelButton: true,
-    confirmButtonText: "Update Now",
-    cancelButtonText: "Update Later",
-  }).then((result) => {
-    if (result.isConfirmed) {
-      navigateToEditPage();
-    } else if (result.dismiss === Swal.DismissReason.cancel) {
-      Swal.fire({
-        icon: 'info',
-        title: 'Update Later',
-        text: 'You chose to update later.',
-        confirmButtonText: 'OK',
-      });
-    }
-  });
-};
-
-
+    Swal.fire({
+      title: "Update Your Profile",
+      text: "Please update your profile information to ensure accurate details.",
+      icon: "info",
+      showCancelButton: true,
+      confirmButtonText: "Update Now",
+      cancelButtonText: "Update Later",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        navigateToEditPage();
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire({
+          icon: 'info',
+          title: 'Update Later',
+          text: 'You chose to update later.',
+          confirmButtonText: 'OK',
+        });
+      }
+    });
+  };
 </script>
+
 
 
 <!-- 
@@ -242,7 +263,7 @@
                       class="cv-download-btn fw-500 tran3s ms-md-3 sm-mt-20"
                       on:click={navigateToEditPage}
                       ><i class="bi bi-pencil" style="margin: 0 5px;"
-                      ></i>Edit</button
+                      ></i>Edit Profile</button
                     >
                   </div>
                 {/if}
@@ -371,24 +392,107 @@
                   href={`https://www.linkedin.com/in/${userData.Linkedin}`}
                   target="_blank"><i class="bi bi-linkedin"></i></a
                 >
+
               </div>
             </li>
           </ul>
         </div>
         <!-- /.cadidate-bio -->
 
-        <div id="certificate-content">
-          <div class="col-md-6" >
-            <a on:click={downloadImage} style="background-color: #333333;" href  class="btn-ten fw-500 text-white w-100 text-center tran3s mt-25">Download your profile PDF <i class="fas fa-file-pdf"></i></a>
+     
+        
+      </div>
+      
+    </div>
+    
+  </div>
+
+
+  <section class="job-portal-intro">
+    <div class="container">
+      <div class="wrapper bottom-border pt-10 lg-pt-80 md-pt-50 pb-65 md-pb-50">
+        <div class="row align-items-center">
+          <div class="col-lg-6">
+            <ul class="btn-group style-none d-flex flex-wrap justify-content-center justify-content-lg-center">
+              <li class=""><a href on:click={downloadProfile} class="btn-three">Download Certficicate <i class="fas fa-address-card"></i></a></li>
+              
+            </ul>
+          </div>
+          <div class="col-lg-6">
+            <ul class="btn-group style-none d-flex flex-wrap justify-content-center justify-content-lg-center">
+              <li class=""><a href on:click={downloadProfile} class="btn-three">Download profile PDF <i class="fas fa-file-pdf"></i></a></li>
+              
+            </ul>
           </div>
         </div>
       </div>
-      <!-- /.cadidate-profile-sidebar -->
     </div>
+  </section>
+
+
+
+  <div class="inner-card mb-60 lg-mb-50">
+   
+    
+    <div class="time-line-data position-relative pt-15">
+      {#if userData.lastUpdate !== undefined}
+      <div class="info position-relative">
+          <h3 class="title">Last Profile Update</h3>
+            
+          
+          <p class="text_1 fw-500">{userData.lastUpdate}</p>
+        
+        
+          </div>
+          {/if}
+        <!-- ./info -->
+        <div class="info position-relative">
+          <h3 class="title">Session Details</h3>
+            
+          {#if userData.userSessions !== undefined}
+          <p>Platform / OS : {userData.userSessions.platform}</p>
+          <p>Browser : {userData.userSessions.userAgent}</p>
+        {/if}
+        </div>
+        <!-- ./info -->
+    </div>
+
+    
+    <!-- /.time-line-data -->
   </div>
+
+</div>
+{#if isProfileVisible}
+<div id="profile-content" class="hidden" >
+  <!-- Add your profile information here using userData -->
+  <h1>User Profile</h1>
+  <p>Age: {userData.age}</p>
+  <p>Area: {userData.area}</p>
+  <p>Blood Group: {userData.bloodGroup}</p>
+  <p>City: {userData.city}</p>
+  <p>Country: {userData.country}</p>
+  <p>Date of Birth: {userData.dateOfBirth}</p>
+  <p>Email: {userData.email}</p>
+  <p>Full Name: {userData.fullName}</p>
+  <p>Gender: {userData.gender}</p>
+  <p>Last Update: {userData.lastUpdate}</p>
+  <p>Phone Number: {userData.phoneNumber}</p>
+  <p>Pincode: {userData.pincode}</p>
+  <p>Rh Factor: {userData.rhFactor}</p>
+  <p>Risky Activities: {userData.riskyActivities}</p>
+  <p>State: {userData.state}</p>
+  <p>Tattoos/Piercings: {userData.tattoosPiercings}</p>
+  <p>Travel History: {userData.travelHistory}</p>
+  <p>UID: {userData.uid}</p>
 </div>
 
+
+
+{/if}
 <style>
+  .hidden {
+    display: none;
+  }
   @media (max-width: 767px) {
     /* Add your mobile-specific styles here */
 

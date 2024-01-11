@@ -1,15 +1,31 @@
 <script>
   import { onMount } from "svelte";
-  import { getDatabase, ref, get, update } from "firebase/database";
+  import { getDatabase, ref, get, update, serverTimestamp  } from "firebase/database";
   import { auth } from "../../firebase";
   import { goto } from "@sapper/app";
   import Swal from "sweetalert2";
+
+  import axios from "axios";
+  import Toastify from "toastify-js";
+  import toastr from "toastr";
+
   import { firebaseApp } from "../../firebase";
 
   const db = getDatabase(firebaseApp);
 
   let error = "";
 
+
+  let pincode = "";
+  let country = "India";
+  let state = "";
+  let division = "";
+  let city = "";
+
+  let area = "";
+
+  let dropdownOptions = [];
+  
   let user = {
     uid: "",
     name: "",
@@ -20,6 +36,7 @@
     pincode: "",
     city: "",
     state: "",
+    area: "",
     division: "",
     whatsappNum: "",
     email: "",
@@ -33,14 +50,13 @@
   function handleBloodGroupChange(event) {
     user.bloodGroup = event.target.value;
 
-    // If the selected blood group is Rh factor relevant, initialize the Rh factor to an empty string
-    // Otherwise, set it to null
+    
     if (user.bloodGroup.includes("+")) {
       user.rhFactor = "+ve";
     } else if (user.bloodGroup.includes("-")) {
       user.rhFactor = "-ve";
     } else {
-      // For other blood groups, set rhFactor to null or an empty string
+   
       user.rhFactor =
         user.bloodGroup === "INRA" || user.bloodGroup === "Bombay Blood Group"
           ? "null"
@@ -48,17 +64,19 @@
     }
   }
 
-  function calculateAge(dateOfBirth) {
-    const dob = new Date(dateOfBirth);
-    const today = new Date();
-    let age = today.getFullYear() - dob.getFullYear();
+  function calculateAge() {
+    if (user.dateOfBirth) {
+      const dob = new Date(user.dateOfBirth);
+      const today = new Date();
+      let age = today.getFullYear() - dob.getFullYear();
 
-    // Check if the birthday has occurred this year
-    if (today < new Date(today.getFullYear(), dob.getMonth(), dob.getDate())) {
-      age--;
+      // Check if the birthday has occurred this year
+      if (today < new Date(today.getFullYear(), dob.getMonth(), dob.getDate())) {
+        age--;
+      }
+
+      user.age = age;
     }
-
-    return age;
   }
 
   const handleDateChange = (event) => {
@@ -66,51 +84,44 @@
     user.age = calculateAge(user.dateOfBirth);
   };
 
+
   async function handlePincodeInput(event) {
     const input = event.target;
-    user.pincode = input.value;
-
-    if (user.pincode.length === 6) {
-      await fetchAddressData();
+    let pincode = input.value; // Declare pincode using let
+    if (pincode.length === 6) {
+        await fetchAddressData(pincode); // Pass pincode as an argument
     } else {
-      error = "Invalid pincode. Please enter a valid 6-digit pincode.";
+        error = "Invalid pincode. Please enter a valid 6-digit pincode.";
     }
-  }
+}
 
-  async function fetchAddressData() {
-    if (user.pincode.length === 6) {
-      try {
-        const apiUrl = `https://api.postalpincode.in/pincode/${user.pincode}`;
-        const response = await fetch(apiUrl);
+async function fetchAddressData(pincode) { // Accept pincode as a parameter
+    try {
+        const apiUrl = `https://api.postalpincode.in/pincode/${pincode}`;
+        const response = await axios.get(apiUrl);
 
-        if (!response.ok) {
-          throw new Error(
-            "Invalid pincode. Please enter a valid 6-digit pincode."
-          );
-        }
-
-        const data = await response.json();
-
-        if (data.length > 0 && data[0].Status === "Success") {
-          const postOffice = data[0].PostOffice[0];
-          user.state = postOffice.State;
-          user.division = postOffice.Division;
-          user.city = postOffice.Name;
-          error = "";
+        if (response.data.length > 0 && response.data[0].Status === "Success") {
+            const postOffice = response.data[0].PostOffice[0];
+            state = postOffice.State;
+            division = postOffice.Name;
+            city = postOffice.District;
+            error = "";
+            dropdownOptions = response.data[0].PostOffice.map(po => po.Name);
         } else {
-          throw new Error(
-            "Invalid pincode. Please enter a valid 6-digit pincode."
-          );
+            throw new Error("Invalid pincode. Please enter a valid 6-digit pincode.");
         }
-      } catch (err) {
-        error =
-          err.message ||
-          "An error occurred while fetching data. Please try again.";
-      }
-    } else {
-      error = "";
+    } catch (err) {
+        error = err.message || "An error occurred while fetching data. Please try again.";
+        Toastify({
+            text: error,
+            duration: 3000,
+            gravity: 'top',
+            position: 'left',
+            backgroundColor: '#ff4d4d',
+        }).showToast();
     }
-  }
+}
+
 
   const loadUserData = async (uid) => {
     const userRef = ref(db, `users/${uid}`);
@@ -128,6 +139,7 @@
       pincode: userData?.pincode || "",
       city: userData?.city || "",
       state: userData?.state || "",
+      area: userData?.area || "",
       division: userData?.division || "",
       whatsappNum: userData?.whatsapp || "",
       email: userData?.email || "",
@@ -143,6 +155,31 @@
       linkedin: userData?.Linkedin || "",
     };
   };
+
+  function getCurrentTimestamp() {
+    const now = new Date();
+
+  // Format time (hh:mm AM/PM)
+  const hours = now.getHours() % 12 || 12;
+  const minutes = String(now.getMinutes()).padStart(2, '0');
+  const ampm = now.getHours() >= 12 ? 'PM' : 'AM';
+  const timeString = `${hours}:${minutes} ${ampm}`;
+
+  // Format date (Day, MM/DD/YYYY)
+  const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  const dayOfWeek = daysOfWeek[now.getDay()];
+  const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+  const day = String(now.getDate()).padStart(2, '0');
+  const year = now.getFullYear();
+  const dateString = `${dayOfWeek}, ${month}/${day}/${year}`;
+
+  // Combine time and date
+  const timestamp = `${timeString} ${dateString}`;
+
+  return timestamp;
+}
+
+const timestamp = getCurrentTimestamp();
 
   onMount(async () => {
 
@@ -175,6 +212,7 @@
       pincode: user.pincode,
       city: user.city,
       state: user.state,
+      area: user.area,
       division: user.division,
       whatsapp: user.whatsappNum,
       email: user.email,
@@ -189,6 +227,7 @@
       Facebook: user.facebook,
       Twitter: user.twitter,
       Linkedin: user.linkedin,
+      lastUpdate : timestamp,
     };
 
     try {
@@ -210,6 +249,57 @@
       });
     }
   };
+
+  let date = '';
+
+  function getCurrentDateTime() {
+    const currentDate = new Date();
+    const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true };
+    return currentDate.toLocaleString(undefined, options);
+  }
+
+  function updateDateTime() {
+    date = getCurrentDateTime();
+  }
+
+  onMount(() => {
+    updateDateTime();
+    setInterval(updateDateTime, 1000);
+    getOSDetails();
+  });
+
+  // Function to get browser information
+  function getOSDetails() {
+    const userAgent = window.navigator.userAgent;
+    const osRegex = /(Windows|Macintosh|Linux|iPhone|iPad|Android)/i;
+    const osMatch = userAgent.match(osRegex);
+    osDetails = osMatch ? `${osMatch[0]} Operating System` : 'Operating System: Unknown';
+  }
+
+  function handleAreaSelect() {
+    toastr.options = {
+      closeButton: true,
+      debug: true,
+      newestOnTop: true,
+      progressBar: true,
+      positionClass: 'toast-bottom-full-width',
+      preventDuplicates: true,
+      onclick: null,
+      showDuration: '300',
+      hideDuration: '1000',
+      timeOut: '5000',
+      extendedTimeOut: '1000',
+      showEasing: 'swing',
+      hideEasing: 'linear',
+      showMethod: 'fadeIn',
+      hideMethod: 'fadeOut',
+    };
+
+    toastr.info('If you want to change your location details, please edit the pincode.', 'Notification');
+  }
+  
+
+  let osDetails = '';
 </script>
 
 <svelte:head>
@@ -224,9 +314,40 @@
 </svelte:head>
 
 <div class="main-page-wrapper">
+
+ 
   <div class="dashboard-body">
+
+    
     <div class="position-relative">
-      <h2 class="main-title px-3">Account Settings | User Id : {user.uid}</h2>
+
+     
+
+<div class="membership-plan-wrapper mb-20">
+    <div class="row gx-0">
+        <div class="col-xxl-7 col-lg-6 d-flex flex-column">
+            <div class="column w-100 h-100">
+                <h4>Account Settings</h4>
+                <p>User ID : {user.uid}</p>
+            </div>
+        </div>
+        <div class="col-xxl-5 col-lg-6 d-flex flex-column">
+            <div class="column border-left w-100 h-100">
+                <div class="d-flex">
+                    
+                    <div class="ps-4 flex-fill">
+                        
+                        <span class="text1 d-block">{date}</span>
+                        <span class="text1 d-block">{osDetails}</span>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
       <div class="bg-white card-box border-20">
         <h4 class="dash-title-three">Gendral Information</h4>
@@ -254,6 +375,7 @@
                   type="date"
                   placeholder=""
                   bind:value={user.dateOfBirth}
+                  on:change={calculateAge}
                 />
               </div>
               <!-- /.dash-input-wrapper -->
@@ -261,7 +383,7 @@
             <div class="col-lg-3">
               <div class="dash-input-wrapper mb-20">
                 <label for="">Age</label>
-                <input type="text" placeholder="" bind:value={user.age} />
+                <input type="text" placeholder="" bind:value={user.age} readonly/>
               </div>
               <!-- /.dash-input-wrapper -->
             </div>
@@ -313,17 +435,23 @@
               </div>
 
               <div class="col-lg-4">
-                <div class="dash-input-wrapper mb-20">
-                  <label for="state">Division</label>
-                  <input
-                    type="text"
-                    disabled
-                    placeholder="Division"
-                    bind:value={user.division}
-                    autocomplete="off"
-                  />
-                </div>
-              </div>
+  <div class="dash-input-wrapper mb-20">
+    <label for="state">Area</label>
+    <select bind:value={user.area} on:click={handleAreaSelect}>
+      {#if user.area}
+        <option value={user.area}>{user.area}</option>
+      {/if}
+      <option value="" disabled hidden style="display:none">
+        Select your Area!
+      </option>
+      {#each dropdownOptions as option (option)}
+        <option value={option}>{option}</option>
+      {/each}
+    </select>
+  </div>
+</div>
+
+
 
               <div class="col-12">
                 <div class="dash-input-wrapper mb-20">
@@ -518,8 +646,10 @@
                 </label>
               </div>
             </div>
-
+            
             <h4 class="dash-title-three">Social Media Handles</h4>
+            <span class="mt-10 mb-15 text1 d-block"><span style="color:red;">Simply enter your username without the "@" symbol</span></span>
+
             <div class="col-lg-3">
               <div class="dash-input-wrapper mb-20">
                 <label for="">Instagram</label>
@@ -568,6 +698,8 @@
     </div>
   </div>
 </div>
+
+
 
 <style>
   .dashboard-body {
