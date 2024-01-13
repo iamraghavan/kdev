@@ -4,16 +4,16 @@
   import Swal from 'sweetalert2';
   import { goto } from '@sapper/app';
   import { writable } from 'svelte/store';
-
-  import Banner from '../components/InnerBanner.svelte';
+  import UAParser from 'ua-parser-js';
   import { firebaseApp } from '../firebase';
-
+  import Banner from '../components/InnerBanner.svelte';
   const auth = getAuth(firebaseApp);
 
   let email = '';
   let password = '';
   let rememberMe = writable(false);
   let showPassword = false;
+  let isLoading = false; // Added loading state
 
   onMount(() => {
     const inputFields = document.querySelectorAll('input[autocomplete="off"]');
@@ -31,6 +31,18 @@
 
   const handleLogin = async () => {
     try {
+      // Added basic input validation
+      if (!email || !password) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Validation Error',
+          text: 'Please enter both email and password.',
+        });
+        return;
+      }
+
+      isLoading = true; // Set loading state to true
+
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
 
       // Check if "Keep me logged in" is selected
@@ -40,25 +52,135 @@
 
       localStorage.setItem('loggedIn', true);
 
-      // Show a success message with SweetAlert
-      Swal.fire({
-        icon: 'success',
-        title: '🎉 Login Successful 🎉',
-        text: `You are logged in at ${window.navigator.userAgent}.`,
-        showConfirmButton: false, // Remove the OK button
-        timer: 5000, // Show the message for 5 seconds (5000 milliseconds),
+      // Fetch additional details
+      const timestamp = new Date().toLocaleString();
+      const device = window.navigator.userAgent;
+      const location = "Your logic to get location"; // Implement your logic to get location
+      const parser = new UAParser();
+      const browser = parser.getBrowser().name + ' ' + parser.getBrowser().version;
+
+      // Send an email to the logged-in user with additional details
+      await fetch('/sendMail', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userEmail: userCredential.user.email,
+          subject: 'Login Successful',
+          message: `
+          <!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Email Template</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    header {
+      background-color: #222222;
+      color: #ffffff;
+      padding: 20px;
+      text-align: center;
+    }
+
+    header img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    footer {
+      background-color: #f6f6f6;
+      padding: 20px;
+      text-align: center;
+    }
+
+    footer p {
+      margin: 0;
+    }
+
+    .content {
+      padding: 20px;
+    }
+
+    .content p {
+      margin-bottom: 15px;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    ul li {
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <img src="https://mcolfw.stripocdn.email/content/guids/CABINET_39254364a214f8068da04f2ed695900b7184bdb10d1b1fcfa5d66b206aab1e38/images/untitled2.png" alt="Logo">
+    </header>
+
+    <div class="content">
+      <p>Hello,</p>
+      <p>You have successfully logged in. Here are the details:</p>
+      <ul>
+        <li><strong>Timestamp:</strong> ${timestamp}</li>
+        <li><strong>Login Device:</strong> ${device}</li>
+        
+        <li><strong>Browser:</strong> ${browser}</li>
+      </ul>
+      <p>If you did not perform this login, please contact us immediately.</p>
+      <p>Thank you for using our service!</p>
+    </div>
+
+    <footer>
+      <p>This message was sent from Bumble Bees IT Solutions, Chennai</p>
+    </footer>
+  </div>
+</body>
+
+</html>
+
+          `,
+        }),
       });
 
-      // Redirect to the dashboard or profile page after a delay
-      setTimeout(() => {
-        goto('/profile');
-      }, 5000);
+      // Redirect to the dashboard immediately
+      goto('/profile');
     } catch (error) {
-      // Login failed, show an error message
+      isLoading = false; // Set loading state back to false on error
+
+      // Differentiate between error types
+      let errorMessage = 'Login Failed';
+      if (error.code === 'auth/user-not-found') {
+        errorMessage = 'User not found. Please check your email and password.';
+      } else if (error.code === 'auth/wrong-password') {
+        errorMessage = 'Incorrect password. Please try again.';
+      } else {
+        console.error(error);
+      }
+
       Swal.fire({
         icon: 'error',
         title: 'Login Failed',
-        text: error.message,
+        text: errorMessage,
       });
     }
   };

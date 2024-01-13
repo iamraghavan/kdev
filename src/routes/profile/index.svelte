@@ -8,16 +8,12 @@
   import Swal from "sweetalert2";
   import _ from "lodash";
   import Session from "./Session.svelte";
-   // Update this line
+
 
 
   let isProfileVisible = false;
 
-  const downloadProfile = async (event) => {
-    event.preventDefault();
-
-    alert(2 + 2 * 30 / 4 )
-  };
+ 
 
   onMount(() => {
     isProfileVisible = true;
@@ -408,7 +404,7 @@
   </div>
 
 
-  <section class="job-portal-intro">
+  <!-- <section class="job-portal-intro">
     <div class="container">
       <div class="wrapper bottom-border pt-10 lg-pt-80 md-pt-50 pb-65 md-pb-50">
         <div class="row align-items-center">
@@ -427,7 +423,7 @@
         </div>
       </div>
     </div>
-  </section>
+  </section> -->
 
 
 
