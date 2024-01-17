@@ -31,7 +31,6 @@
         </div>
       </div>
     </div>
-    <img src="images/shape/shape_02.svg" data-src="" alt="" class="lazy-img shapes shape_01">
-    <img src="images/shape/shape_03.svg" data-src="" alt="" class="lazy-img shapes shape_02">
+   
   </div>
   

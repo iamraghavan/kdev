@@ -5,15 +5,16 @@
   import { goto } from '@sapper/app';
   import { writable } from 'svelte/store';
   import UAParser from 'ua-parser-js';
-  import { firebaseApp } from '../firebase';
   import Banner from '../components/InnerBanner.svelte';
+  import { firebaseApp } from '../firebase';
+
   const auth = getAuth(firebaseApp);
 
   let email = '';
   let password = '';
   let rememberMe = writable(false);
   let showPassword = false;
-  let isLoading = false; // Added loading state
+  let isLoading = false;
 
   onMount(() => {
     const inputFields = document.querySelectorAll('input[autocomplete="off"]');
@@ -21,7 +22,6 @@
       input.setAttribute('autocomplete', 'new-password');
     });
 
-    // Check for stored authentication state on component mount
     const userLoggedIn = localStorage.getItem('userLoggedIn');
     if (userLoggedIn) {
       goto('/profile');
@@ -31,7 +31,6 @@
 
   const handleLogin = async () => {
     try {
-      // Added basic input validation
       if (!email || !password) {
         Swal.fire({
           icon: 'error',
@@ -41,35 +40,40 @@
         return;
       }
 
-      isLoading = true; // Set loading state to true
+      isLoading = true;
 
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
 
-      // Check if "Keep me logged in" is selected
       if ($rememberMe) {
         localStorage.setItem('userLoggedIn', true);
       }
 
       localStorage.setItem('loggedIn', true);
 
-      // Fetch additional details
       const timestamp = new Date().toLocaleString();
       const device = window.navigator.userAgent;
-      const location = "Your logic to get location"; // Implement your logic to get location
-      const parser = new UAParser();
-      const browser = parser.getBrowser().name + ' ' + parser.getBrowser().version;
 
-      // Send an email to the logged-in user with additional details
-      await fetch('/sendMail', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          userEmail: userCredential.user.email,
-          subject: 'Login Successful',
-          message: `
-          <!DOCTYPE html>
+      Swal.fire({
+        icon: 'success',
+        title: '🎉 Login Successful 🎉',
+        text: `You are logged in at ${device}.`,
+        showConfirmButton: false,
+        timer: 2000,
+      }).then(async () => {
+        const location = "Your logic to get location"; // Implement your logic to get location
+        const parser = new UAParser();
+        const browser = parser.getBrowser().name + ' ' + parser.getBrowser().version;
+
+        await fetch('/sendMail', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            userEmail: userCredential.user.email,
+            subject: 'Login Successful',
+            message: `
+            <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -157,17 +161,15 @@
 </body>
 
 </html>
+            `,
+          }),
+        });
 
-          `,
-        }),
+        goto('/profile');
       });
 
-      // Redirect to the dashboard immediately
-      goto('/profile');
     } catch (error) {
-      isLoading = false; // Set loading state back to false on error
-
-      // Differentiate between error types
+      isLoading = false;
       let errorMessage = 'Login Failed';
       if (error.code === 'auth/user-not-found') {
         errorMessage = 'User not found. Please check your email and password.';
@@ -199,14 +201,12 @@
       try {
         await sendPasswordResetEmail(auth, email);
 
-        // Password reset email sent successfully
         Swal.fire({
           icon: 'success',
           title: 'Password Reset Email Sent',
           text: 'Please check your email for instructions on resetting your password.',
         });
       } catch (error) {
-        // Password reset email failed
         Swal.fire({
           icon: 'error',
           title: 'Password Reset Failed',
@@ -220,6 +220,7 @@
     showPassword = !showPassword;
   }
 </script>
+
 
 
 <!-- Your login form HTML here -->

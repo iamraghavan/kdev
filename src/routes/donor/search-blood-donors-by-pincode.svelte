@@ -59,13 +59,13 @@
 
     try {
       const snapshot = await get(ref(db, 'users'));
-      filteredData = [];
+      const tempData = [];
 
       snapshot.forEach((childSnapshot) => {
         const data = childSnapshot.val();
 
         if (data.pincode === pincode && data.bloodGroup === bloodGroup) {
-          filteredData.push({
+          tempData.push({
             uid: data.uid,
             fullName: data.fullName,
             age: data.age,
@@ -77,18 +77,37 @@
         }
       });
 
-      console.log(filteredData); // Log the filtered data
+      // Shuffle the filteredData array
+      shuffleArray(tempData);
+
+      // Update filteredData with the shuffled array
+      filteredData = tempData;
+
+      resetAddressData();
     } catch (err) {
       error = err.message || 'Error fetching data from Firebase';
+    }
+  };
+
+  // Function to shuffle array elements
+  const shuffleArray = (array) => {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
     }
   };
 
   // Reactive update of results count
   $: noofresults = filteredData.length;
 
+ 
+
+
   // Fetch initial data on component mount
   onMount(() => {
     applyFilter();
+    
+    
   });
 
   // Handle pincode input
@@ -134,6 +153,8 @@
   // Reset address data function
   function resetAddressData() {
     state = "";
+    pincode = "";
+    bloodGroup = "";
     division = "";
     city = "";
     dropdownOptions = [];

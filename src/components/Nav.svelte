@@ -298,6 +298,9 @@ onDestroy(() => {
               <li class="nav-item">
                 <a class="nav-link" href="/Contact" role="button">Contact</a>
               </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/blood-request" role="button">Blood Request</a>
+              </li>
               {#if $userContext !== null}
               <li class="nav-item dropdown d-md-none mt-5">
                 <a class="dropdown-toggle fw-500 text-dark" data-bs-theme="dark" href="/" role="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">

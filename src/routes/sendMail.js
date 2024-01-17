@@ -1,6 +1,8 @@
 // src/routes/sendMail.js
 
 export async function post(req, res) {
+
+  
     try {
       const { userEmail, message } = req.body;
   
@@ -10,8 +12,8 @@ export async function post(req, res) {
       const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-          user: 'kurudhiofficial@gmail.com', // replace with your email
-          pass: 'vutf jrjw bnpc jire', // replace with your password or use app-specific password
+          user: 'kurudhiofficial@gmail.com', 
+          pass: 'vutf jrjw bnpc jire', 
         },
       });
   

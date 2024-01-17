@@ -64,18 +64,11 @@ toastr.options = {
   }
   
   const applyFilter = async (event) => {
+    if (!selectedSuggestion || !bloodGroup) {
+      toastr.error("Please fill in all required fields.");
+      return;
+    }
 
-    if (
-    
-    !selectedSuggestion ||
-   
-    !bloodGroup 
-    
-  ) {
-    toastr.error("Please fill in all required fields.");
-    return;
-  }
-    
     try {
       const snapshot = await get(ref(db, "users"));
 
@@ -101,14 +94,25 @@ toastr.options = {
         }
       });
 
+      // Shuffle the filteredDataArray
+      shuffleArray(filteredDataArray);
+
       noofresults = filteredDataArray.length;
 
       // Update the store
-      
     } catch (err) {
       error = err.message || "Error fetching data from Firebase";
     }
   };
+
+  // Function to shuffle array elements
+  const shuffleArray = (array) => {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+  };
+
 
   const filteredData = readable([], (set) => {
     // Initial call to applyFilter
