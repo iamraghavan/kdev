@@ -295,9 +295,9 @@ onDestroy(() => {
                 </ul> 
               </li>
 
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                 <a class="nav-link" href="/Contact" role="button">Contact</a>
-              </li>
+              </li> -->
               <li class="nav-item">
                 <a class="nav-link" href="/blood-request" role="button">Blood Request</a>
               </li>

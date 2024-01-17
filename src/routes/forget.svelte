@@ -1,3 +1,13 @@
+<svelte:head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reset Kurudhi.com Profile Password Effortlessly</title>
+<meta name="description" content="Unlock seamless access with our step-by-step guide to resetting your Kurudhi.com profile password.">
+<meta name="author" content="J S Raghavan">
+<meta name="copyright" content="Bumble Bees IT Solutions">
+<meta name="robots" content="index, follow">
+</svelte:head>
+
 <script>
 
 import Banner from "../components/InnerBanner.svelte";

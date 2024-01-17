@@ -1,3 +1,12 @@
+<svelte:head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Transforming Lives Your First Blood Donation Experience at Kurudhi.com</title>
+<meta name="description" content="Begin a life-changing journey with your first blood donation at Kurudhi.com">
+<meta name="author" content="J S Raghavan">
+<meta name="copyright" content="Bumble Bees IT Solutions">
+<meta name="robots" content="index, follow">
+</svelte:head>
 <script>
   import BloodCta from "../components/BloodCTA.svelte";
 import BlogDetails from "./BlogDetails.svelte";

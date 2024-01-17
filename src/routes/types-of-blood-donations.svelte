@@ -1,3 +1,13 @@
+<svelte:head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Explore the Diversity of Blood Donation in India at Kurudhi.com</title>
+<meta name="description" content="Discover various types of blood donation in India on Kurudhi.com Join us in saving lives today !">
+<meta name="author" content="J S Raghavan">
+<meta name="copyright" content="Bumble Bees IT Solutions">
+<meta name="robots" content="index, follow">
+</svelte:head>
+
 <script>
     import BloodCta from "../components/BloodCTA.svelte";
 
@@ -5,7 +15,7 @@
   
     // Define your blog data here or fetch it from an API
     let blogData3 = {
-      title: "Requirements by Blood Donation Type in India",
+      title: "Types of Blood Donation in India",
       image:
         "./images/Requirements-by-Blood-Donation-Type-in-India.jpg",
       content: `

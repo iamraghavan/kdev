@@ -1,3 +1,13 @@
+<svelte:head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Requirements by Blood Donation Type in India - Kurudhi.com</title>
+<meta name="description" content="Explore specific eligibility criteria and guidelines for various blood donation types in India at Kurudhi.com">
+<meta name="author" content="J S Raghavan">
+<meta name="copyright" content="Bumble Bees IT Solutions">
+<meta name="robots" content="index, follow">
+</svelte:head>
+
 <script>
     import BloodCta from "../components/BloodCTA.svelte";
 

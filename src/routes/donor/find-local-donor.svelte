@@ -1,3 +1,13 @@
+<svelte:head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Easily Find Blood Donors Near You on Kurudhi.com</title>
+<meta name="description" content="Search for blood donors in your location effortlessly with Kurudhi.com">
+<meta name="author" content="J S Raghavan">
+<meta name="copyright" content="Bumble Bees IT Solutions">
+<meta name="robots" content="index, follow">
+</svelte:head>
+
 <script>
   import { getDatabase, ref, get } from "firebase/database";
   import { onMount, afterUpdate } from "svelte";

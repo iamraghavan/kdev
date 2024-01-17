@@ -1,3 +1,12 @@
+<svelte:head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Easily Find Blood Donors Near You with Pincode Search - Kurudhi.com.</title>
+<meta name="description" content="Looking for local blood donors near you? Visit Kurudhi.com and find donors using our pincode search. Make a lifesaving impact today!">
+<meta name="author" content="J S Raghavan">
+<meta name="copyright" content="Bumble Bees IT Solutions">
+<meta name="robots" content="index, follow">
+</svelte:head>
 <script>
   import Banner from "../../components/InnerBanner.svelte";
   import { getDatabase, ref, get } from "firebase/database";

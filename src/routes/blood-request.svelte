@@ -1,10 +1,22 @@
+<svelte:head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Need blood urgently? Get quick and easy help at Kurudhi.com</title>
+<meta name="description" content="Need blood urgently? Get quick and easy help at Kurudhi.com with just one click. You can easily request blood on their website.">
+<meta name="author" content="J S Raghavan">
+<meta name="copyright" content="Bumble Bees IT Solutions">
+<meta name="robots" content="index, follow">
+</svelte:head>
+
 <script>
     import Banner from '../components/InnerBanner.svelte';
     import { onMount } from 'svelte';
     import _ from 'lodash';
     import axios from 'axios';
     import Swal from 'sweetalert2';
-    import toastr from 'toastr';
+    import Toastify from "toastify-js";
+    import { goto } from '@sapper/app';
+    import toastr from "toastr";
 
     let city = '';
     let suggestions = [];
@@ -80,26 +92,54 @@
   
     const sendRequest = async () => {
 
-        if (!isCheckboxChecked) {
-    Toastify({
-      text: 'Please confirm that the provided information is accurate and correct',
-      duration: 3000,
-      gravity: 'top',
-      position: 'left',
-      backgroundColor: '#ff4d4d',
-    }).showToast();
+        if (!checkboxChecked) {
+    
+          toastr.options = {
+      closeButton: true,
+      debug: true,
+      newestOnTop: true,
+      progressBar: true,
+      positionClass: 'toast-bottom-full-width',
+      preventDuplicates: true,
+      onclick: null,
+      showDuration: '300',
+      hideDuration: '1000',
+      timeOut: '5000',
+      extendedTimeOut: '1000',
+      showEasing: 'swing',
+      hideEasing: 'linear',
+      showMethod: 'fadeIn',
+      hideMethod: 'fadeOut',
+    };
+
+    toastr.info('Please confirm that the provided information is accurate and correct.', 'Notification');
     return;
   }
     
     if (!AttenderName || !patentName || !AttePhoneNumber || !bloodGroup || !Unit || !bloodRequiredDate || !city) {
      
-        Toastify({
-      text: 'All input fields are required',
-      duration: 3000,
-      gravity: 'top',
-      position: 'left',
-      backgroundColor: '#ff4d4d',
-    }).showToast();
+
+      toastr.options = {
+      closeButton: true,
+      debug: true,
+      newestOnTop: true,
+      progressBar: true,
+      positionClass: 'toast-bottom-full-width',
+      preventDuplicates: true,
+      onclick: null,
+      showDuration: '300',
+      hideDuration: '1000',
+      timeOut: '5000',
+      extendedTimeOut: '1000',
+      showEasing: 'swing',
+      hideEasing: 'linear',
+      showMethod: 'fadeIn',
+      hideMethod: 'fadeOut',
+    };
+
+    toastr.info('All input fields are required.', 'Notification');
+
+       
     return;
 
     }
@@ -138,10 +178,18 @@
       // Get and display the result
       const result = await response.text();
       Swal.fire({
-        icon: 'success',
-        title: 'Your Request has been sent Successfully!',
-        text: result,
-      });
+  icon: 'success',
+  title: 'Your Request has been sent Successfully!',
+  text: result,
+  showConfirmButton: true,
+  confirmButtonText: 'Go to Donor Search',
+  allowOutsideClick: false,
+}).then((result) => {
+  if (result.isConfirmed) {
+    // Use goto to navigate
+    goto('donor/search-blood-donors-by-pincode');
+  }
+});
 
       console.log(result);
     } catch (error) {

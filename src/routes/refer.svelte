@@ -1,5 +1,13 @@
 
-
+<svelte:head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Join Kurudhi.com's community and invite your loved ones to join too.</title>
+<meta name="description" content="Join Kurudhi.com's community and invite your loved ones to join too. Together, we can expand our support network and care for one another.">
+<meta name="author" content="J S Raghavan">
+<meta name="copyright" content="Bumble Bees IT Solutions">
+<meta name="robots" content="index, follow">
+</svelte:head>
 
 <!-- src/routes/refer.svelte -->
 <script>

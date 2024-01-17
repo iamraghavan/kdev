@@ -1,3 +1,13 @@
+<svelte:head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Login for Donor Candidates - Empowering Lives at Kurudhi.com</title>
+<meta name="description" content="Join Kurudhi.com as a donor candidate and save lives. Log in as a donor candidate at Kurudhi.com and unlock the power to save lives.">
+<meta name="author" content="J S Raghavan">
+<meta name="copyright" content="Bumble Bees IT Solutions">
+<meta name="robots" content="index, follow">
+</svelte:head>
+
 <script>
   import { onMount } from 'svelte';
   import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth';
