@@ -4,6 +4,11 @@ import sirv from 'sirv';
 import compression from 'compression';
 import * as sapper from '@sapper/server'; // Use '* as sapper'
 
+import cors from 'cors';
+import bodyParser from 'body-parser';
+import { post } from './routes/sendMail';
+
+
 const { PORT, NODE_ENV } = process.env;
 const dev = NODE_ENV === 'development';
 
@@ -14,6 +19,15 @@ const app = polka()
     sirv('static', { dev }),
     sapper.middleware()
   );
+
+
+  app.use(cors()); // Enable CORS for all routes
+app.use(bodyParser.json());
+
+// Route for handling the sendMail endpoint
+app.post('/sendMail', post);
+
+
 
 app.listen(PORT, (err) => {
   if (err) console.log('error', err);
