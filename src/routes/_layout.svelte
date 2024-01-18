@@ -30,7 +30,7 @@
 <style>
   /* Your styles go here */
 </style>
-
+<div class="main-page-wrapper">
 <Nav {segment}/>
 
 <main>
@@ -38,6 +38,7 @@
 </main>
 
 <Footer />
+</div>
 
 
 

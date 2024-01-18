@@ -19,8 +19,7 @@ import HomeComponentOne from "../components/HomeComponentOne.svelte";
 
   
   
-  <div class="main-page-wrapper">
-  
+
 		
 		<div class="hero-banner-five position-relative pt-200 lg-pt-150">
 		  <div class="container">
@@ -29,17 +28,20 @@ import HomeComponentOne from "../components/HomeComponentOne.svelte";
 				<div class="col-lg-6 col-md-8">
 				  <h1>Join our cause and help us save <br>  more lives.</h1>
 				  <p class="text-md mt-40 lg-mt-20 mb-65 lg-mb-30 pe-xxl-5">Find blood donors near your location and make a blood request in less than a minutes.</p>
-				  <a href="/register" class="btn-five">Register</a>
+				  <a href="/register" class="btn-five">Register as a Donor</a>
 				</div>
+
+				
 				
 			  </div>
 			
 			  <div class="d-sm-flex align-items-center mt-85 lg-mt-50">
-				<img src="images/assets/screen_15.png" data-src="" alt="" class="lazy-img">
-				<div class="ps-3">
-				  <div class="fw-500 text-dark text-md">18k+</div>
-				  <div>Individual Donors</div>
-				</div>
+				<div class="partner-title">Powered by:</div>
+					<img src="images/f-logo.svg" alt="" class="lazy-img ms-2 me-4" style="    
+					width: auto;
+					height: 3.4rem;
+				">
+
 			  </div>
 			</div>
 		  </div>
@@ -53,8 +55,7 @@ import HomeComponentOne from "../components/HomeComponentOne.svelte";
 		<Testmonial/>
 
 		<BloodCta/>
-  
-  </div>  
+ 
   
   
   

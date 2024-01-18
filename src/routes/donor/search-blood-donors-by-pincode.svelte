@@ -7,6 +7,7 @@
 <meta name="copyright" content="Bumble Bees IT Solutions">
 <meta name="robots" content="index, follow">
 </svelte:head>
+
 <script>
   import Banner from "../../components/InnerBanner.svelte";
   import { getDatabase, ref, get } from "firebase/database";
@@ -19,20 +20,20 @@
 
   toastr.options = {
     "closeButton": true,
-  "debug": false,
-  "newestOnTop": true,
-  "progressBar": true,
-  "positionClass": "toast-bottom-center",
-  "preventDuplicates": true,
-  "onclick": null,
-  "showDuration": "300",
-  "hideDuration": "1000",
-  "timeOut": "5000",
-  "extendedTimeOut": "1000",
-  "showEasing": "swing",
-  "hideEasing": "linear",
-  "showMethod": "fadeIn",
-  "hideMethod": "fadeOut"
+    "debug": false,
+    "newestOnTop": true,
+    "progressBar": true,
+    "positionClass": "toast-bottom-center",
+    "preventDuplicates": true,
+    "onclick": null,
+    "showDuration": "300",
+    "hideDuration": "1000",
+    "timeOut": "5000",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut"
   };
 
   const noimage = {
@@ -50,6 +51,7 @@
 
   let selectedOption = '';
   let dropdownOptions = [];
+  let isLoading = false;
 
   // Navigation function
   function viewUserProfile(uid) {
@@ -58,8 +60,9 @@
   }
 
   // Apply filter function
-  const applyFilter = async (event) => {
-    event.preventDefault();
+  const applyFilter = async () => {
+  
+
 
     if (!pincode || !bloodGroup) {
       toastr.error("Please fill in all required fields.");
@@ -95,6 +98,8 @@
       resetAddressData();
     } catch (err) {
       error = err.message || 'Error fetching data from Firebase';
+    } finally {
+      isLoading = false;
     }
   };
 
@@ -109,20 +114,14 @@
   // Reactive update of results count
   $: noofresults = filteredData.length;
 
- 
-
-
   // Fetch initial data on component mount
   onMount(() => {
     applyFilter();
-    
-    
   });
 
   // Handle pincode input
   async function handlePincodeInput(event) {
-    const input = event.target;
-    pincode = input.value;
+    pincode = event.target.value;
 
     if (pincode.length === 6) {
       await fetchAddressData();
@@ -162,17 +161,12 @@
   // Reset address data function
   function resetAddressData() {
     state = "";
-    pincode = "";
-    bloodGroup = "";
     division = "";
     city = "";
     dropdownOptions = [];
     error = "";
   }
-
-  let isLoading = false;
 </script>
-
 
 
 
@@ -312,7 +306,7 @@
                                       <div class="row">
                                           <div class="col-xl-2 m-auto">
                                               <a href
-                                              on:click={applyFilter} class="btn-ten fw-500 text-white w-100 text-center tran3s mt-30 md-mt-10">Apply Filter</a>
+                                              on:click|preventDefault={applyFilter} class="btn-ten fw-500 text-white w-100 text-center tran3s mt-30 md-mt-10">Apply Filter</a>
                                           </div>
                                       </div>
                                   </div>

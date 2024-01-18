@@ -74,7 +74,7 @@
         const parser = new UAParser();
         const browser = parser.getBrowser().name + ' ' + parser.getBrowser().version;
 
-        await fetch('/sendMail', {
+        await fetch('https://send-bulk-mail-kurudhi.onrender.com/sendMail', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
