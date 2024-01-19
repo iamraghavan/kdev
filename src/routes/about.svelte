@@ -57,7 +57,7 @@
           <div class="row">
             <div class="col-lg-5">
               <div class="title-one mt-30 md-mb-40">
-                <h2 class="fw-600" style="font-size: 4.7rem;">We’ve been helping customers globally.</h2>
+                <h2 class="fw-600" style="font-size: 4.7rem;">We’ve been helping Donors globally.</h2>
               </div>
             </div>
             <div class="col-lg-6 ms-auto">
@@ -120,7 +120,6 @@
     </div>
   </section>
   
-  <HowWorks />
 
   <Team/>
 

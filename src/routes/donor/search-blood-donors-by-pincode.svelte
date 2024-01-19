@@ -184,9 +184,9 @@
                   <div class="col-12">
                       <div class="filter-area-tab">
                           <div class="light-bg border-20 ps-4 pe-4">
-                              <a class="filter-header border-20 d-block collapsed" data-bs-toggle="collapse" href="#collapseFilterHeader" role="button" aria-expanded="false"><span class="main-title fw-500 text-dark">Search Donors By</span></a>
+                              <div class="filter-header border-20 d-block "><span class="main-title fw-500 text-dark">Search Donors By</span></div>
                              
-                              <div class="border-top collapse" id="collapseFilterHeader" style="">
+                              <div class="border-top " id="" style="">
                                   <div class="pt-25 pb-30">
                                       <div class="row">
                                           

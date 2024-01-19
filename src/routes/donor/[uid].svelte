@@ -151,13 +151,13 @@
 
                             <div class="row">
   <div class="col-md-4" >
-    <a style="background-color: #333333;" href="{`tel:+91${userData.phoneNumber}`}" class="btn-ten fw-500 text-white w-100 text-center tran3s mt-25">{callnow}</a>
+    <a style="background-color: #333333;" target="_blank" href="{`tel:+91${userData.phoneNumber}`}" class="btn-ten fw-500 text-white w-100 text-center tran3s mt-25">{callnow}</a>
   </div>
   <div class="col-md-4">
-    <a style="background-color: #333333;" href="{`tel:+91${userData.phoneNumber}`}" class="btn-ten fw-500 text-white w-100 text-center tran3s mt-25">{callnow}</a>
+    <a style="background-color: #333333;" target="_blank" href="{`mailto:${userData.email}`}" class="btn-ten fw-500 text-white w-100 text-center tran3s mt-25">Send an Mail to Donor</a>
   </div>
   <div class="col-md-4">
-    <a style="background-color: #333333;" href="{`tel:+91${userData.phoneNumber}`}" class="btn-ten fw-500 text-white w-100 text-center tran3s mt-25">{callnow}</a>
+    <a style="background-color: #333333;" target="_blank" href="{`https://api.whatsapp.com/send?phone=91${userData.phoneNumber}&text=Hi%20!%20I%20Need%20A%20Blood%20I%20got%20your%20Number%20Form%20kurudhi.com`}" class="btn-ten fw-500 text-white w-100 text-center tran3s mt-25">Send Whatsapp Message</a>
   </div>
 </div>
 
