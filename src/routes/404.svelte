@@ -21,7 +21,7 @@
           </a>
         </div>
         <div class="col-md-6 order-md-first">
-          <img src="images/assets/404.svg" alt="" class="sm-mt-60">
+          <img src="https://kurudhi-assets.s3.ap-south-1.amazonaws.com/404-1.svg" alt="" class="sm-mt-60">
         </div>
       </div>
     </div>

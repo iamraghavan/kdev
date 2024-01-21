@@ -13,12 +13,12 @@
 	// Determine the image, text, and description based on the error status
 	const getImage = () => {
 	  if (status >= 400 && status < 500) {
-		return { src: 'images/assets/404-1.svg', alt: 'Client Error Image' };
+		return { src: 'https://kurudhi-assets.s3.ap-south-1.amazonaws.com/404-1.svg', alt: 'Client Error Image' };
 	  } else if (status >= 500 && status < 600) {
-		return { src: 'images/assets/server-error-image.svg', alt: 'Server Error Image' };
+		return { src: 'https://kurudhi-assets.s3.ap-south-1.amazonaws.com/server-error-image.svg', alt: 'Server Error Image' };
 	  } else {
 		// Default image if no specific condition is met
-		return { src: 'images/assets/default-error-image.svg', alt: 'Default Error Image' };
+		return { src: 'https://kurudhi-assets.s3.ap-south-1.amazonaws.com/default-error-image.svg', alt: 'Default Error Image' };
 	  }
 	};
   
