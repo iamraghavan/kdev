@@ -1,55 +1,74 @@
 <!doctype html>
 <html lang="en">
+
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
-	<meta name="theme-color" content="#333333">
 
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5e5e5e">
+	<meta name="apple-mobile-web-app-title" content="kurudhi.com">
+	<meta name="application-name" content="kurudhi.com">
+	<meta name="msapplication-TileColor" content="#ff0000">
+	<meta name="theme-color" content="#000000">
+
+
+
+	<link rel="icon" href="/favicon.png">
 	<meta property="og:type" content="website">
-<meta property="og:title" content="Kurudhi.com India's No 1 Blood Donor Platform">
-<meta property="og:url" content="https://kurudhi.com/">
-<meta property="og:image" content="https://kurudhi.com/images/logo/logo_04.png">
-<meta property="og:description" content="Connecting blood donors with recipients – Kurudhi.com, the pioneering website in India. Join the lifesaving community today.">
+	<meta property="og:title" content="Kurudhi.com India's No 1 Blood Donor Platform">
+	<meta property="og:url" content="https://kurudhi.com/">
+	<meta property="og:image" content="https://kurudhi.com/images/logo/logo_04.png">
+	<meta property="og:description"
+		content="Connecting blood donors with recipients – Kurudhi.com, the pioneering website in India. Join the lifesaving community today.">
+
+
+
+	<link rel="manifest" href="/manifest.json">
+
 
 
 
 
 	<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-TM5X96E1JT"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-TM5X96E1JT"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
 
-  gtag('config', 'G-TM5X96E1JT');
+		function gtag() {
+			dataLayer.push(arguments);
+		}
+		gtag('js', new Date());
+
+		gtag('config', 'G-TM5X96E1JT');
+	</script>
 
 
-
-</script>
-
-
-<script type="application/ld+json">
-	{
-		"@context": "http://schema.org/",
-		"@type": "NGO",
-		"name": "Kurudhi",
-		"logo": "https://kurudhi.com/images/logo/logo_04.png",
-		"url": "https://kurudhi.com/",
-		"address": {
-			"@type": "PostalAddress",
-			"addressLocality": "Chennai",
-			"addressCountry": "India"
-		},
-		"sameAs": []
-	}
+	<script type="application/ld+json">
+		{
+			"@context": "http://schema.org/",
+			"@type": "NGO",
+			"name": "Kurudhi",
+			"logo": "https://kurudhi.com/images/logo/logo_04.png",
+			"url": "https://kurudhi.com/",
+			"address": {
+				"@type": "PostalAddress",
+				"addressLocality": "Chennai",
+				"addressCountry": "India"
+			},
+			"sameAs": []
+		}
 	</script>
 
 	<script type="application/ld+json">
 		{
 			"@context": "http://schema.org/",
 			"@type": "BreadcrumbList",
-			"itemListElement": [
-				{
+			"itemListElement": [{
 					"@type": "ListItem",
 					"position": 1,
 					"name": "kurudhi.com",
@@ -111,7 +130,7 @@
 				}
 			]
 		}
-		</script>
+	</script>
 
 	%sapper.base%
 
@@ -119,40 +138,43 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-		<!-- Bootstrap CSS -->
-		<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" media="all">
-		<!-- Main style sheet -->
-		<link rel="stylesheet" type="text/css" href="/css/style.min.css" media="all">
-		<!-- responsive style sheet -->
-		<link rel="stylesheet" type="text/css" href="/css/responsive.css" media="all">
-		
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.1/font/bootstrap-icons.min.css" integrity="sha512-oAvZuuYVzkcTc2dH5z1ZJup5OmSQ000qlfRvuoTTiyTBjwX1faoyearj8KdMq0LgsBTHMrRuMek7s+CxF8yE+w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-		
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" media="all">
+	<!-- Main style sheet -->
+	<link rel="stylesheet" type="text/css" href="/css/style.min.css" media="all">
+	<!-- responsive style sheet -->
+	<link rel="stylesheet" type="text/css" href="/css/responsive.css" media="all">
 
-		<script src="/vendor/jquery.min.js"></script>
-	
-		<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-	
-		<script src="/vendor/wow/wow.min.js"></script>
-	
-		<script src="/vendor/slick/slick.min.js"></script>
-		
-		<script src="/vendor/fancybox/dist/jquery.fancybox.min.js"></script>
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.1/font/bootstrap-icons.min.css"
+		integrity="sha512-oAvZuuYVzkcTc2dH5z1ZJup5OmSQ000qlfRvuoTTiyTBjwX1faoyearj8KdMq0LgsBTHMrRuMek7s+CxF8yE+w=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
-		<script src="/vendor/jquery.lazy.min.js"></script>
 
-		<script src="/vendor/jquery.counterup.min.js"></script>
-		<script src="/vendor/jquery.waypoints.min.js"></script>
-	
-		<script src="/vendor/nice-select/jquery.nice-select.min.js"></script>
-	
-		<script src="/vendor/validator.js"></script>
+	<script src="/vendor/jquery.min.js"></script>
 
-		<script  src="/vendor/isotope.pkgd.min.js"></script>
+	<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-		<script src="/js/theme.js"></script>
+	<script src="/vendor/wow/wow.min.js"></script>
+
+	<script src="/vendor/slick/slick.min.js"></script>
+
+	<script src="/vendor/fancybox/dist/jquery.fancybox.min.js"></script>
+
+	<script src="/vendor/jquery.lazy.min.js"></script>
+
+	<script src="/vendor/jquery.counterup.min.js"></script>
+	<script src="/vendor/jquery.waypoints.min.js"></script>
+
+	<script src="/vendor/nice-select/jquery.nice-select.min.js"></script>
+
+	<script src="/vendor/validator.js"></script>
+
+	<script src="/vendor/isotope.pkgd.min.js"></script>
+
+	<script src="/js/theme.js"></script>
 
 
 	<!-- Sapper creates a <script> tag containing `src/client.js`
@@ -169,12 +191,11 @@
 	     the current page has one -->
 	%sapper.head%
 </head>
+
 <body>
 	<!-- The application will be rendered inside this element,
 	     because `src/client.js` references it -->
 	<div id="sapper">%sapper.html%</div>
 </body>
+
 </html>
-
-
-
