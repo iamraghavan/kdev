@@ -35,15 +35,7 @@ import HomeComponentOne from "../components/HomeComponentOne.svelte";
 				
 			  </div>
 			
-			  <div class="d-sm-flex align-items-center mt-85 lg-mt-50">
-				<div class="partner-title">Powered by:</div>
-					<img src="images/f-logo.svg" alt="" class="lazy-img ms-2 me-4" style="    
-					width: auto;
-					height: 3.4rem;
-				">
-
-			  </div>
-			</div>
+			  
 		  </div>
 		  <div class="img-meta">
 			<img src="images/shape/shape_29.svg" data-src="" alt="" class="lazy-img shapes shape_01">
