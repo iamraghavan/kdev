@@ -96,17 +96,17 @@
             {/each}
           </ul>
         </div>
-        <div class="col-lg-3 mb-6 footer-newsletter">
-          <p style="font-size: 1.1rem; font-family: 'McLaren', sans-serif;">
-            Powered by
-          </p>
-          <img
-            style="width: 8rem; height:auto;"
-            src="images/f-logo.svg"
-            alt="Company Logo"
-            class="company-logo"
-          />
-        </div>
+               <!-- <div class="col-lg-3 mb-6 footer-newsletter">
+                <p style="font-size: 1.1rem; font-family: 'McLaren', sans-serif;">
+                  Powered by
+                </p>
+                <img
+                  style="width: 8rem; height:auto;"
+                  src="images/f-logo.svg"
+                  alt="Company Logo"
+                  class="company-logo"
+                />
+              </div> -->
       </div>
     </div>
     <!-- /.inner-wrapper -->
