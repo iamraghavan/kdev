@@ -35,7 +35,8 @@ import HomeComponentOne from "../components/HomeComponentOne.svelte";
 				
 			  </div>
 			
-			  
+			 
+			</div>
 		  </div>
 		  <div class="img-meta">
 			<img src="images/shape/shape_29.svg" data-src="" alt="" class="lazy-img shapes shape_01">
