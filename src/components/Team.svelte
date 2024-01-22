@@ -19,7 +19,7 @@
       },
       {
         name: "Mr. Raghavan",
-        role: "DevOps Engineer",
+        role: "Website Developer",
       },
     ];
   </script>
